@@ -5,7 +5,6 @@
  */
 package grupo3.reto2.controller;
 
-import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -54,7 +53,7 @@ public class PlaceController {
 
     @FXML
     private TableView tblvTabla;
-    
+
     @FXML
     private DatePicker dteTiempoReservado;
 
@@ -92,8 +91,8 @@ public class PlaceController {
     private TableColumn tblcTipoLugar;
 
     public void initStage(Parent root) {
-        
-        LOGGER.info("Initializing Place stage");
+
+        // LOGGER.info("Initializing Place stage");      
         Scene scene = new Scene(root);
         stage.setScene(scene);
 
@@ -111,20 +110,19 @@ public class PlaceController {
         //habilitamos las combo box
         cbxTipoLugar.setDisable(false);
         cbxFiltroTipoLugar.setDisable(false);
-        
+
         //habilitamos la tabla
         tblvTabla.setDisable(false);
-        
+
         //habilitamos los labels 
         lblNombreLugar.setDisable(false);
         lblDescLugar.setDisable(false);
         lblTiempoReservado.setDisable(false);
         lblTipoLugar.setDisable(false);
-        
+
         //habilitamos el DatePicker
         dteTiempoReservado.setDisable(false);
-        
-        
+
         //El foco estará puesto en el campo de nombre de usuario (txtNombre).
         txtNombreLugar.requestFocus();
 
@@ -135,7 +133,7 @@ public class PlaceController {
         stage.setResizable(false);
 
         stage.show();
-      
+
     }
 
     public void setStage(Stage stage) {

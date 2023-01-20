@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package grupo3c.reto2.logic;
+package grupo3.reto2.logic;
 
 import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.client.Client;
