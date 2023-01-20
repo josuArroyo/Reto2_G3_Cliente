@@ -3,24 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package grupo3.reto2.entities;
+package grupo3.reto2.model;
 
-
-
+import grupo3.reto2.model.SignIn;
 import java.io.Serializable;
 import java.util.Set;
 
 
 /**
  *
- * @author 2dam
+ * @author grupo3c
  */
 
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
-    
+   
     private Integer idUser;
     
     
@@ -41,8 +40,7 @@ public class User implements Serializable {
     private String email;
     private String passwd;
     private String confPasswd;
-    
-    
+
     private Set<SignIn> listaSignIn;
     
     

@@ -19,21 +19,15 @@ import javafx.stage.Stage;
  */
 public class Aplication extends Application {
     
+    
     @Override
     public void start(Stage stage) throws Exception {
-//        Parent root = FXMLLoader.load(getClass().getResource("Objective.fxml"));
-//        
-//        Scene scene = new Scene(root);
-//        
-//        stage.setScene(scene);
-//        stage.show();
+        
             FXMLLoader loader= new FXMLLoader(getClass().getResource("view/Objective.fxml")); 
             Parent root = (Parent)loader.load();
             ObjectiveController objeti = (ObjectiveController)loader.getController();
+            objeti.setStage(stage);
             objeti.initStage(root);
-            //SignInController signIn= ((SignInController)loader.getController());
-            //signIn.setStage(stage);
-            //signIn.initStage(root);
     }
 
     /**

@@ -3,21 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package grupo3.reto2.entities;
+package grupo3.reto2.model;
 
-
-
+import grupo3.reto2.model.Admin;
+import grupo3.reto2.model.Entrenamiento;
 import java.io.Serializable;
 import java.util.Set;
+
 /**
  *
- * @author Diego Y Jessica
+ * @author Diego
  */
+
 
 public class Objetivo implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+   
     private Integer idObjetivo;
 
     private String descripcion;
@@ -33,13 +35,11 @@ public class Objetivo implements Serializable {
      * @associates <{uml.ObjetivoUser}>
      */
 //Relaciones
-    
     private Set<ObjetivoCliente> listaClientes;
 
     /**
      * @associates <{uml.Entrenamiento}>
      */
-    
     private Set<Entrenamiento> listaEntrenamiento;
 
     public void setListaEntrenamiento(Set<Entrenamiento> listaEntrenamiento) {

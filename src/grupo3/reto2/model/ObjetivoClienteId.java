@@ -3,12 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package grupo3.reto2.entities;
-
+package grupo3.reto2.model;
 
 import java.io.Serializable;
 import java.util.Objects;
-import javax.persistence.Embeddable;
+
 
 /**
  *
@@ -76,4 +75,5 @@ public class ObjetivoClienteId implements Serializable{
     
     
 }
+
 

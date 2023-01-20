@@ -3,26 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package grupo3.reto2.entities;
+package grupo3.reto2.model;
 
-
+import grupo3.reto2.model.Objetivo;
+import grupo3.reto2.model.Cliente;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.validation.constraints.Pattern;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -46,8 +33,7 @@ public class ObjetivoCliente implements Serializable {
     
     
     
-    //@Pattern(regexp = "^\\d(4)-\\d(2)-\\d(2)$")
-    
+   
     private Date fechaCon;
     
     

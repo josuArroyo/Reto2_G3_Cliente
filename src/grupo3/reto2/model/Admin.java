@@ -3,12 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package grupo3.reto2.entities;
-
+package grupo3.reto2.model;
 
 
 import java.util.Set;
-
 
 
 /**
@@ -35,7 +33,7 @@ public class Admin extends User{
     /**
      * @associates <{uml.Lugar}>
      */
-    
+  
     private Set<Lugar> listaLugar;
 
     /**

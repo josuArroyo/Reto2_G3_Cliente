@@ -16,7 +16,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TextArea;
+
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 
@@ -25,6 +26,9 @@ import javafx.stage.Stage;
  * @author Diego
  */
 public class ObjectiveController{
+    
+    @FXML
+    private Stage stage;
     
     @FXML
     private Button btnCrear;
@@ -60,19 +64,19 @@ public class ObjectiveController{
     private TableColumn colAdmin;
     
     @FXML
-    private TextArea txtDescriObjeti;
+    private TextField txtDescriObjeti;
     
     @FXML 
-    private TextArea txtClaveObjet;
+    private TextField txtClaveObjet;
     
     @FXML
-    private TextArea txtValorParam;
+    private TextField txtValorParam;
     
     @FXML 
-    private TextArea txtFiltrarParam;
+    private TextField txtFiltrarParam;
     
     @FXML 
-    private TextArea txtDescriParam;
+    private TextField txtDescriParam;
     
     @FXML
     private Label lblObjetivo;
@@ -91,11 +95,7 @@ public class ObjectiveController{
     
     @FXML
     private ComboBox cbxFiltr;
-    
-    
-    
-    
-    
+     
     @FXML
     private void handleButtonAction(ActionEvent event) {
         System.out.println("You clicked me!");
@@ -112,7 +112,10 @@ public class ObjectiveController{
         stage.setTitle("Objetivos");
 
         stage.show();
-    }    
+    } 
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
    
     
 }
