@@ -3,11 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package grupo3c.reto2.logic;
+package grupo3.reto2.logic;
 
 import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.GenericType;
 
 /**
  * Jersey REST client generated for REST resource:EntrenamientoFacadeREST
@@ -22,7 +23,7 @@ import javax.ws.rs.client.WebTarget;
  *
  * @author 2dam
  */
-public class TrainingRESTfulClient {
+public class TrainingRESTfulClient implements TrainingInterface{
 
     //Hay que retocar el restfull para la gestion de excepciones
     
@@ -88,24 +89,24 @@ public class TrainingRESTfulClient {
         webTarget.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON));
     }
 
-    public <T> T findIntensidad_XML(Class<T> responseType, String intensidad) throws ClientErrorException {
+    public <T> T findIntensidad_XML(GenericType<T> responseType, String intensidad) throws ClientErrorException {
         WebTarget resource = webTarget;
         resource = resource.path(java.text.MessageFormat.format("getEntrenamientoInsensidad/{0}", new Object[]{intensidad}));
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_XML).get(responseType);
     }
 
-    public <T> T findIntensidad_JSON(Class<T> responseType, String intensidad) throws ClientErrorException {
+    public <T> T findIntensidad_JSON(GenericType<T> responseType, String intensidad) throws ClientErrorException {
         WebTarget resource = webTarget;
         resource = resource.path(java.text.MessageFormat.format("getEntrenamientoInsensidad/{0}", new Object[]{intensidad}));
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
-    public <T> T findAll_XML(Class<T> responseType) throws ClientErrorException {
+    public <T> T findAll_XML(GenericType<T> responseType) throws ClientErrorException {
         WebTarget resource = webTarget;
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_XML).get(responseType);
     }
 
-    public <T> T findAll_JSON(Class<T> responseType) throws ClientErrorException {
+    public <T> T findAll_JSON(GenericType<T> responseType) throws ClientErrorException {
         WebTarget resource = webTarget;
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }

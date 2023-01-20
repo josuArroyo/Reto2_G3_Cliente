@@ -46,6 +46,16 @@ public class Entrenamiento implements Serializable {
    
     private Set<Admin> admin;
    
+    public void getEntrenamientos() {
+		
+		System.out.println(this.descripcion);
+		System.out.println(this.duracion);
+		System.out.println(this.fechaPeriod);
+		System.out.println(this.intensidad);
+		System.out.println(this.repeticion);
+		System.out.println(this.objetivo);	
+	}
+
 
     public void setIdEntrenamiento(Integer idEntrenamiento) {
         this.idEntrenamiento = idEntrenamiento;

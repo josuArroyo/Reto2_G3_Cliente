@@ -5,6 +5,7 @@
  */
 package grupo3.reto2;
 
+import grupo3.reto2.controller.TrainingController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,12 +20,19 @@ public class Aplication extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
         
-        Scene scene = new Scene(root);
+        FXMLLoader loader= new FXMLLoader(getClass().getResource("view/Training.fxml")); 
+        Parent root = (Parent)loader.load();
+        TrainingController trainCont= ((TrainingController)loader.getController());
+        trainCont.setStage(stage);
+        trainCont.initStage(root);
         
-        stage.setScene(scene);
-        stage.show();
+//        Parent root = FXMLLoader.load(getClass().getResource("Training.fxml"));
+//        
+//        Scene scene = new Scene(root);
+//        
+//        stage.setScene(scene);
+//        stage.show();
     }
 
     /**
