@@ -8,7 +8,7 @@ package grupo3.reto2.controller;
 import static grupo3.reto2.controller.TrainingController.LOGGER;
 import grupo3.reto2.logic.TrainingFactory;
 import grupo3.reto2.logic.TrainingInterface;
-import grupo3.reto2.logic.TrainingRESTfulClient;
+//import grupo3.reto2.logic.TrainingRESTfulClient;
 import grupo3.reto2.model.Entrenamiento;
 import grupo3.reto2.model.User;
 import java.util.List;
@@ -38,7 +38,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javax.ws.rs.core.GenericType;
+
 
 /**
  *
@@ -48,7 +48,7 @@ public class TrainingController {
     
     @FXML
     private Stage stage;
-    private TrainingInterface tInter = new TrainingRESTfulClient();
+//    private TrainingInterface tInter = new TrainingRESTfulClient();
      Entrenamiento entrena = new Entrenamiento();
     
     
@@ -158,14 +158,15 @@ public class TrainingController {
     }
     
 //    private ObservableList <Entrenamiento> cargarTodos() {
-//        ObservableList <Entrenamiento> listEntrena;
+//       ObservableList <Entrenamiento> listEntrena;
 //        List<Entrenamiento> todosEntrenas;
 //        todosEntrenas = tInter.findAll_XML(new GenericType <List<Entrenamiento>> () {}); 
-//        //listEntrena = FXCollections.observableArrayList(tInter.findAll_XML(GenericType <Entrenamiento>));
-//      //  table.setItems(listEntrena);
+//        listEntrena = FXCollections.observableArrayList(tInter.findAll_XML(GenericType <Entrenamiento>));
+//        listEntrena.addAll(todosEntrenas);
+//        table.setItems(listEntrena);
 //       // return listEntrena;
 //    
-//    }
+//   }
     
     @FXML
     private void handleCrearButtonAction(ActionEvent event) {
