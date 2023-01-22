@@ -5,10 +5,10 @@
  */
 package grupo3.reto2;
 
+import grupo3.reto2.controller.EventController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
@@ -19,12 +19,11 @@ public class Aplication extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
-        
-        Scene scene = new Scene(root);
-        
-        stage.setScene(scene);
-        stage.show();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("view/Ventana_evento.fxml"));
+        Parent root = (Parent)loader.load();
+        EventController ec = (EventController)loader.getController();
+        ec.setStage(stage);
+        ec.initStage(root);
     }
 
     /**
