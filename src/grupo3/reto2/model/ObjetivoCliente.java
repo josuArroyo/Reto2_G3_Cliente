@@ -10,12 +10,14 @@ import grupo3.reto2.model.Cliente;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author Diego Y Jessica
  */
-
+@XmlRootElement
 public class ObjetivoCliente implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -40,7 +42,7 @@ public class ObjetivoCliente implements Serializable {
     public void setFechaCon(Date fechaCon) {
         this.fechaCon = fechaCon;
     }
-
+    @XmlElement(name="FechaCon")
     public Date getFechaCon() {
         return fechaCon;
     }
@@ -48,11 +50,11 @@ public class ObjetivoCliente implements Serializable {
     public void setObjetivo(Objetivo objetivo) {
         this.objetivo = objetivo;
     }
-
+    @XmlElement(name="Objetivo")
     public Objetivo getObjetivo() {
         return objetivo;
     }
-
+    @XmlElement(name="ObjetivoUserId")
     public ObjetivoClienteId getObjetivoUserId() {
         return objetivoClienteId;
     }
@@ -60,7 +62,7 @@ public class ObjetivoCliente implements Serializable {
     public void setObjetivoUserId(ObjetivoClienteId objetivoUserId) {
         this.objetivoClienteId = objetivoUserId;
     }
-
+    @XmlElement(name="Cliente")
     public Cliente getCliente() {
         return cliente;
     }

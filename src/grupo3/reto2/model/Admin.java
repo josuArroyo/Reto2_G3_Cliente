@@ -5,15 +5,17 @@
  */
 package grupo3.reto2.model;
 
-
 import java.util.Set;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author grupo3c
  */
-
+@XmlRootElement
 public class Admin extends User{
 
     private static final long serialVersionUID = 1L;
@@ -27,13 +29,13 @@ public class Admin extends User{
     /**
      * @associates <{uml.Evento}>
      */
-    
+   
     private Set<Evento> listaEvento;
 
     /**
      * @associates <{uml.Lugar}>
      */
-  
+    
     private Set<Lugar> listaLugar;
 
     /**
@@ -52,7 +54,7 @@ public class Admin extends User{
     public void setLicencia(String licencia) {
         this.licencia = licencia;
     }
-
+    @XmlElement(name="licencia")
     public String getLicencia() {
         return licencia;
     }
@@ -88,7 +90,7 @@ public class Admin extends User{
         this.listaObjetivo = listaObjetivo;
     }
 
-    
+    @XmlTransient
     public Set<Objetivo> getListaObjetivo() {
         return listaObjetivo;
     }

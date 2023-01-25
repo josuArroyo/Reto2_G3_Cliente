@@ -5,24 +5,36 @@
  */
 package grupo3.reto2.model;
 
-import grupo3.reto2.model.SignIn;
 import java.io.Serializable;
 import java.util.Set;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 
 /**
  *
- * @author grupo3c
+ * @author 2dam
  */
 
+@XmlRootElement
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
-   
+    
+    
     private Integer idUser;
+   
+    private String login;
+    private String nombre;
+    private String email;
+    private String passwd;
+    private String confPasswd;
     
     
+    private UserPrivilege userPrivilege;
+    
+    @XmlElement(name="Id")
     public Integer getId() {
         return idUser;
     }
@@ -35,36 +47,28 @@ public class User implements Serializable {
         super();
     }
     
-    private String nomUser;
-    private String nombre;
-    private String email;
-    private String passwd;
-    private String confPasswd;
-
-    private Set<SignIn> listaSignIn;
     
-    
-    public void setListaSignIn(Set<SignIn> listaSignIn) {
-        this.listaSignIn = listaSignIn;
+        @XmlElement(name="Login")
+    public String getLogin() {
+        return login;
     }
 
-    
-    public Set<SignIn> getListaSignIn() {
-        return listaSignIn;
+    public void setLogin(String login) {
+        this.login = login;
+    }
+    @XmlElement(name="Privilege")
+    public UserPrivilege getPrivilege() {
+        return userPrivilege;
     }
 
-    public void setNomUser(String nomUser) {
-        this.nomUser = nomUser;
-    }
-
-    public String getNomUser() {
-        return nomUser;
+    public void setPrivilege(UserPrivilege privilege) {
+        this.userPrivilege = privilege;
     }
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
+    @XmlElement(name="Nombre")
     public String getNombre() {
         return nombre;
     }
@@ -72,7 +76,7 @@ public class User implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
-
+    @XmlElement(name="Email")
     public String getEmail() {
         return email;
     }
@@ -80,7 +84,7 @@ public class User implements Serializable {
     public void setPasswd(String passwd) {
         this.passwd = passwd;
     }
-
+    @XmlElement(name="Passwd")
     public String getPasswd() {
         return passwd;
     }
@@ -88,7 +92,7 @@ public class User implements Serializable {
     public void setConfPasswd(String confPasswd) {
         this.confPasswd = confPasswd;
     }
-
+    @XmlElement(name="ConfPasswd")
     public String getConfPasswd() {
         return confPasswd;
     }

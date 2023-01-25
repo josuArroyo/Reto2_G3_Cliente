@@ -9,13 +9,15 @@ package grupo3.reto2.model;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 
 /**
  *
  * @author Ale 
  */
-
+@XmlRootElement
 public class Evento implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -50,7 +52,7 @@ public class Evento implements Serializable {
     public void setIdEvento(Integer idEvento) {
         this.idEvento = idEvento;
     }
-
+    @XmlElement(name="IdEvento")
     public Integer getIdEvento() {
         return idEvento;
     }
@@ -58,7 +60,7 @@ public class Evento implements Serializable {
     public void setTipoEvento(String tipoEvento) {
         this.tipoEvento = tipoEvento;
     }
-
+    @XmlElement(name="TipoEcento")
     public String getTipoEvento() {
         return tipoEvento;
     }
@@ -66,7 +68,7 @@ public class Evento implements Serializable {
     public void setNumPart(Integer numPart) {
         this.numPart = numPart;
     }
-
+    @XmlElement(name="Numpart")
     public Integer getNumPart() {
         return numPart;
     }
@@ -74,7 +76,7 @@ public class Evento implements Serializable {
     public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
-
+    @XmlElement(name="Fecha")
     public Date getFecha() {
         return fecha;
     }
@@ -82,7 +84,7 @@ public class Evento implements Serializable {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-
+    @XmlElement(name="Descripcion")
     public String getDescripcion() {
         return descripcion;
     }
@@ -91,7 +93,7 @@ public class Evento implements Serializable {
     public void setPremio(String premio) {
         this.premio = premio;
     }
-
+    @XmlElement(name="Premio")
     public String getPremio() {
         return premio;
     }
@@ -99,7 +101,7 @@ public class Evento implements Serializable {
     public void setAdmin(Admin admin) {
         this.admin = admin;
     }
-
+    @XmlElement(name="Admin")
     public Admin getAdmin() {
         return admin;
     }
@@ -107,7 +109,7 @@ public class Evento implements Serializable {
     public void setLugar(Lugar lugar) {
         this.lugar = lugar;
     }
-
+    @XmlElement(name="Lugar")
     public Lugar getLugar() {
         return lugar;
     }

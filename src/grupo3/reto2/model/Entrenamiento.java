@@ -9,13 +9,15 @@ package grupo3.reto2.model;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 
 /**
  *
  * @author Jessica
  */
-
+@XmlRootElement
 public class Entrenamiento implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -50,7 +52,7 @@ public class Entrenamiento implements Serializable {
     public void setIdEntrenamiento(Integer idEntrenamiento) {
         this.idEntrenamiento = idEntrenamiento;
     }
-
+    @XmlElement(name="idEntrenamiento")
     public Integer getIdEntrenamiento() {
         return idEntrenamiento;
     }
@@ -58,7 +60,7 @@ public class Entrenamiento implements Serializable {
     public void setObjetivo(Objetivo objetivo) {
         this.objetivo = objetivo;
     }
-
+    @XmlElement(name="Objetivo")
     public Objetivo getObjetivo() {
         return objetivo;
     }
@@ -75,7 +77,7 @@ public class Entrenamiento implements Serializable {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-
+    @XmlElement(name="Descripction")
     public String getDescripcion() {
         return descripcion;
     }
@@ -83,7 +85,7 @@ public class Entrenamiento implements Serializable {
     public void setDuracion(Integer duracion) {
         this.duracion = duracion;
     }
-
+    @XmlElement(name="Duration")
     public Integer getDuracion() {
         return duracion;
     }
@@ -91,7 +93,7 @@ public class Entrenamiento implements Serializable {
     public void setFechaPeriod(Date fechaPeriod) {
         this.fechaPeriod = fechaPeriod;
     }
-
+    @XmlElement(name="FechaPeriod")
     public Date getFechaPeriod() {
         return fechaPeriod;
     }
@@ -99,7 +101,7 @@ public class Entrenamiento implements Serializable {
     public void setIntensidad(Integer intensidad) {
         this.intensidad = intensidad;
     }
-
+    @XmlElement(name="Intensidad")
     public Integer getIntensidad() {
         return intensidad;
     }
@@ -107,7 +109,7 @@ public class Entrenamiento implements Serializable {
     public void setRepeticion(Integer repeticion) {
         this.repeticion = repeticion;
     }
-
+    @XmlElement(name="Repeticion")
     public Integer getRepeticion() {
         return repeticion;
     }

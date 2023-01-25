@@ -6,13 +6,15 @@
 package grupo3.reto2.model;
 
 import java.util.Set;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 
 /**
  *
  * @author grupo3c
  */
-
+@XmlRootElement
 public class Cliente extends User{
 
     private static final long serialVersionUID = 1L;
@@ -24,13 +26,16 @@ public class Cliente extends User{
     /**
      * @associates <{uml.ObjetivoUser}>
      */
+    
     private Set<ObjetivoCliente> listaObjetivoCliente;
 
     /**
      * @associates <{uml.Evento}>
      */
+    
     private Set<Evento> listaEvento;
 
+    
     public Set<ObjetivoCliente> getListaObjetivoCliente() {
         return listaObjetivoCliente;
     }
@@ -49,7 +54,8 @@ public class Cliente extends User{
     public Set<Evento> getListaEvento() {
         return listaEvento;
     }
-
+    
+    @XmlElement(name="edad")
     public void setEdad(int edad) {
         this.edad = edad;
     }

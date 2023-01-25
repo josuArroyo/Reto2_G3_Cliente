@@ -9,12 +9,14 @@ package grupo3.reto2.model;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author josuA
  */
-
+@XmlRootElement
 public class Lugar implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -53,7 +55,7 @@ public class Lugar implements Serializable {
     public void setAdmin(Admin admin) {
         this.admin = admin;
     }
-
+    @XmlElement(name="Admin")
     public Admin getAdmin() {
         return admin;
     }
@@ -61,7 +63,7 @@ public class Lugar implements Serializable {
     public void setIdLugar(Integer idLugar) {
         this.idLugar = idLugar;
     }
-
+    @XmlElement(name="IdLugar")
     public Integer getIdLugar() {
         return idLugar;
     }
@@ -69,7 +71,7 @@ public class Lugar implements Serializable {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
+    @XmlElement(name="Nombre")
     public String getNombre() {
         return nombre;
     }
@@ -77,7 +79,7 @@ public class Lugar implements Serializable {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-
+    @XmlElement(name="Descripcion")
     public String getDescripcion() {
         return descripcion;
     }
@@ -85,7 +87,7 @@ public class Lugar implements Serializable {
     public void setTipoLugar(String tipoLugar) {
         this.tipoLugar = tipoLugar;
     }
-
+    @XmlElement(name="TipoLugar")
     public String getTipoLugar() {
         return tipoLugar;
     }
@@ -93,7 +95,7 @@ public class Lugar implements Serializable {
     public void setTiempo(Date tiempo) {
         this.tiempo = tiempo;
     }
-
+    @XmlElement(name="Tiempo")
     public Date getTiempo() {
         return tiempo;
     }

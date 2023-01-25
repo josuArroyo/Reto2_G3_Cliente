@@ -5,8 +5,13 @@
  */
 package grupo3.reto2.controller;
 
+import grupo3.reto2.logica.ObjectiveManagerFactory;
+import grupo3.reto2.model.Objetivo;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,9 +21,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import javax.ws.rs.core.GenericType;
+
 
 
 /**
@@ -29,6 +40,8 @@ public class ObjectiveController{
     
     @FXML
     private Stage stage;
+    
+    private ObjectiveManagerFactory factoryObj = new ObjectiveManagerFactory();
     
     @FXML
     private Button btnCrear;
@@ -47,6 +60,9 @@ public class ObjectiveController{
     
     @FXML
     private Button btnInform;
+    
+    @FXML
+    private TableView TableObjetivo;
     
     @FXML
     private TableColumn colObjetivo;
@@ -95,6 +111,8 @@ public class ObjectiveController{
     
     @FXML
     private ComboBox cbxFiltr;
+    
+    private ObservableList<Objetivo> objectiveData;
      
     @FXML
     private void handleButtonAction(ActionEvent event) {
@@ -105,13 +123,54 @@ public class ObjectiveController{
     @FXML
     public void initStage(Parent root) {
         // TODO
+        
         Scene scene = new Scene(root);
         Stage stage = new Stage();
-        stage.setResizable(false);
         stage.setScene(scene);
+        //La ventana es modal
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Objetivos");
-
         stage.show();
+        
+        //Los siguientes campos són visibles
+        lblDescri.setVisible(true);
+        lblDescripParam.setVisible(true);
+        lblFiltr.setVisible(true);
+        lblObjetivo.setVisible(true);
+        lblValorParam.setVisible(true);
+        
+        //Los campos de textos están habilitados
+        txtClaveObjet.setDisable(false);
+        txtDescriObjeti.setDisable(false);
+        txtDescriParam.setDisable(false);
+        txtFiltrarParam.setDisable(false);
+        txtValorParam.setDisable(false);
+        
+        //Los botones asociados al crud están deshabilitados
+        btnCrear.setDisable(true);
+        btnDelete.setDisable(true);
+        btnModifi.setDisable(true);
+        
+        //Los otros botones están habilitados
+        btnInform.setDisable(false);
+        btnSalir.setDisable(false);
+        
+        //El combobox está habilitado
+        cbxFiltr.setDisable(false);
+        
+        //El foco está en el campo txtDescriParam
+        txtDescriParam.requestFocus();
+        
+        //Establecemos las factorias para los valores de celda
+        colAdmin.setCellValueFactory(new PropertyValueFactory<>("Admin"));
+        //colDescriObj.setCellValueFactory(new PropertyValueFactory<>("Descripción Objetivo"));
+        colDescriParam.setCellValueFactory(new PropertyValueFactory<>("Descripción Parámetro"));
+        colObjetivo.setCellValueFactory(new PropertyValueFactory<>("Objetivo"));
+        colValParam.setCellValueFactory(new PropertyValueFactory<>("Valor Parámetro"));
+        
+        //Cargamos los datos en la tabla
+        objectiveData = FXCollections.observableArrayList(factoryObj.getFactory().findAll_XML(new GenericType<List<Objetivo>>(){}));
+        TableObjetivo.setItems(objectiveData);
     } 
     public void setStage(Stage stage) {
         this.stage = stage;

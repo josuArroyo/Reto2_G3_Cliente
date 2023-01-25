@@ -9,13 +9,15 @@ import grupo3.reto2.model.Admin;
 import grupo3.reto2.model.Entrenamiento;
 import java.io.Serializable;
 import java.util.Set;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author Diego
  */
 
-
+@XmlRootElement
 public class Objetivo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -59,7 +61,7 @@ public class Objetivo implements Serializable {
     public void setListaClientes(Set<ObjetivoCliente> listaClientes) {
         this.listaClientes = listaClientes;
     }
-
+    @XmlElement(name="admin")
     public Admin getAdmin() {
         return admin;
     }
@@ -71,7 +73,7 @@ public class Objetivo implements Serializable {
     public void setIdObjetivo(Integer idObjetivo) {
         this.idObjetivo = idObjetivo;
     }
-
+    @XmlElement(name="idObjetivo")
     public Integer getIdObjetivo() {
         return idObjetivo;
     }
@@ -79,7 +81,7 @@ public class Objetivo implements Serializable {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-
+    @XmlElement(name="Descripcion")
     public String getDescripcion() {
         return descripcion;
     }
@@ -87,7 +89,7 @@ public class Objetivo implements Serializable {
     public void setValorParam(String valorParam) {
         this.valorParam = valorParam;
     }
-
+    @XmlElement(name="ValorParam")
     public String getValorParam() {
         return valorParam;
     }
@@ -95,7 +97,7 @@ public class Objetivo implements Serializable {
     public void setDescriParam(String descriParam) {
         this.descriParam = descriParam;
     }
-
+    @XmlElement(name="DescriParam")
     public String getDescriParam() {
         return descriParam;
     }

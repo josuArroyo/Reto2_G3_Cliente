@@ -7,27 +7,29 @@ package grupo3.reto2.model;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 
 /**
  *
  * @author DiegoF
  */
-
+@XmlRootElement
 public class ObjetivoClienteId implements Serializable{
     
     private Integer idUser;
     private Integer idObjetivo;
 
-
+    @XmlElement(name="IdObjetivo")
     public Integer getIdObjetivo() {
         return idObjetivo;
     }
-
+    
     public void setIdObjetivo(Integer idObjetivo) {
         this.idObjetivo = idObjetivo;
     }
-
+    @XmlElement(name="idUser")
     public Integer getIdUser() {
         return idUser;
     }
