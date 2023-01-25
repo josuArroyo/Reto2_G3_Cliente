@@ -10,12 +10,14 @@ import grupo3.reto2.model.Admin;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author josuA
  */
-
+@XmlRootElement
 public class Lugar implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -71,6 +73,7 @@ public class Lugar implements Serializable {
         this.nombre = nombre;
     }
 
+    @XmlElement(name="name")
     public String getNombre() {
         return nombre;
     }
@@ -79,6 +82,7 @@ public class Lugar implements Serializable {
         this.descripcion = descripcion;
     }
 
+    @XmlElement(name="descripcion")
     public String getDescripcion() {
         return descripcion;
     }
@@ -87,6 +91,7 @@ public class Lugar implements Serializable {
         this.tipoLugar = tipoLugar;
     }
 
+    @XmlElement(name="TipoLugar")
     public String getTipoLugar() {
         return tipoLugar;
     }
@@ -95,6 +100,7 @@ public class Lugar implements Serializable {
         this.tiempo = tiempo;
     }
 
+    @XmlElement(name="tiempo")
     public Date getTiempo() {
         return tiempo;
     }

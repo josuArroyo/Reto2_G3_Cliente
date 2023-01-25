@@ -5,8 +5,14 @@
  */
 package grupo3.reto2.controller;
 
+import grupo3.reto2.logic.PlaceManager;
+import grupo3.reto2.logic.PlaceManagerFactory;
+import grupo3.reto2.model.Lugar;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -19,7 +25,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import javax.ws.rs.core.GenericType;
 
 /**
  *
@@ -89,7 +97,11 @@ public class PlaceController {
 
     @FXML
     private TableColumn tblcTipoLugar;
+    
+    private PlaceManagerFactory placefact = new PlaceManagerFactory();
 
+    private ObservableList<Lugar> placeData;
+    
     public void initStage(Parent root) {
 
         // LOGGER.info("Initializing Place stage");      
@@ -132,6 +144,16 @@ public class PlaceController {
         //La ventana no es redimensionable
         stage.setResizable(false);
 
+        tblcNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        tblcDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
+        tblcTiempo.setCellValueFactory(new PropertyValueFactory<>("tiempo"));
+        tblcTipoLugar.setCellValueFactory(new PropertyValueFactory<>("tipoLugar"));
+
+        
+        placeData = FXCollections.observableArrayList(placefact.getFactory().findAll_XML(new GenericType<List<Lugar>>(){}));
+        //Set table model.
+        tblvTabla.setItems(placeData);
+
         stage.show();
 
     }
@@ -139,6 +161,8 @@ public class PlaceController {
     public void setStage(Stage stage) {
         this.stage = stage;
     }
+    
+    
 
     @FXML
     private void handleButtonAction(ActionEvent event) {

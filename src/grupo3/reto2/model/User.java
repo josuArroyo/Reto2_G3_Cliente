@@ -1,19 +1,31 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package grupo3.reto2.model;
 
-import grupo3.reto2.model.SignIn;
 import java.io.Serializable;
 import java.util.Set;
-
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author grupo3c
+ * @author 2dam
  */
+
 
 public class User implements Serializable {
 
@@ -21,6 +33,14 @@ public class User implements Serializable {
     
    
     private Integer idUser;
+    private String login;
+    private String nombre;
+    private String email;
+    private String passwd;
+    private String confPasswd;
+    
+
+    private UserPrivilege userPrivilege;
     
     
     public Integer getId() {
@@ -35,11 +55,26 @@ public class User implements Serializable {
         super();
     }
     
-    private String nomUser;
-    private String nombre;
-    private String email;
-    private String passwd;
-    private String confPasswd;
+    
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public UserPrivilege getPrivilege() {
+        return userPrivilege;
+    }
+
+    public void setPrivilege(UserPrivilege privilege) {
+        this.userPrivilege = privilege;
+    }
+
+    
+    
 
     private Set<SignIn> listaSignIn;
     
@@ -48,18 +83,12 @@ public class User implements Serializable {
         this.listaSignIn = listaSignIn;
     }
 
-    
+
     public Set<SignIn> getListaSignIn() {
         return listaSignIn;
     }
 
-    public void setNomUser(String nomUser) {
-        this.nomUser = nomUser;
-    }
-
-    public String getNomUser() {
-        return nomUser;
-    }
+    
 
     public void setNombre(String nombre) {
         this.nombre = nombre;

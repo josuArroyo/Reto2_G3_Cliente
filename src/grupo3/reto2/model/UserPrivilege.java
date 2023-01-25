@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package grupo3.reto2.logic;
+package grupo3.reto2.model;
 
 /**
  *
  * @author 2dam
  */
-public class PlaceManagerImplementation implements PlaceManager{
-    
+public enum UserPrivilege {
+    CLIENT, ADMIN;
 }

@@ -10,5 +10,11 @@ package grupo3.reto2.logic;
  * @author 2dam
  */
 public class PlaceManagerFactory {
-    
+
+    public PlaceManager getFactory() {
+        PlaceManager placem = new PlaceRESTfulClient();
+        return placem;
+
+    }
+
 }
