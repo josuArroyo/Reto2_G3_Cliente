@@ -97,11 +97,11 @@ public class PlaceController {
 
     @FXML
     private TableColumn tblcTipoLugar;
-    
+
     private PlaceManagerFactory placefact = new PlaceManagerFactory();
 
     private ObservableList<Lugar> placeData;
-    
+
     public void initStage(Parent root) {
 
         // LOGGER.info("Initializing Place stage");      
@@ -132,6 +132,7 @@ public class PlaceController {
         lblTiempoReservado.setDisable(false);
         lblTipoLugar.setDisable(false);
 
+        txtNombreLugar.setText("hola");
         //habilitamos el DatePicker
         dteTiempoReservado.setDisable(false);
 
@@ -143,16 +144,21 @@ public class PlaceController {
 
         //La ventana no es redimensionable
         stage.setResizable(false);
+       
 
-        tblcNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-        tblcDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
-        tblcTiempo.setCellValueFactory(new PropertyValueFactory<>("tiempo"));
-        tblcTipoLugar.setCellValueFactory(new PropertyValueFactory<>("tipoLugar"));
+            tblcNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+            tblcDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
+            tblcTiempo.setCellValueFactory(new PropertyValueFactory<>("tiempo"));
+            tblcTipoLugar.setCellValueFactory(new PropertyValueFactory<>("tipoLugar"));
 
+            placeData = FXCollections.observableArrayList(placefact.getFactory().findAll_XML(new GenericType<List<Lugar>>(){}));
+            //Set table model.
+            tblvTabla.setItems(placeData);
+
+     
+            
+            
         
-        placeData = FXCollections.observableArrayList(placefact.getFactory().findAll_XML(new GenericType<List<Lugar>>(){}));
-        //Set table model.
-        tblvTabla.setItems(placeData);
 
         stage.show();
 
@@ -161,8 +167,6 @@ public class PlaceController {
     public void setStage(Stage stage) {
         this.stage = stage;
     }
-    
-    
 
     @FXML
     private void handleButtonAction(ActionEvent event) {

@@ -76,17 +76,6 @@ public class User implements Serializable {
     
     
 
-    private Set<SignIn> listaSignIn;
-    
-    
-    public void setListaSignIn(Set<SignIn> listaSignIn) {
-        this.listaSignIn = listaSignIn;
-    }
-
-
-    public Set<SignIn> getListaSignIn() {
-        return listaSignIn;
-    }
 
     
 
