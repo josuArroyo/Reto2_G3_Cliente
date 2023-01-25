@@ -6,7 +6,12 @@
 package grupo3.reto2.model;
 
 import java.util.Set;
-
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -24,11 +29,13 @@ public class Cliente extends User{
     /**
      * @associates <{uml.ObjetivoUser}>
      */
+   
     private Set<ObjetivoCliente> listaObjetivoCliente;
 
     /**
      * @associates <{uml.Evento}>
      */
+  
     private Set<Evento> listaEvento;
 
     public Set<ObjetivoCliente> getListaObjetivoCliente() {

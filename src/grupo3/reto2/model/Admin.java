@@ -5,9 +5,15 @@
  */
 package grupo3.reto2.model;
 
-import grupo3.reto2.model.Entrenamiento;
 import java.util.Set;
-
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -27,25 +33,25 @@ public class Admin extends User{
     /**
      * @associates <{uml.Evento}>
      */
-    
+   
     private Set<Evento> listaEvento;
 
     /**
      * @associates <{uml.Lugar}>
      */
-  
+    
     private Set<Lugar> listaLugar;
 
     /**
      * @associates <{uml.Entrenamiento}>
      */
-    
+   
     private Set<Entrenamiento> listaEntrenamiento;
 
     /**
      * @associates <{uml.Objetivo}>
      */
-    
+   
     private Set<Objetivo> listaObjetivo;
 
 
