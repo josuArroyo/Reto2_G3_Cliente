@@ -81,7 +81,7 @@ public class Objetivo implements Serializable {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-    @XmlElement(name="Descripcion")
+    @XmlElement(name="descripcion")
     public String getDescripcion() {
         return descripcion;
     }
@@ -89,7 +89,7 @@ public class Objetivo implements Serializable {
     public void setValorParam(String valorParam) {
         this.valorParam = valorParam;
     }
-    @XmlElement(name="ValorParam")
+    @XmlElement(name="valorParam")
     public String getValorParam() {
         return valorParam;
     }
@@ -97,7 +97,7 @@ public class Objetivo implements Serializable {
     public void setDescriParam(String descriParam) {
         this.descriParam = descriParam;
     }
-    @XmlElement(name="DescriParam")
+    @XmlElement(name="descriParam")
     public String getDescriParam() {
         return descriParam;
     }

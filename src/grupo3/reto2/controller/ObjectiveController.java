@@ -41,7 +41,7 @@ public class ObjectiveController{
     @FXML
     private Stage stage;
     
-    private ObjectiveManagerFactory factoryObj = new ObjectiveManagerFactory();
+    private final ObjectiveManagerFactory factoryObj = new ObjectiveManagerFactory();
     
     @FXML
     private Button btnCrear;
@@ -68,7 +68,7 @@ public class ObjectiveController{
     private TableColumn colObjetivo;
     
     @FXML
-    private TableColumn colDescriObj;
+    private TableColumn colDescriObje;
     
     @FXML
     private TableColumn colValParam;
@@ -130,7 +130,7 @@ public class ObjectiveController{
         //La ventana es modal
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Objetivos");
-        stage.show();
+        
         
         //Los siguientes campos són visibles
         lblDescri.setVisible(true);
@@ -162,15 +162,17 @@ public class ObjectiveController{
         txtDescriParam.requestFocus();
         
         //Establecemos las factorias para los valores de celda
-        colAdmin.setCellValueFactory(new PropertyValueFactory<>("Admin"));
-        //colDescriObj.setCellValueFactory(new PropertyValueFactory<>("Descripción Objetivo"));
-        colDescriParam.setCellValueFactory(new PropertyValueFactory<>("Descripción Parámetro"));
-        colObjetivo.setCellValueFactory(new PropertyValueFactory<>("Objetivo"));
-        colValParam.setCellValueFactory(new PropertyValueFactory<>("Valor Parámetro"));
+        
+        colObjetivo.setCellValueFactory(new PropertyValueFactory<>("idObjetivo"));
+        colDescriParam.setCellValueFactory(new PropertyValueFactory<>("descriParam"));
+        colDescriObje.setCellValueFactory(new PropertyValueFactory<>("descripcion")); 
+        colValParam.setCellValueFactory(new PropertyValueFactory<>("valorParam"));
+        colAdmin.setCellValueFactory(new PropertyValueFactory<>("admin"));
         
         //Cargamos los datos en la tabla
         objectiveData = FXCollections.observableArrayList(factoryObj.getFactory().findAll_XML(new GenericType<List<Objetivo>>(){}));
         TableObjetivo.setItems(objectiveData);
+        stage.show();
     } 
     public void setStage(Stage stage) {
         this.stage = stage;
