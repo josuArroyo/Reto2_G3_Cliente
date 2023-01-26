@@ -5,10 +5,18 @@
  */
 package grupo3.reto2.logic;
 
+import grupo3.reto2.entities.Evento;
+import grupo3.reto2.exception.BusinessLogicException;
+import java.util.Collection;
+
 /**
  *
  * @author Ale
  */
+
 public class EventManagerFactory {
-    
+    public EventManager getFactory() {
+        EventManager em = (EventManager) new EventRESTfulClient();       
+        return em;
+    }
 }

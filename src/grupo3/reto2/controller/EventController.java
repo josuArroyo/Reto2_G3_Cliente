@@ -6,8 +6,11 @@
 package grupo3.reto2.controller;
 
 import grupo3.reto2.entities.Evento;
+import grupo3.reto2.logic.EventManagerFactory;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.value.ObservableValue;
@@ -30,6 +33,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import javax.ws.rs.core.GenericType;
 
 /**
  *
@@ -37,6 +41,7 @@ import javafx.stage.WindowEvent;
  */
 public class EventController extends GenericController {
 
+    private EventManagerFactory emf = new EventManagerFactory();
     @FXML
     private Button btnCrear;
 
@@ -100,6 +105,8 @@ public class EventController extends GenericController {
     private ObservableList<Evento> eventsData;
 
     public void initStage(Parent root) {
+        
+        LOGGER.info("Iniciando método init stage");
         Scene scene = new Scene(root);
         stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -107,42 +114,38 @@ public class EventController extends GenericController {
         stage.setTitle("Gestión de eventos");
         stage.setResizable(false);
         stage.setOnShowing(this::vistaVentana);
-
-        tfDescripcion.textProperty().addListener(this::cambioDeTexto);
-        dpFecha.promptTextProperty().addListener(this::cambioDeTexto);
-        tfTipoEvento.textProperty().addListener(this::cambioDeTexto);
-        tfPremio.textProperty().addListener(this::cambioDeTexto);
-        tfIdLugar.textProperty().addListener(this::cambioDeTexto);
-        btnModificar.setOnAction(this::modificar);
+ 
+    
+        
+       tfDescripcion.textProperty().addListener(this::cambioDeTexto);
+       btnModificar.setOnAction(this::modificar);
+       dpFecha.promptTextProperty().addListener(this::cambioDeTexto);
+       tfTipoEvento.textProperty().addListener(this::cambioDeTexto);
+       tfPremio.textProperty().addListener(this::cambioDeTexto);
+       tfIdLugar.textProperty().addListener(this::cambioDeTexto);
+/*   
         btnSalir.setOnAction(this::salir);
         btnSubscribir.setOnAction(this::subscribirse);
         btnCrear.setOnAction(this::crear);
         btnBorrar.setOnAction(this::borrar);
         btnInforme.setOnAction(this::informe);
-
-        HBox hboxMenu = (HBox) root.getChildrenUnmodifiable().get(0);
-        MenuBar menuBar = (MenuBar) hboxMenu.getChildren().get(0);
-        Menu menuHelp = menuBar.getMenus().get(1);
-        menuHelp.showingProperty().addListener((observableValue, oldValue, newValue) -> {
-            if (newValue) {
-                menuHelp.getItems().get(0).fire();
-            }
-        });
-
-        tcIdEvento.setCellFactory(new PropertyValueFactory<>("Id del evento"));
-        tcDescripcion.setCellFactory(new PropertyValueFactory<>("Descripcion"));
-        tcFecha.setCellFactory(new PropertyValueFactory<>("Fecha"));
-        tcPremio.setCellFactory(new PropertyValueFactory<>("Premio"));
-        tcTipoEvento.setCellFactory(new PropertyValueFactory<>("Tipo de evento"));
-        tcIdLugar.setCellFactory(new PropertyValueFactory<>("Id del lugar"));
+*/
+        tcIdEvento.setCellValueFactory(new PropertyValueFactory<>("idEvento"));
+        tcDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
+        tcFecha.setCellValueFactory(new PropertyValueFactory<>("fecha"));
+        tcPremio.setCellValueFactory(new PropertyValueFactory<>("premio"));
+        tcTipoEvento.setCellValueFactory(new PropertyValueFactory<>("tipoEvento"));
+        tcIdLugar.setCellValueFactory(new PropertyValueFactory<>("lugar"));
 
         ObservableList<Evento> tiposDeEvento = FXCollections.observableArrayList();
-        cbFiltroTipoEvento.setItems(tiposDeEvento);
+        cbFiltroTipoEvento.setItems((ObservableList) usersManager);
         ObservableList<Evento> idsEventos = FXCollections.observableArrayList();
-        cbFiltroIdEvento.setItems(idsEventos);
-        eventsData = FXCollections.observableArrayList();
+        cbFiltroIdEvento.setItems((ObservableList) usersManager);
+
+        eventsData = FXCollections.observableArrayList(emf.getFactory().viewEvents_XML(new GenericType<List<Evento>>(){}));
 
         tvTablaEvento.setItems(eventsData);
+
         stage.show();
     }
     
@@ -150,24 +153,41 @@ public class EventController extends GenericController {
         this.stage = stage;
     }
 
+    @FXML
     private void vistaVentana(WindowEvent event) {
-
+        LOGGER.info("Iniciando método vista ventana");
         btnCrear.setDisable(true);
         btnModificar.setDisable(true);
         btnBorrar.setDisable(true);
         btnSubscribir.setDisable(true);
-
+/*
         tfDescripcion.setPromptText("De que trata el evento...");
         dpFecha.setPromptText("Fecha de realización del evento...");
         tfTipoEvento.setPromptText("Que de evento va a ser...");
         tfPremio.setPromptText("Cuál es el premio al ganador del evento...");
         tfIdLugar.setPromptText("Id del lugar en el que se realizará el evento...");
+*/
     }
-
+    
+    @FXML
     private void cambioDeTexto(ObservableValue observable, String oldValue, String newValue) {
-        try {
-            String fecha;
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        LOGGER.info("Iniciando método cambio de texto");
+        
+        String fecha = dpFecha.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+         if (tfDescripcion.getText().trim().isEmpty() || tfTipoEvento.getText().trim().isEmpty() || fecha.isEmpty() || tfPremio.getText().trim().isEmpty() || tfIdLugar.getText().trim().isEmpty()) {
+                btnCrear.setDisable(true);
+                btnModificar.setDisable(true);
+                btnBorrar.setDisable(true);
+            } else {
+                btnCrear.setDisable(false);
+                btnModificar.setDisable(false);
+                btnBorrar.setDisable(false);
+
+            }
+        
+     /*   try {
+  String fecha;
+                      SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             fecha = sdf.format(sdf.parse(this.dpFecha.getValue().toString()));
             if (tfDescripcion.getText().trim().isEmpty() || tfTipoEvento.getText().trim().isEmpty() || fecha.isEmpty() || tfPremio.getText().trim().isEmpty() || tfIdLugar.getText().trim().isEmpty()) {
                 btnCrear.setDisable(true);
@@ -177,10 +197,12 @@ public class EventController extends GenericController {
                 btnCrear.setDisable(false);
                 btnModificar.setDisable(false);
                 btnBorrar.setDisable(false);
+
             }
         } catch (ParseException ex) {
             Logger.getLogger(EventController.class.getName()).log(Level.SEVERE, null, ex);
         }
+*/
     }
 
     @FXML
