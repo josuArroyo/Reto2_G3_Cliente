@@ -11,33 +11,33 @@
 <?import javafx.scene.layout.Pane?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="grupo3.reto2.controller.PlaceController">
-   <children>
-       <fx:include fx:id="hbox" source="MenuBar.fxml" />
-      <TextField fx:id="txtNombreLugar" layoutX="70.0" layoutY="87.0" prefHeight="25.0" prefWidth="204.0" promptText="Introduzca el nombre del Lugar" />
-      <TextField fx:id="txtDescLugar" layoutX="330.0" layoutY="87.0" prefHeight="25.0" prefWidth="357.0" promptText="Introduzca la descripcion del lugar" />
-      <Label fx:id="lblNombreLugar" layoutX="70.0" layoutY="70.0" text="Nombre del Lugar" />
-      <Label fx:id="lblDescLugar" layoutX="330.0" layoutY="70.0" text="Descripcion del Lugar" />
-      <TableView fx:id="tblvTabla" layoutX="48.0" layoutY="246.0" prefHeight="364.0" prefWidth="670.0">
-        <columns>
-          <TableColumn fx:id="tblcNombre" prefWidth="161.5999984741211" text="Nombre" />
-          <TableColumn fx:id="tblcDescripcion" prefWidth="156.79998779296875" text="Descripcion" />
-            <TableColumn fx:id="tblcTiempo" prefWidth="156.00009155273438" text="Tiempo" />
-            <TableColumn fx:id="tblcTipoLugar" prefWidth="194.0" text="TipoLugar" />
-        </columns>
-      </TableView>
-      <Button fx:id="btnCrear" layoutX="745.0" layoutY="87.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="156.0" text="Crear" />
-      <ComboBox fx:id="cbxTipoLugar" layoutX="70.0" layoutY="155.0" prefHeight="25.0" prefWidth="204.0" />
-      <Label fx:id="lblTipoLugar" layoutX="70.0" layoutY="138.0" text="Tipo de Lugar" />
-      <DatePicker fx:id="dteTiempoReservado" layoutX="330.0" layoutY="155.0" prefHeight="25.0" prefWidth="357.0" />
-      <Label fx:id="lblTiempoReservado" layoutX="330.0" layoutY="138.0" text="Tiempo Reservado" />
-      <Separator layoutX="48.0" layoutY="61.0" prefHeight="3.0" prefWidth="874.0" />
-      <Separator layoutX="45.0" layoutY="60.0" orientation="VERTICAL" prefHeight="147.0" prefWidth="0.0" />
-      <Separator layoutX="49.0" layoutY="206.0" prefHeight="3.0" prefWidth="874.0" />
-      <Separator layoutX="920.0" layoutY="60.0" orientation="VERTICAL" prefHeight="147.0" prefWidth="6.0" />
-      <Button fx:id="btnModificar" layoutX="745.0" layoutY="155.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="156.0" text="Modificar" />
-      <Button fx:id="btnEliminar" layoutX="783.0" layoutY="424.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="137.0" text="Eliminar" />
-      <Button fx:id="btnSalir" layoutX="783.0" layoutY="620.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="137.0" text="Salir" />
-      <ComboBox fx:id="cbxFiltroTipoLugar" layoutX="777.0" layoutY="246.0" minHeight="-Infinity" minWidth="150.0" prefWidth="150.0" promptText="Filtrado TipoLugar" />
-      <Button fx:id="btnInforme" layoutX="49.0" layoutY="620.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="137.0" text="Informe" />
-   </children>
+    <children>
+        <fx:include fx:id="hbox" source="MenuBar.fxml" />
+        <TextField fx:id="txtNombreLugar" layoutX="70.0" layoutY="87.0" prefHeight="25.0" prefWidth="204.0" promptText="Introduzca el nombre del Lugar" />
+        <TextField fx:id="txtDescLugar" layoutX="330.0" layoutY="87.0" prefHeight="25.0" prefWidth="357.0" promptText="Introduzca la descripcion del lugar" />
+        <Label fx:id="lblNombreLugar" layoutX="70.0" layoutY="70.0" text="Nombre del Lugar" />
+        <Label fx:id="lblDescLugar" layoutX="330.0" layoutY="70.0" text="Descripcion del Lugar" />
+        <TableView fx:id="tblvTabla" layoutX="48.0" layoutY="246.0" prefHeight="364.0" prefWidth="670.0">
+            <columns>
+                <TableColumn fx:id="tblcNombre" prefWidth="161.5999984741211" text="Nombre" />
+                <TableColumn fx:id="tblcDescripcion" prefWidth="156.79998779296875" text="Descripcion" />
+                <TableColumn fx:id="tblcTiempo" prefWidth="156.00009155273438" text="Tiempo" />
+                <TableColumn fx:id="tblcTipoLugar" prefWidth="194.0" text="TipoLugar" />
+            </columns>
+        </TableView>
+        <Button fx:id="btnCrear" layoutX="745.0" layoutY="87.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="156.0" text="Crear" />
+        <ComboBox fx:id="cbxTipoLugar" layoutX="70.0" layoutY="155.0" prefHeight="25.0" prefWidth="204.0" />
+        <Label fx:id="lblTipoLugar" layoutX="70.0" layoutY="138.0" text="Tipo de Lugar" />
+        <DatePicker fx:id="dteTiempoReservado" layoutX="330.0" layoutY="155.0" prefHeight="25.0" prefWidth="357.0" />
+        <Label fx:id="lblTiempoReservado" layoutX="330.0" layoutY="138.0" text="Tiempo Reservado" />
+        <Separator layoutX="48.0" layoutY="61.0" prefHeight="3.0" prefWidth="874.0" />
+        <Separator layoutX="45.0" layoutY="60.0" orientation="VERTICAL" prefHeight="147.0" prefWidth="0.0" />
+        <Separator layoutX="49.0" layoutY="206.0" prefHeight="3.0" prefWidth="874.0" />
+        <Separator layoutX="920.0" layoutY="60.0" orientation="VERTICAL" prefHeight="147.0" prefWidth="6.0" />
+        <Button fx:id="btnModificar" layoutX="745.0" layoutY="155.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="156.0" text="Modificar" />
+        <Button fx:id="btnEliminar" layoutX="783.0" layoutY="424.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="137.0" text="Eliminar" />
+        <Button fx:id="btnSalir" layoutX="783.0" layoutY="620.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="137.0" text="Salir" />
+        <ComboBox fx:id="cbxFiltroTipoLugar" layoutX="777.0" layoutY="246.0" minHeight="-Infinity" minWidth="150.0" prefWidth="150.0" promptText="Filtrado TipoLugar" />
+        <Button fx:id="btnInforme" layoutX="49.0" layoutY="620.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="137.0" text="Informe" />
+    </children>
 </Pane>

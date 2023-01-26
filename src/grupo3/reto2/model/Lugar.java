@@ -73,7 +73,7 @@ public class Lugar implements Serializable {
         this.nombre = nombre;
     }
 
-    @XmlElement(name="name")
+    @XmlElement(name="nombre")
     public String getNombre() {
         return nombre;
     }
@@ -91,7 +91,7 @@ public class Lugar implements Serializable {
         this.tipoLugar = tipoLugar;
     }
 
-    @XmlElement(name="TipoLugar")
+    @XmlElement(name="tipoLugar")
     public String getTipoLugar() {
         return tipoLugar;
     }
