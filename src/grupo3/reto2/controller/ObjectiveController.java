@@ -11,7 +11,9 @@ import java.net.URL;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.regex.Pattern;
 import javafx.application.Platform;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -116,6 +118,8 @@ public class ObjectiveController{
     @FXML
     private ComboBox cbxFiltr;
     
+    
+    
     private ObservableList<Objetivo> objectiveData;
      
     @FXML
@@ -134,6 +138,32 @@ public class ObjectiveController{
                 ventanita.close();
             }
     }
+    
+    @FXML
+    private void handleCreateButtonAction(ActionEvent event){
+        if(txtDescriObjeti.getText().length() > 10){
+            Alert ventanita = new Alert(Alert.AlertType.CONFIRMATION);
+            ventanita.setHeaderText(null);
+            ventanita.setTitle("Error");
+            ventanita.setContentText("Has introducido demasiados carácteres");
+            //Con este Optional<ButtonType> creamos botones de Ok y cancelar
+            Optional<ButtonType> action = ventanita.showAndWait();
+            //Si le da a OK el programa cesará de existir, se cierra por completo
+            if (action.get() == ButtonType.OK) {
+                txtDescriObjeti.setText("");
+                ventanita.close();
+            }
+        }
+    }
+//    @FXML void handleModifyButtonAction(ActionEevent event){
+//    
+//    }
+//    @FXML
+//    private void cambioTexto(ObservableValue observable, String oldValue, String newValue){
+//        if(txtDescriObjeti.getText().trim().isEmpty() || txtClaveObjet.getText().trim() || txtDescriParam.getText().trim() || txtValorParam.getText().trim()){
+//        
+//        }
+//    }
     
     @FXML
     private void handleCBoxOptionAction(ActionEvent e){
@@ -156,11 +186,10 @@ public class ObjectiveController{
         }
     }
     
-     
-    
     @FXML
     public void initStage(Parent root) {
         // TODO
+        
         
         Scene scene = new Scene(root);
         Stage stage = new Stage();
@@ -182,6 +211,9 @@ public class ObjectiveController{
         txtDescriParam.setDisable(false);
         txtFiltrarParam.setDisable(false);
         txtValorParam.setDisable(false);
+        
+        //Activación de botones
+        
         
         //Los botones asociados al crud están deshabilitados
         btnCrear.setDisable(true);
