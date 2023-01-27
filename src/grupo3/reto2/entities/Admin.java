@@ -6,21 +6,15 @@
 package grupo3.reto2.entities;
 
 import java.util.Set;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
+
 
 /**
  *
  * @author grupo3c
  */
-@Entity
-@DiscriminatorValue("AD")
 @XmlRootElement
 public class Admin extends User{
 
@@ -35,25 +29,25 @@ public class Admin extends User{
     /**
      * @associates <{uml.Evento}>
      */
-    @OneToMany (mappedBy = "admin")
+
     private Set<Evento> listaEvento;
 
     /**
      * @associates <{uml.Lugar}>
      */
-    @OneToMany (mappedBy = "admin")
+
     private Set<Lugar> listaLugar;
 
     /**
      * @associates <{uml.Entrenamiento}>
      */
-    @ManyToMany(mappedBy="admin")
+
     private Set<Entrenamiento> listaEntrenamiento;
 
     /**
      * @associates <{uml.Objetivo}>
      */
-    @OneToMany (mappedBy = "admin")
+
     private Set<Objetivo> listaObjetivo;
 
 
@@ -69,7 +63,7 @@ public class Admin extends User{
         this.listaEvento = listaEvento;
     }
 
-    @XmlTransient
+
     public Set<Evento> getListaEvento() {
         return listaEvento;
     }
@@ -78,7 +72,7 @@ public class Admin extends User{
         this.listaLugar = listaLugar;
     }
 
-    @XmlTransient
+
     public Set<Lugar> getListaLugar() {
         return listaLugar;
     }
@@ -87,7 +81,7 @@ public class Admin extends User{
         this.listaEntrenamiento = listaEntrenamiento;
     }
 
-    @XmlTransient
+
     public Set<Entrenamiento> getListaEntrenamiento() {
         return listaEntrenamiento;
     }
@@ -96,7 +90,7 @@ public class Admin extends User{
         this.listaObjetivo = listaObjetivo;
     }
 
-    @XmlTransient
+
     public Set<Objetivo> getListaObjetivo() {
         return listaObjetivo;
     }

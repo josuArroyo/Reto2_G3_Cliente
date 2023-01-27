@@ -13,9 +13,9 @@
 <Pane fx:id="TableEvent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="grupo3.reto2.controller.EventController">
    <children>
       <fx:include fx:id="hbox" source="MenuBar.fxml" />
-      <Button fx:id="btnCrear" layoutX="753.0" layoutY="84.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="133.0" text="CREAR EVENTO " />
-      <Button fx:id="btnBorrar" layoutX="752.0" layoutY="150.0" mnemonicParsing="false" text="BORRAR EVENTO" />
-      <Button fx:id="btnModificar" layoutX="729.0" layoutY="220.0" mnemonicParsing="false" text="MODIFICAR EVENTO" />
+      <Button fx:id="btnCrear" layoutX="785.0" layoutY="71.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="133.0" text="CREAR EVENTO " />
+      <Button fx:id="btnBuscar" layoutX="719.0" layoutY="417.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="82.0" text="BUSCAR" />
+      <Button fx:id="btnModificar" layoutX="772.0" layoutY="209.0" mnemonicParsing="false" text="MODIFICAR EVENTO" />
       <TableView fx:id="tvTablaEvento" layoutX="12.0" layoutY="321.0" prefHeight="365.0" prefWidth="694.0">
         <columns>
           <TableColumn fx:id="tcIdEvento" prefWidth="98.0" text="id_evento" />
@@ -26,10 +26,8 @@
             <TableColumn fx:id="tcIdLugar" prefWidth="99.0" text="id_lugar" />
         </columns>
       </TableView>
-      <Label layoutX="719.0" layoutY="321.0" text="FILTRAR POR TIPO DE EVENTO" />
-      <ComboBox fx:id="cbFiltroTipoEvento" layoutX="719.0" layoutY="342.0" prefWidth="150.0" />
-      <Label layoutX="719.0" layoutY="427.0" text="FILTRAR POR ID_EVENTO" />
-      <ComboBox fx:id="cbFiltroIdEvento" layoutX="719.0" layoutY="448.0" prefWidth="150.0" />
+      <Label fx:id="lbfiltro" layoutX="719.0" layoutY="321.0" text="FILTRAR:" />
+      <ComboBox fx:id="cbFiltro" layoutX="719.0" layoutY="342.0" prefWidth="150.0" />
       <Separator layoutX="18.0" layoutY="300.0" prefHeight="0.0" prefWidth="864.0" />
       <TextField fx:id="tfDescripcion" layoutX="34.0" layoutY="128.0" prefHeight="113.0" prefWidth="204.0" />
       <Label layoutX="34.0" layoutY="103.0" text="DESCRIPCIÓN" />
@@ -75,5 +73,7 @@
       <Separator layoutX="-329.0" layoutY="341.0" prefHeight="74.0" prefWidth="330.0" rotate="90.0" />
       <Separator layoutX="629.0" layoutY="164.0" prefHeight="3.0" prefWidth="166.0" rotate="90.0" />
       <Button fx:id="btnInforme" layoutX="851.0" layoutY="521.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="135.0" text="INFORME" />
+      <TextField fx:id="tfFiltro" layoutX="719.0" layoutY="378.0" prefHeight="21.0" prefWidth="150.0" />
+      <Button fx:id="btnBorrar" layoutX="780.0" layoutY="141.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="142.0" text="BORRAR EVENTO" />
    </children>
 </Pane>

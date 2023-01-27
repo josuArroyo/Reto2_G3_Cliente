@@ -1,29 +1,109 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE jasperReport PUBLIC "-//JasperReports//DTD JasperReport//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
-
-<jasperReport name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-    <background>
-        <band/>
-    </background>
-    <title>
-        <band height="79"/>
-    </title>
-    <pageHeader>
-        <band height="35"/>
-    </pageHeader>
-    <columnHeader>
-        <band height="61"/>
-    </columnHeader>
-    <detail>
-        <band height="125"/>
-    </detail>
-    <columnFooter>
-        <band height="45"/>
-    </columnFooter>
-    <pageFooter>
-        <band height="54"/>
-    </pageFooter>
-    <summary>
-        <band height="42"/>
-    </summary>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b8ad7e01-5fdd-4887-8a3b-f50d199a29e2">
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="78" uuid="7bc84fdb-7c7d-4a96-b962-b3e26bb7e4d8"/>
+				<textElement textAlignment="Center">
+					<font size="36"/>
+				</textElement>
+				<text><![CDATA[EVENTS]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="39" width="83" height="22" uuid="ef5f8ae9-0dcd-4201-8841-ad6b53a19d93"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Id de Evento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="83" y="39" width="99" height="22" uuid="d5c7f944-34d3-471c-8cc7-8f613a69857f"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Descripcion]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="182" y="39" width="91" height="22" uuid="006a471c-23ba-49f6-91e6-81a44d439c65"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="273" y="39" width="82" height="22" uuid="e5b6ab1f-ede6-4c72-adf3-e96be8b64f15"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Premio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="355" y="39" width="98" height="22" uuid="33e65400-f62b-4698-86f5-8a59b4fba8a4"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Tipo de Evento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="453" y="39" width="102" height="22" uuid="8e584aa4-fb0f-4c48-8be4-09ff6fbf10cf"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Id de Lugar]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="83" height="125" uuid="d15a83d0-07ab-43ff-a1f7-b32f55b1db74"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Static text]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="83" y="0" width="99" height="125" uuid="b46d9a60-afb7-4ba4-8156-efcc833bb557"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Static text]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="182" y="0" width="91" height="125" uuid="017fbf42-8ab2-407c-bdbb-e29526522786"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Static text]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="273" y="0" width="82" height="125" uuid="d9ad624a-2f9f-4344-ada0-db8fdd228aa4"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Static text]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="355" y="0" width="98" height="125" uuid="65c4a11c-673f-470f-830f-f3b2003cd67d"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Static text]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="453" y="0" width="102" height="125" uuid="ec9c480d-152f-42b5-8f87-387357be6958"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Static text]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
 </jasperReport>

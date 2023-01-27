@@ -6,19 +6,14 @@
 package grupo3.reto2.entities;
 
 import java.util.Set;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
+
 
 /**
  *
  * @author grupo3c
  */
-@Entity
-@DiscriminatorValue("CL")
+
 @XmlRootElement
 public class Cliente extends User{
 
@@ -31,16 +26,16 @@ public class Cliente extends User{
     /**
      * @associates <{uml.ObjetivoUser}>
      */
-    @OneToMany (mappedBy = "cliente")
+
     private Set<ObjetivoCliente> listaObjetivoCliente;
 
     /**
      * @associates <{uml.Evento}>
      */
-    @ManyToMany(mappedBy = "listaCliente")
+
     private Set<Evento> listaEvento;
 
-    @XmlTransient
+
     public Set<ObjetivoCliente> getListaObjetivoCliente() {
         return listaObjetivoCliente;
     }
@@ -55,7 +50,7 @@ public class Cliente extends User{
         this.listaEvento = listaEvento;
     }
 
-    @XmlTransient
+
     public Set<Evento> getListaEvento() {
         return listaEvento;
     }
