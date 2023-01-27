@@ -11,12 +11,15 @@ import java.net.URL;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -47,6 +50,8 @@ public class ObjectiveController{
     @FXML
     private Stage stage;
     
+    private static final Logger LOGGER = Logger.getLogger(ObjectiveController.class.getName());
+    
     private final ObjectiveManagerFactory factoryObj = new ObjectiveManagerFactory();
     
     @FXML
@@ -68,7 +73,7 @@ public class ObjectiveController{
     private Button btnInform;
     
     @FXML
-    private TableView TableObjetivo;
+    private TableView<Objetivo> TableObjetivo;
     
     @FXML
     private TableColumn colObjetivo;
@@ -128,68 +133,95 @@ public class ObjectiveController{
             ventanita.setHeaderText(null);
             ventanita.setTitle("Advertencia");
             ventanita.setContentText("¿Deseas Salir?");
-            //Con este Optional<ButtonType> creamos botones de Ok y cancelar
             Optional<ButtonType> action = ventanita.showAndWait();
-            //Si le da a OK el programa cesará de existir, se cierra por completo
             if (action.get() == ButtonType.OK) {
                 Platform.exit();
             } else {
-                //Si le da a cancelar la ventana emergente se cerrará pero la ventana principal se mantiene
                 ventanita.close();
             }
     }
     
     @FXML
     private void handleCreateButtonAction(ActionEvent event){
-        if(txtDescriObjeti.getText().length() > 10){
-            Alert ventanita = new Alert(Alert.AlertType.CONFIRMATION);
+        if(txtDescriObjeti.getText().length() > 10 || txtValorParam.getText().length() > 3){
+            Alert ventanita = new Alert(Alert.AlertType.ERROR);
             ventanita.setHeaderText(null);
             ventanita.setTitle("Error");
-            ventanita.setContentText("Has introducido demasiados carácteres");
-            //Con este Optional<ButtonType> creamos botones de Ok y cancelar
-            Optional<ButtonType> action = ventanita.showAndWait();
-            //Si le da a OK el programa cesará de existir, se cierra por completo
+            ventanita.setContentText("Has introducido carácteres incorrectos"); 
+            Optional<ButtonType> action = ventanita.showAndWait();           
             if (action.get() == ButtonType.OK) {
                 txtDescriObjeti.setText("");
+                txtClaveObjet.setText("");
+                txtDescriParam.setText("");
+                txtValorParam.setText("");
                 ventanita.close();
             }
         }
     }
-//    @FXML void handleModifyButtonAction(ActionEevent event){
-//    
-//    }
-//    @FXML
-//    private void cambioTexto(ObservableValue observable, String oldValue, String newValue){
-//        if(txtDescriObjeti.getText().trim().isEmpty() || txtClaveObjet.getText().trim() || txtDescriParam.getText().trim() || txtValorParam.getText().trim()){
-//        
-//        }
-//    }
     
     @FXML
-    private void handleCBoxOptionAction(ActionEvent e){
-        if(null == cbxFiltr.getValue().toString()){
-            txtFiltrarParam.setDisable(true);
-            btnFiltrar.setVisible(false);
-        }else switch (cbxFiltr.getValue().toString()) {
-            case "Por valor de parámetro":
-                txtFiltrarParam.setDisable(false);
-                btnFiltrar.setVisible(true);
-                break;
-            case "Por clave Objetivo":
-                txtFiltrarParam.setDisable(false);
-                btnFiltrar.setVisible(true);
-                break;
-            default:
-                txtFiltrarParam.setDisable(true);
-                btnFiltrar.setVisible(false);
-                break;
+    private void handleModifyButtonAction(ActionEvent event){
+        if(txtDescriObjeti.getText().length() > 10 || txtValorParam.getText().length() > 3){
+            Alert ventanita = new Alert(Alert.AlertType.ERROR);
+            ventanita.setHeaderText(null);
+            ventanita.setTitle("Error");
+            ventanita.setContentText("Has introducido carácteres incorrectos"); 
+            Optional<ButtonType> action = ventanita.showAndWait();           
+            if (action.get() == ButtonType.OK) {
+                txtDescriObjeti.setText("");
+                txtClaveObjet.setText("");
+                txtDescriParam.setText("");
+                txtValorParam.setText("");
+                ventanita.close();
+            }
+        }
+    }
+    
+    @FXML
+    private void handleDeleteButtonAction(ActionEvent event){
+        if(txtDescriObjeti.getText().length() > 10 || txtValorParam.getText().length() > 3){
+            Alert ventanita = new Alert(Alert.AlertType.ERROR);
+            ventanita.setHeaderText(null);
+            ventanita.setTitle("Error");
+            ventanita.setContentText("Has introducido carácteres incorrectos"); 
+            Optional<ButtonType> action = ventanita.showAndWait();           
+            if (action.get() == ButtonType.OK) {
+                txtDescriObjeti.setText("");
+                txtClaveObjet.setText("");
+                txtDescriParam.setText("");
+                txtValorParam.setText("");
+                ventanita.close();
+            }
+        }
+    }
+    
+    @FXML
+    private void cambioTexto(ObservableValue observable, Object oldValue, Object newValue){
+        if(txtClaveObjet.getText().trim().isEmpty() || txtDescriObjeti.getText().trim().isEmpty() ||  txtDescriParam.getText().trim().isEmpty() || txtValorParam.getText().trim().isEmpty()){
+            btnCrear.setDisable(true);
+            btnDelete.setDisable(true);
+            btnModifi.setDisable(true);
+        }else{
+            btnCrear.setDisable(false);
+            btnDelete.setDisable(false);
+            btnModifi.setDisable(false);
+        }
+    }
+      
+    @FXML
+    private void handleUsersTableSelectionChanged(ObservableValue observable, Object oldValue, Object newValue){
+        if (newValue != null) {
+            Objetivo objetiv = (Objetivo) newValue;
+            txtClaveObjet.setText(objetiv.getIdObjetivo().toString());
+            txtDescriObjeti.setText(objetiv.getDescripcion());
+            txtDescriParam.setText(objetiv.getDescriParam());
+            txtValorParam.setText(objetiv.getValorParam());
         }
     }
     
     @FXML
     public void initStage(Parent root) {
         // TODO
-        
         
         Scene scene = new Scene(root);
         Stage stage = new Stage();
@@ -206,14 +238,20 @@ public class ObjectiveController{
         lblValorParam.setVisible(true);
         
         //Los campos de textos están habilitados
-        txtClaveObjet.setDisable(false);
+        txtClaveObjet.setDisable(true);
         txtDescriObjeti.setDisable(false);
         txtDescriParam.setDisable(false);
         txtFiltrarParam.setDisable(false);
         txtValorParam.setDisable(false);
         
         //Activación de botones
+        txtClaveObjet.textProperty().addListener(this::cambioTexto);
+        txtDescriObjeti.textProperty().addListener(this::cambioTexto);
+        txtValorParam.textProperty().addListener(this::cambioTexto);
+        txtDescriParam.textProperty().addListener(this::cambioTexto);
         
+        //Añadimos los datos de la fila seleccionada en los campos de texto
+        TableObjetivo.getSelectionModel().selectedItemProperty().addListener(this::handleUsersTableSelectionChanged);
         
         //Los botones asociados al crud están deshabilitados
         btnCrear.setDisable(true);
@@ -224,8 +262,9 @@ public class ObjectiveController{
         btnInform.setDisable(false);
         btnSalir.setDisable(false);
         
-        //El combobox está habilitado
+        //El combobox está habilitado y tiene su método
         cbxFiltr.setDisable(false);
+        cbxFiltr.getSelectionModel().getSelectedItem();
         
         //Elementos relacionados con el comboBox
         txtFiltrarParam.setDisable(true);
@@ -240,26 +279,59 @@ public class ObjectiveController{
                 "Todos los objetivos"
         );
         
-        
         //El foco está en el campo txtDescriParam
         txtDescriParam.requestFocus();
         
         //Metodos de botones
         btnSalir.setOnAction(this::handleExitButtonAction);
-        //cbxFiltr.setOnAction(this::handleCBoxOptionAction);
+        btnCrear.setOnAction(this::handleCreateButtonAction);
+        btnModifi.setOnAction(this::handleModifyButtonAction);
+        btnDelete.setOnAction(this::handleDeleteButtonAction);
+        cbxFiltr.setOnAction(new EventHandler<ActionEvent>(){
+            public void handle(ActionEvent event) {
+                if(null == cbxFiltr.getValue().toString()){
+            txtFiltrarParam.setDisable(true);
+            btnFiltrar.setVisible(false);
+        }else switch (cbxFiltr.getValue().toString()) {
+            case "Por valor de parámetro":
+                txtFiltrarParam.setDisable(false);
+                txtFiltrarParam.setVisible(true);
+                btnFiltrar.setVisible(true);
+                btnFiltrar.setDisable(false);               
+                break;
+            case "Por clave Objetivo":
+                txtFiltrarParam.setDisable(false);
+                txtFiltrarParam.setVisible(true);
+                btnFiltrar.setVisible(true);
+                btnFiltrar.setDisable(false);
+                break;
+            default:
+                txtFiltrarParam.setDisable(true);
+                 txtFiltrarParam.setVisible(false);
+                btnFiltrar.setVisible(false);
+                btnFiltrar.setDisable(true);              
+                break;
+        }
+            }
+        
+        });
         
         //Establecemos las factorias para los valores de celda
-        
-        colObjetivo.setCellValueFactory(new PropertyValueFactory<>("idObjetivo"));
-        colDescriParam.setCellValueFactory(new PropertyValueFactory<>("descriParam"));
-        colDescriObje.setCellValueFactory(new PropertyValueFactory<>("descripcion")); 
-        colValParam.setCellValueFactory(new PropertyValueFactory<>("valorParam"));
-        colAdmin.setCellValueFactory(new PropertyValueFactory<>("admin"));
+        try{
+            colObjetivo.setCellValueFactory(new PropertyValueFactory<>("idObjetivo"));
+            colDescriParam.setCellValueFactory(new PropertyValueFactory<>("descriParam"));
+            colDescriObje.setCellValueFactory(new PropertyValueFactory<>("descripcion")); 
+            colValParam.setCellValueFactory(new PropertyValueFactory<>("valorParam"));
+            colAdmin.setCellValueFactory(new PropertyValueFactory<>("admin"));
         
         //Cargamos los datos en la tabla
-        objectiveData = FXCollections.observableArrayList(factoryObj.getFactory().findAll_XML(new GenericType<List<Objetivo>>(){}));
-        TableObjetivo.setItems(objectiveData);
-        stage.show();
+            objectiveData = FXCollections.observableArrayList(factoryObj.getFactory().findAll_XML(new GenericType<List<Objetivo>>(){}));
+            TableObjetivo.setItems(objectiveData);
+            stage.show();
+         }catch(Exception e){
+            LOGGER.info("Error a la hora de cargar los datos");
+        }
+       
     } 
     public void setStage(Stage stage) {
         this.stage = stage;
