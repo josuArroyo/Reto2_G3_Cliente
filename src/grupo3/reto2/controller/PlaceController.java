@@ -5,19 +5,13 @@
  */
 package grupo3.reto2.controller;
 
-import grupo3.reto2.logic.PlaceManager;
 import grupo3.reto2.logic.PlaceManagerFactory;
 import grupo3.reto2.model.Lugar;
-import java.awt.event.MouseEvent;
-import java.net.URL;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
-import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
@@ -26,7 +20,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -41,6 +34,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javax.ws.rs.core.GenericType;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -116,6 +116,10 @@ public class PlaceController {
     private PlaceManagerFactory placefact = new PlaceManagerFactory();
 
     private ObservableList<Lugar> placeData;
+     Alert ventanita = new Alert(Alert.AlertType.ERROR);
+
+    @FXML
+    protected static final Logger LOGGER = Logger.getLogger("/controller/PlaceController");
 
     public void initStage(Parent root) {
 
@@ -161,7 +165,13 @@ public class PlaceController {
         //Metodos de botones
         btnSalir.setOnAction(this::handleExitButtonAction);
         btnCrear.setOnAction(this::handleCrearButtonAction);
+        btnInforme.setOnAction(this::handleInformeButtonAction);
+        btnEliminar.setOnAction(this::handleEliminarButtonAction);
         tblvTabla.getSelectionModel().selectedItemProperty().addListener(this::handleUsersTableSelectionChanged);
+        
+        //cargar combobox
+        
+        cbxTipoLugar.getItems().addAll("privado" , "publico");
 
         try {
             tblcNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
@@ -212,14 +222,83 @@ public class PlaceController {
             txtDescLugar.setText(lugar.getDescripcion());
             cbxTipoLugar.getSelectionModel().select(lugar.getTipoLugar());
             //pruebas peligrosas
-           
+
         }
 
     }
 
     @FXML
     private void handleCrearButtonAction(ActionEvent event) {
+        
+        Lugar lugar = new Lugar();
+        lugar.setNombre(txtNombreLugar.getText());
+        lugar.setDescripcion(txtDescLugar.getText());
+        lugar.setTipoLugar(cbxTipoLugar.getSelectionModel().getSelectedItem().toString());
+        //lugar.setTiempo(dteTiempoReservado.getValue().to);
+        
+
+        if (this.txtNombreLugar.getText().isEmpty() || this.txtDescLugar.getText().isEmpty() || this.cbxTipoLugar.getSelectionModel().getSelectedItem().toString().isEmpty() || dteTiempoReservado.getValue() == null) {
+
+           
+            ventanita.setHeaderText(null);
+            ventanita.setTitle("Error");
+            ventanita.setContentText("nos has introducido datos en uno de los campos");
+            Optional<ButtonType> action = ventanita.showAndWait();
+            if (action.get() == ButtonType.OK) {
+                txtNombreLugar.setText("");
+                txtDescLugar.setText("");
+                cbxTipoLugar.setItems(placeData);
+            }
+
+        }
+        if (this.txtNombreLugar.getText().length() > 10 || this.txtDescLugar.getText().length() > 10) {
+            
+            ventanita.setHeaderText(null);
+            ventanita.setTitle("Error");
+            ventanita.setContentText("no has introducido el numero de carracteres correcto");
+            Optional<ButtonType> action = ventanita.showAndWait();
+        }
+        
+         placefact.getFactory().create_XML(lugar);
+         tblvTabla.refresh();
+        
+        
 
     }
+
+    @FXML
+    private void handleInformeButtonAction(ActionEvent event) {
+
+        try {
+            JasperReport report
+                    = JasperCompileManager.compileReport(getClass().getResourceAsStream("/Reto2_G3_Cliente/src/grupo3/reto2/report/PlaceReport.jrxml"));
+
+            JRBeanCollectionDataSource dataItems
+                    = new JRBeanCollectionDataSource((Collection<Lugar>) this.tblvTabla.getItems());
+            Map<String, Object> parameters = new HashMap<>();
+            JasperPrint jasperPrint = JasperFillManager.fillReport(report, parameters, dataItems);
+            JasperViewer jasperViewer = new JasperViewer(jasperPrint, false);
+            jasperViewer.setVisible(true);
+
+        } catch (JRException ex) {
+
+            System.out.println("no funciona");
+
+        }
+
+    }
+
+    @FXML
+    private void handleEliminarButtonAction(ActionEvent event ){
+        
+        Lugar selectedLugar = (Lugar) tblvTabla.getSelectionModel().getSelectedItem();
+        placefact.getFactory().remove(selectedLugar.getIdLugar().toString());
+        tblvTabla.getItems().remove(selectedLugar);
+        
+        
+    }
+    
+    
+ 
 
 }
