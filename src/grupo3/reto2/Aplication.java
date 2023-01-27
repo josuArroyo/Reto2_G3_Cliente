@@ -27,7 +27,7 @@ public class Aplication extends Application {
         trainCont.setStage(stage);
         trainCont.initStage(root);
         
-//        Parent root = FXMLLoader.load(getClass().getResource("Training.fxml"));
+//      Parent root = FXMLLoader.load(getClass().getResource("Training.fxml"));
 //        
 //        Scene scene = new Scene(root);
 //        

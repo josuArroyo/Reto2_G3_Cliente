@@ -21,7 +21,7 @@ import javax.ws.rs.core.GenericType;
  *        client.close();
  * </pre>
  *
- * @author 2dam
+ * @author Jessica
  */
 public class TrainingRESTfulClient implements TrainingInterface{
 
@@ -57,7 +57,7 @@ public class TrainingRESTfulClient implements TrainingInterface{
         webTarget.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).put(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON));
     }
 
-    public <T> T findById_XML(Class<T> responseType, String idEntrenamiento) throws ClientErrorException {
+    public <T> T findById_XML(GenericType<T> responseType, String idEntrenamiento) throws ClientErrorException {
         WebTarget resource = webTarget;
         resource = resource.path(java.text.MessageFormat.format("getEntrenamientoId/{0}", new Object[]{idEntrenamiento}));
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_XML).get(responseType);
@@ -111,7 +111,7 @@ public class TrainingRESTfulClient implements TrainingInterface{
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
-    public void remove(String id) throws ClientErrorException {
+    public void remove(Integer id) throws ClientErrorException {
         webTarget.path(java.text.MessageFormat.format("deleteTraining/{0}", new Object[]{id})).request().delete();
     }
 

@@ -9,6 +9,8 @@ package grupo3.reto2.model;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 
 /**
@@ -16,6 +18,7 @@ import java.util.Set;
  * @author Jessica
  */
 
+@XmlRootElement (name= "entrenamiento")
 public class Entrenamiento implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -69,6 +72,7 @@ public class Entrenamiento implements Serializable {
         this.objetivo = objetivo;
     }
 
+    @XmlElement (name= "objetivo")
     public Objetivo getObjetivo() {
         return objetivo;
     }
@@ -86,6 +90,7 @@ public class Entrenamiento implements Serializable {
         this.descripcion = descripcion;
     }
 
+    @XmlElement (name= "descripcion")
     public String getDescripcion() {
         return descripcion;
     }
@@ -94,6 +99,7 @@ public class Entrenamiento implements Serializable {
         this.duracion = duracion;
     }
 
+    @XmlElement (name= "duracion")
     public Integer getDuracion() {
         return duracion;
     }
@@ -102,6 +108,7 @@ public class Entrenamiento implements Serializable {
         this.fechaPeriod = fechaPeriod;
     }
 
+    @XmlElement (name= "fechaPeriod")
     public Date getFechaPeriod() {
         return fechaPeriod;
     }
@@ -110,6 +117,7 @@ public class Entrenamiento implements Serializable {
         this.intensidad = intensidad;
     }
 
+    @XmlElement (name= "intensidad")
     public Integer getIntensidad() {
         return intensidad;
     }
@@ -118,6 +126,7 @@ public class Entrenamiento implements Serializable {
         this.repeticion = repeticion;
     }
 
+    @XmlElement (name= "repeticion")
     public Integer getRepeticion() {
         return repeticion;
     }

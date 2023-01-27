@@ -1,11 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package grupo3.reto2.model;
 
-import grupo3.reto2.model.SignIn;
 import java.io.Serializable;
 import java.util.Set;
 
@@ -15,12 +10,21 @@ import java.util.Set;
  * @author grupo3c
  */
 
+
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
-   
+    
     private Integer idUser;
+    private String login;
+    private String nombre;
+    private String email;
+    private String passwd;
+    private String confPasswd;
+    
+    
+    private UserPrivilege userPrivilege;
     
     
     public Integer getId() {
@@ -35,31 +39,27 @@ public class User implements Serializable {
         super();
     }
     
-    private String nomUser;
-    private String nombre;
-    private String email;
-    private String passwd;
-    private String confPasswd;
-
-    private Set<SignIn> listaSignIn;
     
-    
-    public void setListaSignIn(Set<SignIn> listaSignIn) {
-        this.listaSignIn = listaSignIn;
+
+    public String getLogin() {
+        return login;
     }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public UserPrivilege getPrivilege() {
+        return userPrivilege;
+    }
+
+    public void setPrivilege(UserPrivilege privilege) {
+        this.userPrivilege = privilege;
+    }
+
+
 
     
-    public Set<SignIn> getListaSignIn() {
-        return listaSignIn;
-    }
-
-    public void setNomUser(String nomUser) {
-        this.nomUser = nomUser;
-    }
-
-    public String getNomUser() {
-        return nomUser;
-    }
 
     public void setNombre(String nombre) {
         this.nombre = nombre;

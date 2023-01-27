@@ -32,7 +32,7 @@ public interface TrainingInterface {
     public void edit_JSON(Object requestEntity) throws ClientErrorException ;
     
 
-    public <T> T findById_XML(Class<T> responseType, String idEntrenamiento) throws ClientErrorException ;
+    public <T> T findById_XML(GenericType<T> responseType, String idEntrenamiento) throws ClientErrorException ;
 
     public <T> T findById_JSON(Class<T> responseType, String idEntrenamiento) throws ClientErrorException ;
 
@@ -52,7 +52,7 @@ public interface TrainingInterface {
 
     public <T> T findAll_JSON(GenericType<T> responseType) throws ClientErrorException;
 
-    public void remove(String id) throws ClientErrorException;
+    public void remove(Integer id) throws ClientErrorException;
 
    
 }

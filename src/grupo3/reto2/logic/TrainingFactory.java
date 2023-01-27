@@ -7,9 +7,15 @@ package grupo3.reto2.logic;
 
 /**
  *
- * @author 2dam
+ * @author Jessica
  */
 public class TrainingFactory {
+    
+   public TrainingInterface getFactory() {
+       TrainingInterface tInter;
+       tInter = new TrainingRESTfulClient();
+       return tInter;
+   } 
    
   
 

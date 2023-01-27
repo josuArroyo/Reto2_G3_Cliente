@@ -5,9 +5,7 @@
  */
 package grupo3.reto2.model;
 
-import grupo3.reto2.model.Entrenamiento;
 import java.util.Set;
-
 
 /**
  *
@@ -27,25 +25,25 @@ public class Admin extends User{
     /**
      * @associates <{uml.Evento}>
      */
-    
+   
     private Set<Evento> listaEvento;
 
     /**
      * @associates <{uml.Lugar}>
      */
-  
+    
     private Set<Lugar> listaLugar;
 
     /**
      * @associates <{uml.Entrenamiento}>
      */
-    
+   
     private Set<Entrenamiento> listaEntrenamiento;
 
     /**
      * @associates <{uml.Objetivo}>
      */
-    
+   
     private Set<Objetivo> listaObjetivo;
 
 
