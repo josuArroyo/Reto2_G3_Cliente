@@ -5,19 +5,24 @@
  */
 package grupo3.reto2.model;
 
-import grupo3.reto2.model.Evento;
-import grupo3.reto2.model.Admin;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 import javax.xml.bind.annotation.XmlElement;
+
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author josuA
+ * @author 2dam,josuA
  */
-@XmlRootElement
+
+
+
+//comienzo de la clase
+@XmlRootElement(name="lugar")
 public class Lugar implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -25,15 +30,16 @@ public class Lugar implements Serializable {
    
     private Integer idLugar;
 
-    
+   
     private String nombre;
 
-    
+   
     private String descripcion;
 
+   
     private String tipoLugar;
 
-    
+
     private Date tiempo;
 
     /**
@@ -49,6 +55,7 @@ public class Lugar implements Serializable {
         this.listaEvento = listaEvento;
     }
 
+    @XmlTransient
     public Set<Evento> getListaEvento() {
         return listaEvento;
     }

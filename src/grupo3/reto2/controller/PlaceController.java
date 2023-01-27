@@ -112,11 +112,12 @@ public class PlaceController {
     private TableColumn tblcTipoLugar;
 
     Integer index;
+    Lugar lugar = new Lugar();
 
     private PlaceManagerFactory placefact = new PlaceManagerFactory();
 
     private ObservableList<Lugar> placeData;
-     Alert ventanita = new Alert(Alert.AlertType.ERROR);
+    Alert ventanita = new Alert(Alert.AlertType.ERROR);
 
     @FXML
     protected static final Logger LOGGER = Logger.getLogger("/controller/PlaceController");
@@ -167,11 +168,11 @@ public class PlaceController {
         btnCrear.setOnAction(this::handleCrearButtonAction);
         btnInforme.setOnAction(this::handleInformeButtonAction);
         btnEliminar.setOnAction(this::handleEliminarButtonAction);
+        btnModificar.setOnAction(this::handleModificarButtonAction);
         tblvTabla.getSelectionModel().selectedItemProperty().addListener(this::handleUsersTableSelectionChanged);
-        
+
         //cargar combobox
-        
-        cbxTipoLugar.getItems().addAll("privado" , "publico");
+        cbxTipoLugar.getItems().addAll("privado", "publico");
 
         try {
             tblcNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
@@ -221,7 +222,6 @@ public class PlaceController {
             txtNombreLugar.setText(lugar.getNombre());
             txtDescLugar.setText(lugar.getDescripcion());
             cbxTipoLugar.getSelectionModel().select(lugar.getTipoLugar());
-            //pruebas peligrosas
 
         }
 
@@ -229,17 +229,14 @@ public class PlaceController {
 
     @FXML
     private void handleCrearButtonAction(ActionEvent event) {
-        
-        Lugar lugar = new Lugar();
+
         lugar.setNombre(txtNombreLugar.getText());
         lugar.setDescripcion(txtDescLugar.getText());
         lugar.setTipoLugar(cbxTipoLugar.getSelectionModel().getSelectedItem().toString());
         //lugar.setTiempo(dteTiempoReservado.getValue().to);
-        
 
         if (this.txtNombreLugar.getText().isEmpty() || this.txtDescLugar.getText().isEmpty() || this.cbxTipoLugar.getSelectionModel().getSelectedItem().toString().isEmpty() || dteTiempoReservado.getValue() == null) {
 
-           
             ventanita.setHeaderText(null);
             ventanita.setTitle("Error");
             ventanita.setContentText("nos has introducido datos en uno de los campos");
@@ -251,18 +248,16 @@ public class PlaceController {
             }
 
         }
-        if (this.txtNombreLugar.getText().length() > 10 || this.txtDescLugar.getText().length() > 10) {
-            
+        if (this.txtNombreLugar.getText().length() > 10 || this.txtDescLugar.getText().length() > 100) {
+
             ventanita.setHeaderText(null);
             ventanita.setTitle("Error");
             ventanita.setContentText("no has introducido el numero de carracteres correcto");
             Optional<ButtonType> action = ventanita.showAndWait();
         }
-        
-         placefact.getFactory().create_XML(lugar);
-         tblvTabla.refresh();
-        
-        
+
+        placefact.getFactory().create_XML(lugar);
+        tblvTabla.getItems().add(lugar);
 
     }
 
@@ -289,16 +284,46 @@ public class PlaceController {
     }
 
     @FXML
-    private void handleEliminarButtonAction(ActionEvent event ){
-        
+    private void handleEliminarButtonAction(ActionEvent event) {
+
         Lugar selectedLugar = (Lugar) tblvTabla.getSelectionModel().getSelectedItem();
         placefact.getFactory().remove(selectedLugar.getIdLugar().toString());
         tblvTabla.getItems().remove(selectedLugar);
-        
-        
+
     }
-    
-    
- 
+
+    @FXML
+    private void handleModificarButtonAction(ActionEvent event) {
+
+        lugar.setNombre(txtNombreLugar.getText());
+        lugar.setDescripcion(txtDescLugar.getText());
+        lugar.setTipoLugar(cbxTipoLugar.getSelectionModel().getSelectedItem().toString());
+        //lugar.setTiempo(dteTiempoReservado.getValue().to);
+
+        if (this.txtNombreLugar.getText().isEmpty() || this.txtDescLugar.getText().isEmpty() || this.cbxTipoLugar.getSelectionModel().getSelectedItem().toString().isEmpty() || dteTiempoReservado.getValue() == null) {
+
+            ventanita.setHeaderText(null);
+            ventanita.setTitle("Error");
+            ventanita.setContentText("nos has introducido datos en uno de los campos");
+            Optional<ButtonType> action = ventanita.showAndWait();
+            if (action.get() == ButtonType.OK) {
+                txtNombreLugar.setText("");
+                txtDescLugar.setText("");
+                cbxTipoLugar.setItems(placeData);
+            }
+
+        }
+        if (this.txtNombreLugar.getText().length() > 10 || this.txtDescLugar.getText().length() > 100) {
+
+            ventanita.setHeaderText(null);
+            ventanita.setTitle("Error");
+            ventanita.setContentText("no has introducido el numero de carracteres correcto");
+            Optional<ButtonType> action = ventanita.showAndWait();
+        }
+
+        placefact.getFactory().edit_XML(lugar);
+        tblvTabla.getItems();
+
+    }
 
 }
