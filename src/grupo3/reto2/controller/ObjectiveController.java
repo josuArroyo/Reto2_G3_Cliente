@@ -130,6 +130,8 @@ public class ObjectiveController{
     @FXML
     private ComboBox cbxFiltr;
     
+    private int posicionObjetivo;
+    
     
     private ObservableList<Objetivo> objectiveData;
      
@@ -189,9 +191,11 @@ public class ObjectiveController{
                 ventanita.close();
             }
         }else{
-              Objetivo selectedObjective = TableObjetivo.getSelectionModel().getSelectedItem();
+              //Objetivo selectedObjective = TableObjetivo.getSelectionModel().getSelectedItem();
+              
+              objetivo.setIdObjetivo(TableObjetivo.getSelectionModel().getSelectedItem().getIdObjetivo());
               objetivo.setDescriParam(txtDescriParam.getText());
-              objetivo.setDescripcion(txtDescriParam.getText());
+              objetivo.setDescripcion(txtDescriObjeti.getText());
               objetivo.setValorParam(txtValorParam.getText());
               factoryObj.getFactory().edit_XML(objetivo);
               objectiveData = FXCollections.observableArrayList(cargarTodo());  
@@ -228,6 +232,7 @@ public class ObjectiveController{
         
         listObjetivo = FXCollections.observableArrayList(todosObjetivos);
         TableObjetivo.setItems(listObjetivo);
+        TableObjetivo.refresh();
         return listObjetivo;
     }
     
@@ -323,6 +328,7 @@ public class ObjectiveController{
         btnCrear.setOnAction(this::handleCreateButtonAction);
         btnModifi.setOnAction(this::handleModifyButtonAction);
         btnDelete.setOnAction(this::handleDeleteButtonAction);
+        
         cbxFiltr.setOnAction(new EventHandler<ActionEvent>(){
             public void handle(ActionEvent event) {
                 if(null == cbxFiltr.getValue().toString()){
