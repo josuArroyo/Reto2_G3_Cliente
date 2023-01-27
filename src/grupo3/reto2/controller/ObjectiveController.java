@@ -5,8 +5,11 @@
  */
 package grupo3.reto2.controller;
 
-import grupo3.reto2.logica.ObjectiveManagerFactory;
+import grupo3.reto2.logic.ObjectiveManagerFactory;
+import grupo3.reto2.model.Admin;
 import grupo3.reto2.model.Objetivo;
+import grupo3.reto2.model.User;
+import grupo3.reto2.model.UserPrivilege;
 import java.net.URL;
 import java.util.List;
 import java.util.Optional;
@@ -53,6 +56,10 @@ public class ObjectiveController{
     private static final Logger LOGGER = Logger.getLogger(ObjectiveController.class.getName());
     
     private final ObjectiveManagerFactory factoryObj = new ObjectiveManagerFactory();
+    
+    private Objetivo objetivo = new Objetivo();
+    
+    private User user = new User();
     
     @FXML
     private Button btnCrear;
@@ -124,7 +131,6 @@ public class ObjectiveController{
     private ComboBox cbxFiltr;
     
     
-    
     private ObservableList<Objetivo> objectiveData;
      
     @FXML
@@ -143,7 +149,7 @@ public class ObjectiveController{
     
     @FXML
     private void handleCreateButtonAction(ActionEvent event){
-        if(txtDescriObjeti.getText().length() > 10 || txtValorParam.getText().length() > 3){
+        if(txtDescriObjeti.getText().length() > 100 || txtValorParam.getText().length() > 20){
             Alert ventanita = new Alert(Alert.AlertType.ERROR);
             ventanita.setHeaderText(null);
             ventanita.setTitle("Error");
@@ -156,12 +162,20 @@ public class ObjectiveController{
                 txtValorParam.setText("");
                 ventanita.close();
             }
+        }else{
+            objetivo.setDescriParam(txtDescriParam.getText());
+            objetivo.setDescripcion(txtDescriParam.getText());
+            objetivo.setValorParam(txtValorParam.getText());
+            factoryObj.getFactory().create_XML(objetivo);
+            objectiveData = FXCollections.observableArrayList(cargarTodo());
+            
         }
+        
     }
     
     @FXML
     private void handleModifyButtonAction(ActionEvent event){
-        if(txtDescriObjeti.getText().length() > 10 || txtValorParam.getText().length() > 3){
+        if(txtDescriObjeti.getText().length() > 100 || txtValorParam.getText().length() > 20){
             Alert ventanita = new Alert(Alert.AlertType.ERROR);
             ventanita.setHeaderText(null);
             ventanita.setTitle("Error");
@@ -174,12 +188,19 @@ public class ObjectiveController{
                 txtValorParam.setText("");
                 ventanita.close();
             }
+        }else{
+              Objetivo selectedObjective = TableObjetivo.getSelectionModel().getSelectedItem();
+              objetivo.setDescriParam(txtDescriParam.getText());
+              objetivo.setDescripcion(txtDescriParam.getText());
+              objetivo.setValorParam(txtValorParam.getText());
+              factoryObj.getFactory().edit_XML(objetivo);
+              objectiveData = FXCollections.observableArrayList(cargarTodo());  
         }
     }
     
     @FXML
     private void handleDeleteButtonAction(ActionEvent event){
-        if(txtDescriObjeti.getText().length() > 10 || txtValorParam.getText().length() > 3){
+        if(txtDescriObjeti.getText().length() > 100 || txtValorParam.getText().length() > 20){
             Alert ventanita = new Alert(Alert.AlertType.ERROR);
             ventanita.setHeaderText(null);
             ventanita.setTitle("Error");
@@ -192,12 +213,27 @@ public class ObjectiveController{
                 txtValorParam.setText("");
                 ventanita.close();
             }
-        }
+        }else{   
+                Objetivo selectedObjective = TableObjetivo.getSelectionModel().getSelectedItem();
+                factoryObj.getFactory().remove(selectedObjective.getIdObjetivo().toString());
+                objectiveData = FXCollections.observableArrayList(cargarTodo());
+            }
+    }
+    
+    @FXML
+    private ObservableList<Objetivo> cargarTodo(){
+        ObservableList<Objetivo> listObjetivo;
+        List<Objetivo> todosObjetivos;
+        todosObjetivos = factoryObj.getFactory().findAll_XML(new GenericType<List<Objetivo>>(){});
+        
+        listObjetivo = FXCollections.observableArrayList(todosObjetivos);
+        TableObjetivo.setItems(listObjetivo);
+        return listObjetivo;
     }
     
     @FXML
     private void cambioTexto(ObservableValue observable, Object oldValue, Object newValue){
-        if(txtClaveObjet.getText().trim().isEmpty() || txtDescriObjeti.getText().trim().isEmpty() ||  txtDescriParam.getText().trim().isEmpty() || txtValorParam.getText().trim().isEmpty()){
+        if(txtDescriObjeti.getText().trim().isEmpty() ||  txtDescriParam.getText().trim().isEmpty() || txtValorParam.getText().trim().isEmpty()){
             btnCrear.setDisable(true);
             btnDelete.setDisable(true);
             btnModifi.setDisable(true);
@@ -212,7 +248,7 @@ public class ObjectiveController{
     private void handleUsersTableSelectionChanged(ObservableValue observable, Object oldValue, Object newValue){
         if (newValue != null) {
             Objetivo objetiv = (Objetivo) newValue;
-            txtClaveObjet.setText(objetiv.getIdObjetivo().toString());
+            //txtClaveObjet.setText(objetiv.getIdObjetivo().toString());
             txtDescriObjeti.setText(objetiv.getDescripcion());
             txtDescriParam.setText(objetiv.getDescriParam());
             txtValorParam.setText(objetiv.getValorParam());
@@ -327,6 +363,7 @@ public class ObjectiveController{
         //Cargamos los datos en la tabla
             objectiveData = FXCollections.observableArrayList(factoryObj.getFactory().findAll_XML(new GenericType<List<Objetivo>>(){}));
             TableObjetivo.setItems(objectiveData);
+           
             stage.show();
          }catch(Exception e){
             LOGGER.info("Error a la hora de cargar los datos");

@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Diego
  */
 
-@XmlRootElement
+@XmlRootElement (name="objetivo")
 public class Objetivo implements Serializable {
 
     private static final long serialVersionUID = 1L;
