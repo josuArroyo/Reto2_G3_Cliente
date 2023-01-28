@@ -18,6 +18,7 @@ import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
@@ -73,7 +74,7 @@ public class PlaceController {
     private Label label;
 
     @FXML
-    private TableView tblvTabla;
+    private TableView<Lugar> tblvTabla;
 
     @FXML
     private DatePicker dteTiempoReservado;
@@ -97,7 +98,7 @@ public class PlaceController {
     private ComboBox cbxTipoLugar;
 
     @FXML
-    private ComboBox cbxFiltroTipoLugar;
+    private ComboBox<String> cbxFiltroTipoLugar;
 
     @FXML
     private TableColumn tblcNombre;
@@ -113,10 +114,11 @@ public class PlaceController {
 
     Integer index;
     Lugar lugar = new Lugar();
-
+    int posicion;
     private PlaceManagerFactory placefact = new PlaceManagerFactory();
 
     private ObservableList<Lugar> placeData;
+    private ObservableList patata;
     Alert ventanita = new Alert(Alert.AlertType.ERROR);
 
     @FXML
@@ -170,30 +172,54 @@ public class PlaceController {
         btnEliminar.setOnAction(this::handleEliminarButtonAction);
         btnModificar.setOnAction(this::handleModificarButtonAction);
         tblvTabla.getSelectionModel().selectedItemProperty().addListener(this::handleUsersTableSelectionChanged);
-
+        cbxFiltroTipoLugar.valueProperty().addListener(this::handleFiltradoTipoLugar);
         //cargar combobox
         cbxTipoLugar.getItems().addAll("privado", "publico");
+        cbxFiltroTipoLugar.getItems().addAll("privado", "publico", "ninguno");
 
-        try {
-            tblcNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-            tblcDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
-            tblcTiempo.setCellValueFactory(new PropertyValueFactory<>("tiempo"));
-            tblcTipoLugar.setCellValueFactory(new PropertyValueFactory<>("tipoLugar"));
+        tblcNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        tblcDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
+        tblcTiempo.setCellValueFactory(new PropertyValueFactory<>("tiempo"));
+        tblcTipoLugar.setCellValueFactory(new PropertyValueFactory<>("tipoLugar"));
 
-            placeData = FXCollections.observableArrayList(placefact.getFactory().findAll_XML(new GenericType<List<Lugar>>() {
-            }));
-            //Set table model.
-            tblvTabla.setItems(placeData);
-        } catch (Exception e) {
+        placeData = FXCollections.observableArrayList(placefact.getFactory().findAll_XML(new GenericType<List<Lugar>>() {
+        }));
+        //Set table model.
+        tblvTabla.setItems(placeData);
 
-        }
-
+        ///////
         stage.show();
 
     }
 
     public void setStage(Stage stage) {
         this.stage = stage;
+    }
+
+    @FXML
+    private ObservableList<Lugar> cargarTodo() {
+        ObservableList<Lugar> listaLugar;
+        List<Lugar> todosLugares;
+        todosLugares = placefact.getFactory().findAll_XML(new GenericType<List<Lugar>>() {
+        });
+
+        listaLugar = FXCollections.observableArrayList(todosLugares);
+        tblvTabla.setItems(listaLugar);
+        tblvTabla.refresh();
+        return listaLugar;
+    }
+
+    @FXML
+    private ObservableList<Lugar> cargarFiltro() {
+        ObservableList<Lugar> listaLugar;
+        List<Lugar> todosLugares;
+        todosLugares = placefact.getFactory().findByType_XML(new GenericType<List<Lugar>>() {
+        }, cbxFiltroTipoLugar.getSelectionModel().getSelectedItem());
+
+        listaLugar = FXCollections.observableArrayList(todosLugares);
+        tblvTabla.setItems(listaLugar);
+        tblvTabla.refresh();
+        return listaLugar;
     }
 
     @FXML
@@ -230,11 +256,6 @@ public class PlaceController {
     @FXML
     private void handleCrearButtonAction(ActionEvent event) {
 
-        lugar.setNombre(txtNombreLugar.getText());
-        lugar.setDescripcion(txtDescLugar.getText());
-        lugar.setTipoLugar(cbxTipoLugar.getSelectionModel().getSelectedItem().toString());
-        //lugar.setTiempo(dteTiempoReservado.getValue().to);
-
         if (this.txtNombreLugar.getText().isEmpty() || this.txtDescLugar.getText().isEmpty() || this.cbxTipoLugar.getSelectionModel().getSelectedItem().toString().isEmpty() || dteTiempoReservado.getValue() == null) {
 
             ventanita.setHeaderText(null);
@@ -256,8 +277,12 @@ public class PlaceController {
             Optional<ButtonType> action = ventanita.showAndWait();
         }
 
+        lugar.setNombre(txtNombreLugar.getText());
+        lugar.setDescripcion(txtDescLugar.getText());
+        lugar.setTipoLugar(cbxTipoLugar.getSelectionModel().getSelectedItem().toString());
+        //lugar.setTiempo(dteTiempoReservado.getValue().to);
         placefact.getFactory().create_XML(lugar);
-        tblvTabla.getItems().add(lugar);
+        placeData = FXCollections.observableArrayList(cargarTodo());
 
     }
 
@@ -288,13 +313,14 @@ public class PlaceController {
 
         Lugar selectedLugar = (Lugar) tblvTabla.getSelectionModel().getSelectedItem();
         placefact.getFactory().remove(selectedLugar.getIdLugar().toString());
-        tblvTabla.getItems().remove(selectedLugar);
+        placeData = FXCollections.observableArrayList(cargarTodo());
 
     }
 
     @FXML
     private void handleModificarButtonAction(ActionEvent event) {
 
+        lugar.setIdLugar(tblvTabla.getSelectionModel().getSelectedItem().getIdLugar());
         lugar.setNombre(txtNombreLugar.getText());
         lugar.setDescripcion(txtDescLugar.getText());
         lugar.setTipoLugar(cbxTipoLugar.getSelectionModel().getSelectedItem().toString());
@@ -322,7 +348,23 @@ public class PlaceController {
         }
 
         placefact.getFactory().edit_XML(lugar);
-        tblvTabla.getItems();
+        placeData = FXCollections.observableArrayList(cargarTodo());
+
+    }
+
+    @FXML
+    private void handleFiltradoTipoLugar(ObservableValue observable, Object oldValue, Object newValue) {
+
+        switch (cbxFiltroTipoLugar.getValue()) {
+            case ("publico"):
+                cargarFiltro();
+                break;
+            case ("privado"):
+                cargarFiltro();
+                break;
+            case ("ninguno"):
+                cargarTodo();
+        }
 
     }
 

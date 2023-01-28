@@ -80,7 +80,7 @@ public class PlaceRESTfulClient implements PlaceManager{
         webTarget.path(java.text.MessageFormat.format("deletePlace/{0}", new Object[]{id})).request().delete();
     }
 
-    public <T> T findByType_XML(Class<T> responseType, String tipoLugar) throws ClientErrorException {
+    public <T> T findByType_XML(GenericType<T> responseType, String tipoLugar) throws ClientErrorException {
         WebTarget resource = webTarget;
         resource = resource.path(java.text.MessageFormat.format("findByType/{0}", new Object[]{tipoLugar}));
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_XML).get(responseType);

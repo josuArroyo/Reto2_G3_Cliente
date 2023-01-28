@@ -33,7 +33,7 @@ public interface PlaceManager {
 
     public void remove(String id) throws ClientErrorException;
 
-    public <T> T findByType_XML(Class<T> responseType, String tipoLugar) throws ClientErrorException;
+    public <T> T findByType_XML(GenericType<T> responseType, String tipoLugar) throws ClientErrorException;
 
     public <T> T findByType_JSON(Class<T> responseType, String tipoLugar) throws ClientErrorException;
 
