@@ -6,6 +6,7 @@
 package grupo3.reto2.controller;
 
 import grupo3.reto2.entities.Evento;
+import grupo3.reto2.entities.Lugar;
 import grupo3.reto2.entities.User;
 import grupo3.reto2.logic.EventManagerFactory;
 import java.text.ParseException;
@@ -31,17 +32,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import javax.ws.rs.client.Client;
 import javax.ws.rs.core.GenericType;
 
 /**
@@ -51,6 +49,11 @@ import javax.ws.rs.core.GenericType;
 public class EventController extends GenericController {
 
     private EventManagerFactory emf = new EventManagerFactory();
+
+    private Evento e = new Evento();
+
+    private User user = new User();
+
     @FXML
     private Button btnCrear;
 
@@ -68,7 +71,7 @@ public class EventController extends GenericController {
 
     @FXML
     private Button btnSubscribir;
-    
+
     @FXML
     private Button btnBuscar;
 
@@ -86,7 +89,7 @@ public class EventController extends GenericController {
 
     @FXML
     private TextField tfIdLugar;
-    
+
     @FXML
     private TextField tfFiltro;
 
@@ -94,7 +97,7 @@ public class EventController extends GenericController {
     private ComboBox cbFiltro;
 
     @FXML
-    private TableView tvTablaEvento;
+    private TableView<Evento> tvTablaEvento;
 
     @FXML
     private TableColumn tcIdEvento;
@@ -128,20 +131,20 @@ public class EventController extends GenericController {
         stage.setOnShowing(this::vistaVentana);
 
         tfDescripcion.textProperty().addListener(this::cambioDeTexto);
-        //btnModificar.setOnAction(this::modificar);
+        btnModificar.setOnAction(this::modificar);
         dpFecha.promptTextProperty().addListener(this::cambioDeTexto);
         tfTipoEvento.textProperty().addListener(this::cambioDeTexto);
         tfPremio.textProperty().addListener(this::cambioDeTexto);
         tfIdLugar.textProperty().addListener(this::cambioDeTexto);
-           
+
         btnCerrar.setOnAction(this::salir);
-/*
-        btnSubscribir.setOnAction(this::subscribirse);
         btnCrear.setOnAction(this::crear);
+        btnBuscar.setOnAction(this::buscar);
+        /*
+        btnSubscribir.setOnAction(this::subscribirse);
+         */
         btnBorrar.setOnAction(this::borrar);
         btnInforme.setOnAction(this::informe);
-*/
-        
 
         tvTablaEvento.getSelectionModel().selectedItemProperty().addListener(this::handleTableSelection);
         tcIdEvento.setCellValueFactory(new PropertyValueFactory<>("idEvento"));
@@ -166,35 +169,24 @@ public class EventController extends GenericController {
     @FXML
     private void vistaVentana(WindowEvent event) {
         LOGGER.info("Iniciando método vista ventana");
-        User u = new User();
-        if (u.getPrivilege() == u.getPrivilege().CLIENT) {
-            
-            tfDescripcion.setDisable(true);
-            tfIdLugar.setDisable(true);
-            tfPremio.setDisable(true);
-            tfTipoEvento.setDisable(true);
-            dpFecha.setDisable(true);
-            btnCrear.setDisable(true);
-            btnModificar.setDisable(true);
-            btnBorrar.setDisable(true);
-            btnSubscribir.setDisable(true);
-        } else if (u.getPrivilege() == u.getPrivilege().ADMIN) {
-            btnCrear.setDisable(true);
-            btnModificar.setDisable(true);
-            btnBorrar.setDisable(true);
-            btnSubscribir.setDisable(true);
-        }
+        btnCrear.setDisable(true);
+        btnModificar.setDisable(true);
+        btnBorrar.setDisable(true);
+        btnSubscribir.setDisable(true);
+
         tfDescripcion.setPromptText("De que trata el evento...");
         dpFecha.setValue(LocalDate.of(2023, Month.JANUARY, 1));
         tfTipoEvento.setPromptText("Que de evento va a ser...");
         tfPremio.setPromptText("Cuál es el premio al ganador del evento...");
         tfIdLugar.setPromptText("Id del lugar en el que se realizará el evento...");
+        cbFiltro.getItems().addAll(
+                "Por tipo de evento",
+                "Por id de evento"
+        );
     }
 
     @FXML
     private void cambioDeTexto(ObservableValue observable, String oldValue, String newValue) {
-        LOGGER.info("Iniciando método cambio de texto");
-
         String fecha = dpFecha.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         if (tfDescripcion.getText().trim().isEmpty() || tfTipoEvento.getText().trim().isEmpty() || fecha.isEmpty() || tfPremio.getText().trim().isEmpty() || tfIdLugar.getText().trim().isEmpty()) {
             btnCrear.setDisable(true);
@@ -219,7 +211,7 @@ public class EventController extends GenericController {
                 tfPremio.setText(e.getPremio());
                 tfIdLugar.setText(e.getLugar().toString());
                 String fecha = dpFecha.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-                Date date = new SimpleDateFormat("dd/MM/yyyy").parse(fecha);
+                Date date = new SimpleDateFormat("yyyy-MM-dd").parse(fecha);
                 date = e.getFecha();
                 //pruebas peligrosas
             } catch (ParseException ex) {
@@ -230,36 +222,37 @@ public class EventController extends GenericController {
 
     }
 
-    /*   try {
-  String fecha;
-                      SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            fecha = sdf.format(sdf.parse(this.dpFecha.getValue().toString()));
-            if (tfDescripcion.getText().trim().isEmpty() || tfTipoEvento.getText().trim().isEmpty() || fecha.isEmpty() || tfPremio.getText().trim().isEmpty() || tfIdLugar.getText().trim().isEmpty()) {
-                btnCrear.setDisable(true);
-                btnModificar.setDisable(true);
-                btnBorrar.setDisable(true);
-            } else {
-                btnCrear.setDisable(false);
-                btnModificar.setDisable(false);
-                btnBorrar.setDisable(false);
-
-            }
-        } catch (ParseException ex) {
-            Logger.getLogger(EventController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
-
-    @FXML
-    private void modificar(ActionEvent event) {
-
-    }
-    
+    /*   
     @FXML
     private void subscribirse(ActionEvent event) {
 
     }
      */
+    @FXML
+    private void modificar(ActionEvent event) {
+        try {
+            Lugar l = new Lugar();
+            int lug = Integer.parseInt(tfIdLugar.getText());
+            l.setIdLugar(lug);
+
+            String fecha = dpFecha.getValue().toString();
+            Date fech;
+            fech = new SimpleDateFormat("yyyy-MM-dd").parse(fecha);
+
+            e.setIdEvento(tvTablaEvento.getSelectionModel().getSelectedItem().getIdEvento());
+            e.setDescripcion(tfDescripcion.getText());
+            e.setFecha(fech);
+            e.setLugar(l);
+            e.setPremio(tfPremio.getText());
+            e.setTipoEvento(tfTipoEvento.getText());
+
+            emf.getFactory().modifyEvent_XML(e);
+            eventsData = FXCollections.observableArrayList(cargarDatos());
+        } catch (ParseException ex) {
+            Logger.getLogger(EventController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     @FXML
     private void salir(ActionEvent event) {
         Alert ventanaConfirmacion = new Alert(Alert.AlertType.CONFIRMATION);
@@ -267,35 +260,94 @@ public class EventController extends GenericController {
         ventanaConfirmacion.setTitle("Advertencia");
         ventanaConfirmacion.setContentText("¿Deseas salir?");
         Optional<ButtonType> accion = ventanaConfirmacion.showAndWait();
-        
+
         if (accion.get() == ButtonType.OK) {
             Platform.exit();
         } else {
             ventanaConfirmacion.close();
         }
     }
-/*
+
     private void crear(ActionEvent event) {
-        if(){
-            Alert ventanita = new Alert(Alert.AlertType.ERROR);
-            ventanita.setHeaderText(null);
-            ventanita.setTitle("Error");
-            ventanita.setContentText("No se pueden realizar dos evento en un mismo lugar en un mismo día"); 
-            Optional<ButtonType> action = ventanita.showAndWait();           
-            
-            if (action.get() == ButtonType.OK) {
-                tfDescripcion.setText("");
-                tfIdLugar.setText("");
-                tfPremio.setText("");
-                tfTipoEvento.setText("");
-                dpFecha.setValue(LocalDate.of(2023, Month.JANUARY, 1));
-                ventanita.close();
-            }
+
+        try {
+            Lugar l = new Lugar();
+            int lug = Integer.parseInt(tfIdLugar.getText());
+            l.setIdLugar(lug);
+
+            String fecha = dpFecha.getValue().toString();
+            Date fech;
+            fech = new SimpleDateFormat("yyyy-MM-dd").parse(fecha);
+            e.setDescripcion(tfDescripcion.getText());
+            e.setFecha(fech);
+            e.setLugar(l);
+            e.setPremio(tfPremio.getText());
+            e.setTipoEvento(tfTipoEvento.getText());
+
+            emf.getFactory().createEvent_XML(e);
+            eventsData = FXCollections.observableArrayList(cargarDatos());
+        } catch (ParseException ex) {
+            Logger.getLogger(EventController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-*/
-    private void borrar(ActionEvent event) {
 
+    @FXML
+    private ObservableList<Evento> cargarDatos() {
+        ObservableList<Evento> listEvento;
+        List<Evento> todosEventos;
+
+        todosEventos = emf.getFactory().viewEvents_XML(new GenericType<List<Evento>>() {});
+        listEvento = FXCollections.observableArrayList(todosEventos);
+        tvTablaEvento.setItems(listEvento);
+        tvTablaEvento.refresh();
+        return listEvento;
+    }
+
+    private void buscar(ActionEvent event) {
+        Object newValue = new Object();
+        switch (cbFiltro.getValue().toString()) {
+            case ("Por tipo de evento") :
+                emf.getFactory().findEventByType_XML(new GenericType<List<Evento>>() {}, tfFiltro.getText());
+                eventsData = FXCollections.observableArrayList(cargarFiltroTipoEvento());
+                break;
+            
+            case ("Por id de evento") :
+                emf.getFactory().findEventByEventId_XML(new GenericType<List<Evento>>() {}, tfFiltro.getText());
+                eventsData = FXCollections.observableArrayList(cargarFiltroIdEvento());
+                break;
+        }
+    }
+
+    @FXML
+    private ObservableList<Evento> cargarFiltroIdEvento() {
+        ObservableList<Evento> listEvento;
+        List<Evento> todosEventos;
+
+        todosEventos = emf.getFactory().findEventByEventId_XML(new GenericType<List<Evento>>() {
+        }, tfFiltro.getText());
+        listEvento = FXCollections.observableArrayList(todosEventos);
+        tvTablaEvento.setItems(listEvento);
+        tvTablaEvento.refresh();
+        return listEvento;
+    }
+
+    @FXML
+    private ObservableList<Evento> cargarFiltroTipoEvento() {
+        ObservableList<Evento> listEvento;
+        List<Evento> todosEventos;
+
+        todosEventos = emf.getFactory().findEventByType_XML(new GenericType<List<Evento>>() {
+        }, tfFiltro.getText());
+        listEvento = FXCollections.observableArrayList(todosEventos);
+        tvTablaEvento.setItems(listEvento);
+        tvTablaEvento.refresh();
+        return listEvento;
+    }
+
+    private void borrar(ActionEvent event) {
+        Evento es = tvTablaEvento.getSelectionModel().getSelectedItem();
+        emf.getFactory().deleteEvent(es.getIdEvento().toString());
+        eventsData = FXCollections.observableArrayList(cargarDatos());
     }
 
     private void informe(ActionEvent event) {
