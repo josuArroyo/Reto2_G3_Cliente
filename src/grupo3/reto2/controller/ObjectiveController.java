@@ -130,7 +130,12 @@ public class ObjectiveController{
     @FXML
     private ComboBox cbxFiltr;
     
-    private int posicionObjetivo;
+    
+    private String filtroParam;
+    
+    private String findID;
+    
+    private Integer ID;
     
     
     private ObservableList<Objetivo> objectiveData;
@@ -221,9 +226,38 @@ public class ObjectiveController{
                 Objetivo selectedObjective = TableObjetivo.getSelectionModel().getSelectedItem();
                 factoryObj.getFactory().remove(selectedObjective.getIdObjetivo().toString());
                 objectiveData = FXCollections.observableArrayList(cargarTodo());
+                
             }
     }
     
+    @FXML
+    private void handleSearchButton(ActionEvent event){
+        Object newValue = new Object();
+        if(txtFiltrarParam.getText().length() > 100){
+            Alert ventanita = new Alert(Alert.AlertType.ERROR);
+            ventanita.setHeaderText(null);
+            ventanita.setTitle("Error");
+            ventanita.setContentText("Has introducido carácteres incorrectos"); 
+            Optional<ButtonType> action = ventanita.showAndWait();           
+            if (action.get() == ButtonType.OK) {
+                txtDescriObjeti.setText("");
+                txtClaveObjet.setText("");
+                txtDescriParam.setText("");
+                txtValorParam.setText("");
+                ventanita.close();
+            }
+        }else{
+            switch(cbxFiltr.getValue().toString()){
+                case("Por valor de parámetro") :
+                    cargarFiltro1();
+                break;
+                case("Por clave Objetivo") :
+                    cargarFiltro2();
+                break;
+            }
+        }
+    }
+       
     @FXML
     private ObservableList<Objetivo> cargarTodo(){
         ObservableList<Objetivo> listObjetivo;
@@ -231,6 +265,30 @@ public class ObjectiveController{
         todosObjetivos = factoryObj.getFactory().findAll_XML(new GenericType<List<Objetivo>>(){});
         
         listObjetivo = FXCollections.observableArrayList(todosObjetivos);
+        TableObjetivo.setItems(listObjetivo);
+        TableObjetivo.refresh();
+        return listObjetivo;
+    }
+    
+    @FXML
+    private ObservableList<Objetivo> cargarFiltro1(){
+        ObservableList<Objetivo> listObjetivo;
+        List<Objetivo> FiltradoParam;
+        FiltradoParam = FXCollections.observableArrayList(factoryObj.getFactory().findByValue_XML(new GenericType<List<Objetivo>>(){}, txtFiltrarParam.getText()));
+        
+        listObjetivo = FXCollections.observableArrayList(FiltradoParam);
+        TableObjetivo.setItems(listObjetivo);
+        TableObjetivo.refresh();
+        return listObjetivo;
+    }
+    
+    @FXML
+    private ObservableList<Objetivo> cargarFiltro2(){
+        ObservableList<Objetivo> listObjetivo;
+        List<Objetivo> FiltradoParam;
+        FiltradoParam = FXCollections.observableArrayList(factoryObj.getFactory().find_XML(new GenericType<List<Objetivo>>(){}, txtFiltrarParam.getText()));
+        
+        listObjetivo = FXCollections.observableArrayList(FiltradoParam);
         TableObjetivo.setItems(listObjetivo);
         TableObjetivo.refresh();
         return listObjetivo;
@@ -328,6 +386,7 @@ public class ObjectiveController{
         btnCrear.setOnAction(this::handleCreateButtonAction);
         btnModifi.setOnAction(this::handleModifyButtonAction);
         btnDelete.setOnAction(this::handleDeleteButtonAction);
+        btnFiltrar.setOnAction(this::handleSearchButton);
         
         cbxFiltr.setOnAction(new EventHandler<ActionEvent>(){
             public void handle(ActionEvent event) {
@@ -339,19 +398,21 @@ public class ObjectiveController{
                 txtFiltrarParam.setDisable(false);
                 txtFiltrarParam.setVisible(true);
                 btnFiltrar.setVisible(true);
-                btnFiltrar.setDisable(false);               
+                btnFiltrar.setDisable(false);
+                
                 break;
             case "Por clave Objetivo":
                 txtFiltrarParam.setDisable(false);
                 txtFiltrarParam.setVisible(true);
                 btnFiltrar.setVisible(true);
-                btnFiltrar.setDisable(false);
+                btnFiltrar.setDisable(false);               
                 break;
             default:
                 txtFiltrarParam.setDisable(true);
-                 txtFiltrarParam.setVisible(false);
+                txtFiltrarParam.setVisible(false);
                 btnFiltrar.setVisible(false);
-                btnFiltrar.setDisable(true);              
+                btnFiltrar.setDisable(true);       
+                cargarTodo();
                 break;
         }
             }
