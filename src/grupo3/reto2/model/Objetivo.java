@@ -9,13 +9,14 @@ import grupo3.reto2.model.Admin;
 import grupo3.reto2.model.Entrenamiento;
 import java.io.Serializable;
 import java.util.Set;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author Diego
  */
 
-
+@XmlRootElement (name= "objetivo")
 public class Objetivo implements Serializable {
 
     private static final long serialVersionUID = 1L;

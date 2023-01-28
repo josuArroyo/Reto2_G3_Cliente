@@ -39,10 +39,12 @@ public interface TrainingInterface {
     public <T> T findDuracion_XML(Class<T> responseType, String duracion) throws ClientErrorException;
 
     public <T> T findDuracion_JSON(Class<T> responseType, String duracion) throws ClientErrorException;
+    
 
     public void create_XML(Object requestEntity) throws ClientErrorException ;
     
     public void create_JSON(Object requestEntity) throws ClientErrorException ;
+    
 
     public <T> T findIntensidad_XML(GenericType<T> responseType, String intensidad) throws ClientErrorException;
     
@@ -51,6 +53,7 @@ public interface TrainingInterface {
     public <T> T findAll_XML(GenericType<T> responseType) throws ClientErrorException;
 
     public <T> T findAll_JSON(GenericType<T> responseType) throws ClientErrorException;
+    
 
     public void remove(Integer id) throws ClientErrorException;
 

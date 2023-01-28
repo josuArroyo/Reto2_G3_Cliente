@@ -7,12 +7,15 @@ package grupo3.reto2.controller;
 
 import static grupo3.reto2.controller.TrainingController.LOGGER;
 import grupo3.reto2.logic.TrainingFactory;
-import grupo3.reto2.logic.TrainingInterface;
+import grupo3.reto2.logic.*;
 import grupo3.reto2.logic.TrainingRESTfulClient;
+import grupo3.reto2.logic.ObjectiveRESTfulclient;
 import grupo3.reto2.model.Entrenamiento;
+import grupo3.reto2.model.Objetivo;
 import grupo3.reto2.model.User;
 import grupo3.reto2.model.UserPrivilege;
 import static grupo3.reto2.model.UserPrivilege.ADMIN;
+import javafx.beans.value.ObservableValue;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
@@ -51,7 +54,12 @@ public class TrainingController {
     @FXML
     private Stage stage;
     private TrainingInterface tInter = new TrainingRESTfulClient();
-    Entrenamiento entrena = new Entrenamiento();
+    private ObjectiveManager oInter = new ObjectiveRESTfulclient();
+    Entrenamiento entrena = null;
+    //Invocamos a la factoria
+    TrainingFactory fact = new TrainingFactory();
+
+    Objetivo objetivo = new Objetivo();
 
     //Declaramos los campos que utilizaremos en esta ventana
     @FXML
@@ -67,10 +75,10 @@ public class TrainingController {
     @FXML
     private ComboBox<Integer> repCombo;
     @FXML
-    private ComboBox objCombo;
+    private ComboBox<Objetivo> objCombo;
     @FXML
 
-   private ComboBox filterCombo ;
+    private ComboBox filterCombo;
 
     @FXML
     private Pane paneAdmin;
@@ -86,6 +94,7 @@ public class TrainingController {
 
     @FXML
     ObservableList<Entrenamiento> listEntrena;
+    ObservableList<Objetivo> listObjetivos;
     private int posicionEntrenamiento;
 
     @FXML
@@ -119,8 +128,10 @@ public class TrainingController {
         durCombo.getItems().addAll(30, 45, 60, 75, 90);
         intCombo.getItems().addAll(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
         repCombo.getItems().addAll(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20);
-        objCombo.getItems().addAll();
+        objCombo.getItems().addAll(cargarObjetivos());
         
+        
+
         table.setDisable(false);
 
         tcDescrip.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
@@ -132,18 +143,25 @@ public class TrainingController {
 
         listEntrena = FXCollections.observableArrayList(cargarTodos());
         table.setItems(listEntrena);
+        table.getSelectionModel().selectedItemProperty().addListener(this::handleTrainingTableSelectionChanged);
         //table.getColumns().addAll(tcDescrip, tcDuracion, tcDate, tcIntensidad, tcRepet, tcObjetivo);
 
+        btnCrear.setOnAction(this::handleCrearButtonAction);
+        btnModificar.setOnAction(this::handleModificarButtonAction);
         btnEliminar.setOnAction(this::handleEliminarButtonAction);
         // table.getSelectionModel().selectedItemProperty().addListener(this::handleTrainingTableSelectionChanged);
 
         //El filtrado es mediante un ComboBox está visible y habilitado siempre 
         filterCombo.setDisable(false);
-        //filterCombo.setOnAction(this::handleAction);
+        //Los tipos de filtro serán: Todo, duración, intensidad y objetivo.
+        filterCombo.getItems().addAll("Todos", "Duración", "Intensidad", "Objetivo");
+        //filterCombo.setOnAction(this::handleActionFilter);
+
+        
 
         //El botón informe está habilitado y visible.
         btnInforme.setDisable(false);
-        // btnInforme.setOnAction(this::handleButtonInformeAction);
+        btnInforme.setOnAction(this::handleButtonInformeAction);
 
         //El botón cerrar está habilitado y visible. 
         btnCerrar.setDisable(false);
@@ -165,9 +183,6 @@ public class TrainingController {
 
         stage.show();
 
-        //Invocamos a la factoria
-        TrainingFactory fact = new TrainingFactory();
-
     }
 
     public void setStage(Stage stage) {
@@ -181,19 +196,31 @@ public class TrainingController {
         });
         listEntrena = FXCollections.observableArrayList(todosEntrenas);
         table.setItems(listEntrena);
+        table.refresh();
         return listEntrena;
+
+    }
+
+    private ObservableList<Objetivo> cargarObjetivos() {
+        ObservableList<Objetivo> listObjetivos;
+        List<Objetivo> todosObjetivos;
+        todosObjetivos = oInter.findAll_XML(new GenericType<List<Objetivo>>() {
+        });
+        listObjetivos = FXCollections.observableArrayList(todosObjetivos);
+        return listObjetivos;
 
     }
 
     @FXML
     private void handleCrearButtonAction(ActionEvent event) {
+        entrena = new Entrenamiento();
 
         entrena.setDescripcion(descripArea.getText());
         entrena.setDuracion(durCombo.getSelectionModel().getSelectedItem());
-        //entrenamiento.setFechaPeriod(fechdate.getValue());
+        //entrena.setFechaPeriod(fechdate.getValue());
         entrena.setIntensidad(intCombo.getSelectionModel().getSelectedItem());
         entrena.setRepeticion(repCombo.getSelectionModel().getSelectedItem());
-       // entrena.setObjetivo(objCombo.getSelectionModel().getSelectedItem());
+        entrena.setObjetivo(objCombo.getSelectionModel().getSelectedItem());
 
         //Validar que los campos descripción, duración, intensidad y repeticiones y objetivo están informados.
         //Validar que los ComboBox estén seleccionados
@@ -204,52 +231,164 @@ public class TrainingController {
                     || this.objCombo.getSelectionModel().isEmpty()) {
                 throw new Exception("CAMPOS NO INFORMADOS");
             }
-
+        //Validar que el DatePicker esté informado.
+        //if (this.fechdate.getValue() == null) {
+        //        throw new Exception("LA FECHA NO HA SIDO SELECCIONADO");
+//            }
             //Validar que el máximo número de caracteres en el campo de descripción de entrenamiento sea de 100 caracteres.      
-            if (this.descripArea.getText().length() > 15) {
+            if (this.descripArea.getText().length() > 100) {
                 throw new Exception("NUMERO CARACTERES \n INCORRECTOS");
+
+                } else {
+                    try {
+                    // tInter.create_XML(entrena);
+                        fact.getFactory().create_XML(entrena);
+                        listEntrena.add(entrena);
+                       // listEntrena = cargarTodos();
+
+                        throw new Exception("ENTRENAMIENTO CORRECTO");
+
+                    } catch (Exception e) {
+                    new Alert(Alert.AlertType.INFORMATION, e.getMessage()).showAndWait();
+
+                }
+
             }
 
-            //Validar que el DatePicker esté informado.
-            if (this.fechdate.getValue() == null) {
-                throw new Exception("LA FECHA NO HA SIDO SELECCIONADO");
-            }
-
-            tInter.create_XML(entrena);
-            table.setItems(listEntrena);
-
-            //Seguido, saldrá del método del botón.
+            
+//        En caso de que todos los datos introducidos sean válidos y cumplan los requisitos mencionados anteriormente, 
+//        se llama al método create_XML de la interfaz pasándole un objeto (Entrenamiento) con los valores
+            
+//Seguido, saldrá del método del botón.
+            //En caso de error salta la excepción con su mensaje correspondiente
         } catch (Exception e) {
-            new Alert(Alert.AlertType.ERROR, e.getMessage() + ButtonType.OK).showAndWait();
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).showAndWait();
 
         }
 
     }
 
-//    @FXML
-//    private void handleTrainingTableSelectionChanged(ObservableValue observable, Object oldValue, Object newValue) {
-//        if (newValue != null) {
-//            Entrenamiento entrenamiento = (Entrenamiento) newValue;
-//            descripArea.setText(entrenamiento.getDescripcion());
-//            durCombo.getSelectionModel().select(entrenamiento.getDuracion());
-//            fechdate.getValue(entrenamiento.getFechaPeriod());
-//            intCombo.getSelectionModel().select(entrenamiento.getDuracion());
-//            repCombo.getSelectionModel().select(entrenamiento.getDuracion());
-//            objCombo.getSelectionModel().select(entrenamiento.getDuracion());
-//            
-//        }
-//    }
+    @FXML
+    private void handleTrainingTableSelectionChanged(ObservableValue observable, Object oldValue, Object newValue) {
+
+        if (newValue != null) {
+            Entrenamiento entrena = (Entrenamiento) newValue;
+
+            descripArea.setText(entrena.getDescripcion());
+            durCombo.setValue(entrena.getDuracion());
+            //fechdate.getValue(entrenamiento.getFechaPeriod());
+            intCombo.setValue(entrena.getIntensidad());
+            repCombo.setValue(entrena.getRepeticion());
+            objCombo.setValue(entrena.getObjetivo());
+
+        }
+    }
+
     @FXML
     private void handleModificarButtonAction(ActionEvent event) {
+        Entrenamiento entrena = new Entrenamiento();
+
+        Entrenamiento selected = table.getSelectionModel().getSelectedItem();
+        posicionEntrenamiento = selected.getIdEntrenamiento();
+        entrena.setIdEntrenamiento(posicionEntrenamiento);
+        
+        entrena.setDescripcion(descripArea.getText());
+        entrena.setDuracion(durCombo.getSelectionModel().getSelectedItem());
+        //entrenamiento.setFechaPeriod(fechdate.getValue());
+        entrena.setIntensidad(intCombo.getSelectionModel().getSelectedItem());
+        entrena.setRepeticion(repCombo.getSelectionModel().getSelectedItem());
+        entrena.setObjetivo(objCombo.getSelectionModel().getSelectedItem());
+
+        tInter.edit_XML(entrena);
+        listEntrena = cargarTodos();
 
     }
 
     @FXML
     private void handleEliminarButtonAction(ActionEvent event) {
-        Integer id = entrena.getIdEntrenamiento();
-        entrena.getIdEntrenamiento().compareTo(posicionEntrenamiento);
-        listEntrena.remove(posicionEntrenamiento);
+        Entrenamiento selectedEntrena = (Entrenamiento) table.getSelectionModel().getSelectedItem();
+
+        try {
+            try {
+                tInter.remove(selectedEntrena.getIdEntrenamiento());
+
+                //Integer id = entrena.getIdEntrenamiento();
+                //entrena.getIdEntrenamiento().compareTo(posicionEntrenamiento);
+                table.getItems().remove(selectedEntrena);
+
+                throw new Exception("EL ENTRENAMIENTO SE HA ELIMINADO CORRECTAMENTE");
+
+            } catch (Exception e) {
+                new Alert(Alert.AlertType.INFORMATION, e.getMessage()).showAndWait();
+
+            }
+
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).showAndWait();
+            //throw new Exception("EL ENTRENAMIENTO NO SE HA PODIDO ELIMINAR ");
+        }
+
     }
+    
+    @FXML
+    private void handleActionFilter(ActionEvent event) {
+        //Todos", "Duración", "Intensidad", "Objetivo
+        
+//        try {
+//            if(filterCombo.valueProperty().addListener(Todos)){
+//                 fact.getFactory().findAll_XML(responseType);
+//            }
+//                if(filterCombo.getSelectionModel().isSelected(2)){
+//                 fact.getFactory().findDuracion_XML(responseType, duracion);
+//                 
+//            }
+//                if(filterCombo.getSelectionModel().isSelected(3)){
+//                 fact.getFactory().findIntensidad_XML(responseType, intensidad);
+//                 
+//            }
+//                if(filterCombo.getSelectionModel().isSelected(4)){
+//                 fact.getFactory().findObjetivo_XML(responseType, idObjetivo);
+//                 
+//            }
+//           
+//            
+//            
+//        } catch (Exception e){
+//            new Alert(Alert.AlertType.ERROR, e.getMessage()).showAndWait();
+//            
+//        }
+            
+        
+    }
+    
+    @FXML
+    private void handleButtonInformeAction(ActionEvent event) {
+//         try {
+//            LOGGER.info("Beginning printing action...");
+//            JasperReport report = JasperCompileManager.compileReport(getClass().getResourceAsStream("Reto2_G3_Client/grupo3c.reto2.report/TrainingReport.jrxml"));
+//            //Data for the report: a collection of UserBean passed as a JRDataSource 
+//            //implementation 
+//            JRBeanCollectionDataSource dataItems = new JRBeanCollectionDataSource((Collection<Entrenamienton>)this.table.getItems());
+//            //Map of parameter to be passed to the report
+//            Map<String,Object> parameters=new HashMap<>();
+//            //Fill report with data
+//            JasperPrint jasperPrint = JasperFillManager.fillReport(report,parameters,dataItems);
+//            //Create and show the report window. The second parameter false value makes 
+//            //report window not to close app.
+//            JasperViewer jasperViewer = new JasperViewer(jasperPrint,false);
+//            jasperViewer.setVisible(true);
+//           // jasperViewer.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+//        } catch (JRException ex) {
+//            //If there is an error show message and
+//            //log it.
+//            showErrorAlert("Error al imprimir:\n"+
+//                            ex.getMessage());
+//            LOGGER.log(Level.SEVERE,
+//                        "UI GestionUsuariosController: Error printing report: {0}",
+//                        ex.getMessage());
+//        }
+    }
+    
 
     @FXML
     private void handleCerrarButtonAction(ActionEvent event) {
