@@ -7,13 +7,23 @@ package grupo3.reto2.controller;
 
 import grupo3.reto2.logic.PlaceManagerFactory;
 import grupo3.reto2.model.Lugar;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -29,11 +39,13 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import javax.ws.rs.core.GenericType;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -116,14 +128,15 @@ public class PlaceController {
     Lugar lugar = new Lugar();
     int posicion;
     private PlaceManagerFactory placefact = new PlaceManagerFactory();
-
     private ObservableList<Lugar> placeData;
-    private ObservableList patata;
+    //  private ObservableList patata;
     Alert ventanita = new Alert(Alert.AlertType.ERROR);
+    //SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+    //SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+   // private SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
 
-    @FXML
-    protected static final Logger LOGGER = Logger.getLogger("/controller/PlaceController");
 
+  
     public void initStage(Parent root) {
 
         Scene scene = new Scene(root);
@@ -176,10 +189,28 @@ public class PlaceController {
         //cargar combobox
         cbxTipoLugar.getItems().addAll("privado", "publico");
         cbxFiltroTipoLugar.getItems().addAll("privado", "publico", "ninguno");
-
         tblcNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         tblcDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
         tblcTiempo.setCellValueFactory(new PropertyValueFactory<>("tiempo"));
+        /*
+        tblcTiempo.setCellFactory(column -> {
+            TableCell<Lugar, Date> cell = new TableCell<Lugar, Date>() {
+            private SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");   
+                @Override
+                protected void updateItem(Date item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        setText(null);
+                    } else {
+                        setText(format.format(item));
+                    }
+                }
+            };
+
+            return cell;
+        });
+        */
+
         tblcTipoLugar.setCellValueFactory(new PropertyValueFactory<>("tipoLugar"));
 
         placeData = FXCollections.observableArrayList(placefact.getFactory().findAll_XML(new GenericType<List<Lugar>>() {
@@ -248,7 +279,7 @@ public class PlaceController {
             txtNombreLugar.setText(lugar.getNombre());
             txtDescLugar.setText(lugar.getDescripcion());
             cbxTipoLugar.getSelectionModel().select(lugar.getTipoLugar());
-
+            dteTiempoReservado.setValue(lugar.getTiempo().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
         }
 
     }
@@ -290,18 +321,16 @@ public class PlaceController {
     private void handleInformeButtonAction(ActionEvent event) {
 
         try {
-            JasperReport report
-                    = JasperCompileManager.compileReport(getClass().getResourceAsStream("/Reto2_G3_Cliente/src/grupo3/reto2/report/PlaceReport.jrxml"));
-
-            JRBeanCollectionDataSource dataItems
-                    = new JRBeanCollectionDataSource((Collection<Lugar>) this.tblvTabla.getItems());
+            JasperReport report= JasperCompileManager.compileReport(getClass().getResourceAsStream("/grupo3/reto2/report/PlaceReport.jrxml"));
+            JRBeanCollectionDataSource dataItems;
+            dataItems = new JRBeanCollectionDataSource((Collection<Lugar>) this.tblvTabla.getItems());
             Map<String, Object> parameters = new HashMap<>();
             JasperPrint jasperPrint = JasperFillManager.fillReport(report, parameters, dataItems);
             JasperViewer jasperViewer = new JasperViewer(jasperPrint, false);
             jasperViewer.setVisible(true);
 
         } catch (JRException ex) {
-
+            
             System.out.println("no funciona");
 
         }

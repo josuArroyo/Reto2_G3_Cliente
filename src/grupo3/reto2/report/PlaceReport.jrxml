@@ -24,6 +24,10 @@
 		</box>
 	</style>
 	<subDataset name="Table Dataset 1" uuid="2d7e3ce4-bffb-4b7f-b4fc-1bc76d5961a8"/>
+	<field name="nombre" class="java.lang.String"/>
+	<field name="descripcion" class="java.lang.String"/>
+	<field name="tiempo" class="java.util.Date"/>
+	<field name="tipoLugar" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
