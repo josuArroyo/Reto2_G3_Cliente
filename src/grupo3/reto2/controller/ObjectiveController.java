@@ -7,13 +7,18 @@ package grupo3.reto2.controller;
 
 import grupo3.reto2.logic.ObjectiveManagerFactory;
 import grupo3.reto2.model.Admin;
+import grupo3.reto2.model.Lugar;
 import grupo3.reto2.model.Objetivo;
 import grupo3.reto2.model.User;
 import grupo3.reto2.model.UserPrivilege;
 import java.net.URL;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import javafx.application.Platform;
@@ -41,6 +46,13 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import javax.ws.rs.core.GenericType;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.view.JasperViewer;
 
 
 
@@ -53,7 +65,7 @@ public class ObjectiveController{
     @FXML
     private Stage stage;
     
-    private static final Logger LOGGER = Logger.getLogger(ObjectiveController.class.getName());
+    private static final Logger LOGGER = Logger.getLogger("/controller/ObjectiveController");
     
     private final ObjectiveManagerFactory factoryObj = new ObjectiveManagerFactory();
     
@@ -137,6 +149,7 @@ public class ObjectiveController{
     
     private Integer ID;
     
+
     
     private ObservableList<Objetivo> objectiveData;
      
@@ -156,11 +169,24 @@ public class ObjectiveController{
     
     @FXML
     private void handleCreateButtonAction(ActionEvent event){
-        if(txtDescriObjeti.getText().length() > 100 || txtValorParam.getText().length() > 20){
+         if(txtDescriObjeti.getText().length() > 100 || txtValorParam.getText().length() > 20){
             Alert ventanita = new Alert(Alert.AlertType.ERROR);
             ventanita.setHeaderText(null);
             ventanita.setTitle("Error");
-            ventanita.setContentText("Has introducido carácteres incorrectos"); 
+            ventanita.setContentText("Demasiados carácteres"); 
+            Optional<ButtonType> action = ventanita.showAndWait();           
+            if (action.get() == ButtonType.OK) {
+                txtDescriObjeti.setText("");
+                txtClaveObjet.setText("");
+                txtDescriParam.setText("");
+                txtValorParam.setText("");
+                ventanita.close();
+            }
+        }else if (txtDescriObjeti.getText().trim().isEmpty() || txtDescriParam.getText().trim().isEmpty() || txtValorParam.getText().trim().isEmpty()){
+            Alert ventanita = new Alert(Alert.AlertType.ERROR);
+            ventanita.setHeaderText(null);
+            ventanita.setTitle("Error");
+            ventanita.setContentText("Campos vacios"); 
             Optional<ButtonType> action = ventanita.showAndWait();           
             if (action.get() == ButtonType.OK) {
                 txtDescriObjeti.setText("");
@@ -175,18 +201,30 @@ public class ObjectiveController{
             objetivo.setValorParam(txtValorParam.getText());
             factoryObj.getFactory().create_XML(objetivo);
             objectiveData = FXCollections.observableArrayList(cargarTodo());
-            
         }
-        
     }
     
     @FXML
     private void handleModifyButtonAction(ActionEvent event){
-        if(txtDescriObjeti.getText().length() > 100 || txtValorParam.getText().length() > 20){
+        
+         if(txtDescriObjeti.getText().length() > 100 || txtValorParam.getText().length() > 20){
             Alert ventanita = new Alert(Alert.AlertType.ERROR);
             ventanita.setHeaderText(null);
             ventanita.setTitle("Error");
-            ventanita.setContentText("Has introducido carácteres incorrectos"); 
+            ventanita.setContentText("Demasiados carácteres"); 
+            Optional<ButtonType> action = ventanita.showAndWait();           
+            if (action.get() == ButtonType.OK) {
+                txtDescriObjeti.setText("");
+                txtClaveObjet.setText("");
+                txtDescriParam.setText("");
+                txtValorParam.setText("");
+                ventanita.close();
+            }
+        }else if (txtDescriObjeti.getText().trim().isEmpty() || txtDescriParam.getText().trim().isEmpty() || txtValorParam.getText().trim().isEmpty()){
+            Alert ventanita = new Alert(Alert.AlertType.ERROR);
+            ventanita.setHeaderText(null);
+            ventanita.setTitle("Error");
+            ventanita.setContentText("Campos vacios"); 
             Optional<ButtonType> action = ventanita.showAndWait();           
             if (action.get() == ButtonType.OK) {
                 txtDescriObjeti.setText("");
@@ -196,8 +234,6 @@ public class ObjectiveController{
                 ventanita.close();
             }
         }else{
-              //Objetivo selectedObjective = TableObjetivo.getSelectionModel().getSelectedItem();
-              
               objetivo.setIdObjetivo(TableObjetivo.getSelectionModel().getSelectedItem().getIdObjetivo());
               objetivo.setDescriParam(txtDescriParam.getText());
               objetivo.setDescripcion(txtDescriObjeti.getText());
@@ -205,6 +241,7 @@ public class ObjectiveController{
               factoryObj.getFactory().edit_XML(objetivo);
               objectiveData = FXCollections.observableArrayList(cargarTodo());  
         }
+        
     }
     
     @FXML
@@ -213,7 +250,7 @@ public class ObjectiveController{
             Alert ventanita = new Alert(Alert.AlertType.ERROR);
             ventanita.setHeaderText(null);
             ventanita.setTitle("Error");
-            ventanita.setContentText("Has introducido carácteres incorrectos"); 
+            ventanita.setContentText("Demasiados carácteres"); 
             Optional<ButtonType> action = ventanita.showAndWait();           
             if (action.get() == ButtonType.OK) {
                 txtDescriObjeti.setText("");
@@ -222,7 +259,20 @@ public class ObjectiveController{
                 txtValorParam.setText("");
                 ventanita.close();
             }
-        }else{   
+        }else if (txtDescriObjeti.getText().trim().isEmpty() || txtDescriParam.getText().trim().isEmpty() || txtValorParam.getText().trim().isEmpty()){
+            Alert ventanita = new Alert(Alert.AlertType.ERROR);
+            ventanita.setHeaderText(null);
+            ventanita.setTitle("Error");
+            ventanita.setContentText("Campos vacios"); 
+            Optional<ButtonType> action = ventanita.showAndWait();           
+            if (action.get() == ButtonType.OK) {
+                txtDescriObjeti.setText("");
+                txtClaveObjet.setText("");
+                txtDescriParam.setText("");
+                txtValorParam.setText("");
+                ventanita.close();
+            }
+        }else{
                 Objetivo selectedObjective = TableObjetivo.getSelectionModel().getSelectedItem();
                 factoryObj.getFactory().remove(selectedObjective.getIdObjetivo().toString());
                 objectiveData = FXCollections.observableArrayList(cargarTodo());
@@ -233,17 +283,27 @@ public class ObjectiveController{
     @FXML
     private void handleSearchButton(ActionEvent event){
         Object newValue = new Object();
-        if(txtFiltrarParam.getText().length() > 100){
+        if(txtFiltrarParam.getText().length() > 50){
             Alert ventanita = new Alert(Alert.AlertType.ERROR);
             ventanita.setHeaderText(null);
             ventanita.setTitle("Error");
-            ventanita.setContentText("Has introducido carácteres incorrectos"); 
+            ventanita.setContentText("Demasiados carácteres"); 
             Optional<ButtonType> action = ventanita.showAndWait();           
             if (action.get() == ButtonType.OK) {
                 txtDescriObjeti.setText("");
                 txtClaveObjet.setText("");
                 txtDescriParam.setText("");
                 txtValorParam.setText("");
+                ventanita.close();
+            }
+        }else if(txtFiltrarParam.getText().isEmpty()){
+            Alert ventanita = new Alert(Alert.AlertType.ERROR);
+            ventanita.setHeaderText(null);
+            ventanita.setTitle("Error");
+            ventanita.setContentText("Campos vacios"); 
+            Optional<ButtonType> action = ventanita.showAndWait();           
+            if (action.get() == ButtonType.OK) {
+                txtFiltrarParam.setText("");
                 ventanita.close();
             }
         }else{
@@ -311,10 +371,29 @@ public class ObjectiveController{
     private void handleUsersTableSelectionChanged(ObservableValue observable, Object oldValue, Object newValue){
         if (newValue != null) {
             Objetivo objetiv = (Objetivo) newValue;
-            //txtClaveObjet.setText(objetiv.getIdObjetivo().toString());
+            txtClaveObjet.setText(objetiv.getIdObjetivo().toString());
             txtDescriObjeti.setText(objetiv.getDescripcion());
             txtDescriParam.setText(objetiv.getDescriParam());
             txtValorParam.setText(objetiv.getValorParam());
+        }
+    }
+    
+    @FXML
+    private void handleInformButton(ActionEvent event){
+        try {
+            //este metodo sirve para sacar un report con los datos que hay en la tabla de la ventana 
+            JasperReport report = JasperCompileManager.compileReport(getClass().getResourceAsStream("/grupo3/reto2/report/ObjectiveReport.jrxml"));
+            JRBeanCollectionDataSource dataItems;
+            dataItems = new JRBeanCollectionDataSource((Collection<Objetivo>) this.TableObjetivo.getItems());
+            Map<String, Object> parameters = new HashMap<>();
+            JasperPrint jasperPrint = JasperFillManager.fillReport(report, parameters, dataItems);
+            JasperViewer jasperViewer = new JasperViewer(jasperPrint, false);
+            jasperViewer.setVisible(true);
+
+        } catch (JRException ex) {
+
+            Logger.getLogger(ObjectiveController.class.getName()).log(Level.SEVERE, null, ex);
+
         }
     }
     
@@ -361,6 +440,9 @@ public class ObjectiveController{
         btnInform.setDisable(false);
         btnSalir.setDisable(false);
         
+        
+        
+        
         //El combobox está habilitado y tiene su método
         cbxFiltr.setDisable(false);
         cbxFiltr.getSelectionModel().getSelectedItem();
@@ -387,6 +469,7 @@ public class ObjectiveController{
         btnModifi.setOnAction(this::handleModifyButtonAction);
         btnDelete.setOnAction(this::handleDeleteButtonAction);
         btnFiltrar.setOnAction(this::handleSearchButton);
+        btnInform.setOnAction(this::handleInformButton);
         
         cbxFiltr.setOnAction(new EventHandler<ActionEvent>(){
             public void handle(ActionEvent event) {
@@ -399,7 +482,6 @@ public class ObjectiveController{
                 txtFiltrarParam.setVisible(true);
                 btnFiltrar.setVisible(true);
                 btnFiltrar.setDisable(false);
-                
                 break;
             case "Por clave Objetivo":
                 txtFiltrarParam.setDisable(false);
@@ -426,7 +508,7 @@ public class ObjectiveController{
             colDescriObje.setCellValueFactory(new PropertyValueFactory<>("descripcion")); 
             colValParam.setCellValueFactory(new PropertyValueFactory<>("valorParam"));
             colAdmin.setCellValueFactory(new PropertyValueFactory<>("admin"));
-        
+            
         //Cargamos los datos en la tabla
             objectiveData = FXCollections.observableArrayList(factoryObj.getFactory().findAll_XML(new GenericType<List<Objetivo>>(){}));
             TableObjetivo.setItems(objectiveData);
