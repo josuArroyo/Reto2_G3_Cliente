@@ -9,7 +9,6 @@ import grupo3.reto2.logic.PlaceManagerFactory;
 import grupo3.reto2.model.Lugar;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -23,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
@@ -124,6 +124,7 @@ public class PlaceController {
     @FXML
     private TableColumn tblcTipoLugar;
 
+    private static final Logger LOGGER = Logger.getLogger("grupo3.reto2.Controller");
     Integer index;
     Lugar lugar = new Lugar();
     int posicion;
@@ -133,10 +134,8 @@ public class PlaceController {
     Alert ventanita = new Alert(Alert.AlertType.ERROR);
     //SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
     //SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-   // private SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+    // private SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
 
-
-  
     public void initStage(Parent root) {
 
         Scene scene = new Scene(root);
@@ -192,24 +191,27 @@ public class PlaceController {
         tblcNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         tblcDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
         tblcTiempo.setCellValueFactory(new PropertyValueFactory<>("tiempo"));
-        /*
         tblcTiempo.setCellFactory(column -> {
             TableCell<Lugar, Date> cell = new TableCell<Lugar, Date>() {
-            private SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");   
+                private SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+
                 @Override
                 protected void updateItem(Date item, boolean empty) {
                     super.updateItem(item, empty);
                     if (empty) {
                         setText(null);
                     } else {
-                        setText(format.format(item));
+                        if (item != null) {                      
+                            setText(format.format(item));
+                        }
+
+                        
                     }
                 }
             };
 
             return cell;
         });
-        */
 
         tblcTipoLugar.setCellValueFactory(new PropertyValueFactory<>("tipoLugar"));
 
@@ -287,33 +289,52 @@ public class PlaceController {
     @FXML
     private void handleCrearButtonAction(ActionEvent event) {
 
-        if (this.txtNombreLugar.getText().isEmpty() || this.txtDescLugar.getText().isEmpty() || this.cbxTipoLugar.getSelectionModel().getSelectedItem().toString().isEmpty() || dteTiempoReservado.getValue() == null) {
+        try {
+            //aqui estamos validando que los campos no esten vacios 
+            if (this.txtNombreLugar.getText().isEmpty() || this.txtDescLugar.getText().isEmpty() || this.cbxTipoLugar.getSelectionModel().getSelectedItem().toString().isEmpty() || dteTiempoReservado.getValue() == null) {
 
-            ventanita.setHeaderText(null);
-            ventanita.setTitle("Error");
-            ventanita.setContentText("nos has introducido datos en uno de los campos");
-            Optional<ButtonType> action = ventanita.showAndWait();
-            if (action.get() == ButtonType.OK) {
-                txtNombreLugar.setText("");
-                txtDescLugar.setText("");
-                cbxTipoLugar.setItems(placeData);
+                throw new Exception("CAMPOS NO INFORMADOS");
+
+            }
+            //En este if validamos que el numero de caracteres de nombre de lugar y descripcion no supere los 100 caracteres
+            if (this.txtNombreLugar.getText().length() > 100 || this.txtDescLugar.getText().length() > 100) {
+
+                throw new Exception("NUMERO MAXIMO DE CARACTERES SUPERADO");
+
+            } else {
+                try {
+                    //escribimos en el objeto lugar los fields de los campos ha introducir 
+                    lugar.setNombre(txtNombreLugar.getText());
+                    lugar.setDescripcion(txtDescLugar.getText());
+                    lugar.setTipoLugar(cbxTipoLugar.getSelectionModel().getSelectedItem().toString());
+                    lugar.setTiempo(Date.from(dteTiempoReservado.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+
+                    //llamamos a la factoria para crear ese lugar y lo introduzca en la base de datos 
+                    placefact.getFactory().create_XML(lugar);
+                    //llamamos a nuestro metodo de cargarTodo para refrescar nuestra tabla y salga el nuevo lugar creado
+                    placeData = FXCollections.observableArrayList(cargarTodo());
+                    //Una vez creado el lugar pondremos en blanco de nuevo los campos y mostraremos un mensaje de lugar creado con exito
+                    txtNombreLugar.setText("");
+                    txtDescLugar.setText("");
+                    cbxTipoLugar.setValue("");
+                    dteTiempoReservado.setValue(null);
+                    throw new Exception("LUGAR CREADO CON EXITO");
+
+                } catch (Exception e) {
+                    new Alert(Alert.AlertType.INFORMATION, e.getMessage()).showAndWait();
+                }
+
             }
 
-        }
-        if (this.txtNombreLugar.getText().length() > 10 || this.txtDescLugar.getText().length() > 100) {
+        } catch (Exception e) {
+            //si alguna de las validacioens no ha salido bn saldra un mensaje de error y nos vaciara los campos nuevamente 
+            new Alert(Alert.AlertType.INFORMATION, e.getMessage()).showAndWait();
+            txtNombreLugar.setText("");
+            txtDescLugar.setText("");
+            cbxTipoLugar.setValue("");
+            dteTiempoReservado.setValue(null);
 
-            ventanita.setHeaderText(null);
-            ventanita.setTitle("Error");
-            ventanita.setContentText("no has introducido el numero de carracteres correcto");
-            Optional<ButtonType> action = ventanita.showAndWait();
         }
-
-        lugar.setNombre(txtNombreLugar.getText());
-        lugar.setDescripcion(txtDescLugar.getText());
-        lugar.setTipoLugar(cbxTipoLugar.getSelectionModel().getSelectedItem().toString());
-        //lugar.setTiempo(dteTiempoReservado.getValue().to);
-        placefact.getFactory().create_XML(lugar);
-        placeData = FXCollections.observableArrayList(cargarTodo());
 
     }
 
@@ -321,7 +342,8 @@ public class PlaceController {
     private void handleInformeButtonAction(ActionEvent event) {
 
         try {
-            JasperReport report= JasperCompileManager.compileReport(getClass().getResourceAsStream("/grupo3/reto2/report/PlaceReport.jrxml"));
+            //este metodo sirve para sacar un report con los datos que hay en la tabla de la ventana 
+            JasperReport report = JasperCompileManager.compileReport(getClass().getResourceAsStream("/grupo3/reto2/report/PlaceReport.jrxml"));
             JRBeanCollectionDataSource dataItems;
             dataItems = new JRBeanCollectionDataSource((Collection<Lugar>) this.tblvTabla.getItems());
             Map<String, Object> parameters = new HashMap<>();
@@ -330,8 +352,8 @@ public class PlaceController {
             jasperViewer.setVisible(true);
 
         } catch (JRException ex) {
-            
-            System.out.println("no funciona");
+
+            Logger.getLogger(PlaceController.class.getName()).log(Level.SEVERE, null, ex);
 
         }
 
@@ -340,44 +362,86 @@ public class PlaceController {
     @FXML
     private void handleEliminarButtonAction(ActionEvent event) {
 
+        //lo primero que hacemos sera seleccionar una fila de nuestra tabla 
         Lugar selectedLugar = (Lugar) tblvTabla.getSelectionModel().getSelectedItem();
-        placefact.getFactory().remove(selectedLugar.getIdLugar().toString());
-        placeData = FXCollections.observableArrayList(cargarTodo());
+        try {
+            try {
+                Alert ventanita = new Alert(Alert.AlertType.CONFIRMATION);
+                ventanita.setHeaderText(null);
+                ventanita.setTitle("Advertencia");
+                ventanita.setContentText("¿Estas seguro de que quieres eliminar ese lugar?");
+                //Con este Optional<ButtonType> creamos botones de Ok y cancelar
+                Optional<ButtonType> action = ventanita.showAndWait();
+                //Si le da a OK el borrara ese lugar 
+                if (action.get() == ButtonType.OK) {
+                    placefact.getFactory().remove(selectedLugar.getIdLugar().toString());
+                    placeData = FXCollections.observableArrayList(cargarTodo());
+                    throw new Exception("EL LUGAR SE HA ELIMINADO CORRECTAMENTE");
+                } else {
+                    //Si le da a cancelar la ventana emergente se cerrará 
+                    ventanita.close();
+                }
+
+            } catch (Exception e) {
+                new Alert(Alert.AlertType.INFORMATION, e.getMessage()).showAndWait();
+            }
+
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).showAndWait();
+        }
 
     }
 
     @FXML
     private void handleModificarButtonAction(ActionEvent event) {
 
-        lugar.setIdLugar(tblvTabla.getSelectionModel().getSelectedItem().getIdLugar());
-        lugar.setNombre(txtNombreLugar.getText());
-        lugar.setDescripcion(txtDescLugar.getText());
-        lugar.setTipoLugar(cbxTipoLugar.getSelectionModel().getSelectedItem().toString());
-        //lugar.setTiempo(dteTiempoReservado.getValue().to);
+        try {
+            //aqui estamos validando que los campos no esten vacios 
+            if (this.txtNombreLugar.getText().isEmpty() || this.txtDescLugar.getText().isEmpty() || this.cbxTipoLugar.getSelectionModel().getSelectedItem().toString().isEmpty() || dteTiempoReservado.getValue() == null) {
 
-        if (this.txtNombreLugar.getText().isEmpty() || this.txtDescLugar.getText().isEmpty() || this.cbxTipoLugar.getSelectionModel().getSelectedItem().toString().isEmpty() || dteTiempoReservado.getValue() == null) {
+                throw new Exception("CAMPOS NO INFORMADOS");
 
-            ventanita.setHeaderText(null);
-            ventanita.setTitle("Error");
-            ventanita.setContentText("nos has introducido datos en uno de los campos");
-            Optional<ButtonType> action = ventanita.showAndWait();
-            if (action.get() == ButtonType.OK) {
-                txtNombreLugar.setText("");
-                txtDescLugar.setText("");
-                cbxTipoLugar.setItems(placeData);
+            }
+            //En este if validamos que el numero de caracteres de nombre de lugar y descripcion no supere los 100 caracteres
+            if (this.txtNombreLugar.getText().length() > 100 || this.txtDescLugar.getText().length() > 100) {
+
+                throw new Exception("NUMERO MAXIMO DE CARACTERES SUPERADO");
+
+            } else {
+                try {
+                    //escribimos en el objeto lugar los fields de los campos ha introducir 
+                    lugar.setIdLugar(tblvTabla.getSelectionModel().getSelectedItem().getIdLugar());
+                    lugar.setNombre(txtNombreLugar.getText());
+                    lugar.setDescripcion(txtDescLugar.getText());
+                    lugar.setTipoLugar(cbxTipoLugar.getSelectionModel().getSelectedItem().toString());
+                    //lugar.setTiempo(dteTiempoReservado.getValue().to);
+
+                    //llamamos a la factoria para crear ese lugar y lo introduzca en la base de datos 
+                    placefact.getFactory().edit_XML(lugar);
+                    //llamamos a nuestro metodo de cargarTodo para refrescar nuestra tabla y salga el nuevo lugar creado
+                    placeData = FXCollections.observableArrayList(cargarTodo());
+                    //Una vez creado el lugar pondremos en blanco de nuevo los campos y mostraremos un mensaje de lugar creado con exito
+                    txtNombreLugar.setText("");
+                    txtDescLugar.setText("");
+                    cbxTipoLugar.setValue("");
+                    dteTiempoReservado.setValue(null);
+                    throw new Exception("LUGAR MODIFICADO CON EXITO");
+
+                } catch (Exception e) {
+                    new Alert(Alert.AlertType.INFORMATION, e.getMessage()).showAndWait();
+                }
+
             }
 
-        }
-        if (this.txtNombreLugar.getText().length() > 10 || this.txtDescLugar.getText().length() > 100) {
+        } catch (Exception e) {
+            //si alguna de las validacioens no ha salido bn saldra un mensaje de error y nos vaciara los campos nuevamente 
+            new Alert(Alert.AlertType.INFORMATION, e.getMessage()).showAndWait();
+            txtNombreLugar.setText("");
+            txtDescLugar.setText("");
+            cbxTipoLugar.setValue("");
+            dteTiempoReservado.setValue(null);
 
-            ventanita.setHeaderText(null);
-            ventanita.setTitle("Error");
-            ventanita.setContentText("no has introducido el numero de carracteres correcto");
-            Optional<ButtonType> action = ventanita.showAndWait();
         }
-
-        placefact.getFactory().edit_XML(lugar);
-        placeData = FXCollections.observableArrayList(cargarTodo());
 
     }
 
