@@ -5,19 +5,26 @@
  */
 package grupo3.reto2;
 
+
 import grupo3.reto2.controller.PlaceController;
+import java.io.IOException;
 import javafx.application.Application;
+import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- *
- * @author 2dam
+ * This is the Application class for the client side.
+ * @author Josu y Jessica
  */
-public class Aplication extends Application {
+public class Aplication extends Application{
     
+ /**
+ * This method is used to start the app
+ *@param stage is the scenary
+     * @throws java.lang.Exception
+ */
     @Override
     public void start(Stage stage) throws Exception {
         
@@ -27,6 +34,12 @@ public class Aplication extends Application {
         place.setStage(stage);
         place.initStage(root);
         
+        /*FXMLLoader loader= new FXMLLoader(getClass().getResource("view/Place.fxml")); 
+        Parent root = (Parent)loader.load();
+        PlaceController PlaceC= ((PlaceController)loader.getController());
+        PlaceC.setStage(stage);
+        PlaceC.initStage(root);*/
+        
     }
 
     /**
@@ -34,6 +47,5 @@ public class Aplication extends Application {
      */
     public static void main(String[] args) {
         launch(args);
-    }
-    
+    }    
 }

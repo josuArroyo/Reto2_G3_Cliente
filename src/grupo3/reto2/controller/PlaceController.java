@@ -192,11 +192,10 @@ public class PlaceController {
                     if (empty) {
                         setText(null);
                     } else {
-                        if (item != null) {                      
+                        if (item != null) {
                             setText(format.format(item));
                         }
 
-                        
                     }
                 }
             };
@@ -367,6 +366,10 @@ public class PlaceController {
                 if (action.get() == ButtonType.OK) {
                     placefact.getFactory().remove(selectedLugar.getIdLugar().toString());
                     placeData = FXCollections.observableArrayList(cargarTodo());
+                    txtNombreLugar.setText("");
+                    txtDescLugar.setText("");
+                    cbxTipoLugar.setValue("");
+                    dteTiempoReservado.setValue(null);
                     throw new Exception("EL LUGAR SE HA ELIMINADO CORRECTAMENTE");
                 } else {
                     //Si le da a cancelar la ventana emergente se cerrará 
