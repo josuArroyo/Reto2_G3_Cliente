@@ -127,10 +127,10 @@ public class MenuBarController {
 
             Parent root = (Parent) loader.load();
             
-            /*PlaceController controller = ((PlaceController) loader.getController());
+            PlaceController controller = ((PlaceController) loader.getController());
 
             controller.setStage(stage);
-            controller.initStage(root);*/
+            controller.initStage(root);
 
             hBoxMenu.getScene().getWindow().hide();
         } catch (IOException e) {

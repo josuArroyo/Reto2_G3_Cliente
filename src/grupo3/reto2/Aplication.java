@@ -27,6 +27,7 @@ public class Aplication extends Application {
             ObjectiveController objeti = (ObjectiveController)loader.getController();
             objeti.setStage(stage);
             objeti.initStage(root);
+
     }
 
     /**

@@ -37,6 +37,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
@@ -75,6 +76,7 @@ public class ObjectiveController{
     
     @FXML
     private Button btnCrear;
+    
     
     @FXML
     private Button btnModifi;
