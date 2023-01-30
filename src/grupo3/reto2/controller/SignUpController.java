@@ -1,5 +1,3 @@
-
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -7,9 +5,10 @@
  */
 package grupo3.reto2.controller;
 
-
-
+import grupo3.reto2.logic.UserFactory;
+import grupo3.reto2.model.Cliente;
 import grupo3.reto2.model.User;
+import grupo3.reto2.model.UserPrivilege;
 import java.util.logging.Logger;
 import java.awt.event.KeyEvent;
 import java.net.URL;
@@ -36,13 +35,18 @@ import javafx.stage.Stage;
 
 /**
  * Controller for the 'sign up' window
- * @author Jessica y Josu
+ *
+ * @author Jessica
  */
 public class SignUpController {
 
+    @FXML
+    private Stage stage;
+    UserFactory factUser = new UserFactory();
+
     //Declaramos los campos que utilizaremos en esta ventana
     @FXML
-    private TextField txtNombre2, txtNombreComp, txtEmail;
+    private TextField txtNombre2, txtNombreComp, txtEmail, txtEdad;
 
     @FXML
     private PasswordField txtPasswd2;
@@ -73,18 +77,19 @@ public class SignUpController {
     private static final Pattern EMAIL_PATTERN = Pattern.compile(EMAIL_REGEX);
 
     @FXML
-    protected static final Logger LOGGER = Logger.getLogger("SignUpController");
+    protected static final Logger LOGGER = Logger.getLogger("/controller/SignUpController");
 
     //Declaramos la interfaz
     //private Sign interf;
-
     /**
      * Method to initialize the window
+     *
      * @param root the root of the window
      */
     @FXML
     public void initStage(Parent root) {
         LOGGER.info("Initializing Sign Up stage.");
+
         Scene scene = new Scene(root);
 
         //Los TextField nombre de usuario (txtNombre2), fullname  (txtNombreComp), email  (txtEmail), 
@@ -129,14 +134,13 @@ public class SignUpController {
         //Invocamos a la factoria
         //ControllerFactory fact = new ControllerFactory();
         //interf = fact.getSocket();
-
     }
 
     /**
      * 'save' button method with validations
+     *
      * @param event
      */
-    
     @FXML
     //VALIDAR QUE TODO ESTE CORRECTO Y CUMPLA LOS REQUISITOS
     private void handleButtonSaveAction(ActionEvent event) {
@@ -146,7 +150,7 @@ public class SignUpController {
             //Si no están informados alguno de los campos saldrá un label de error (lblError2).
             if (this.txtNombre2.getText().isEmpty() || this.txtNombreComp.getText().isEmpty()
                     || this.txtEmail.getText().isEmpty() || this.txtPasswd2.getText().isEmpty()
-                    || this.txtConfirmPasswd.getText().isEmpty()) {
+                    || this.txtConfirmPasswd.getText().isEmpty() || this.txtEdad.getText().isEmpty()) {
                 throw new Exception("CAMPOS NO INFORMADOS");
             }
 
@@ -165,44 +169,47 @@ public class SignUpController {
 
             //Validar que la password tenga formato especifico
             String password = this.txtPasswd2.getText();
-            if (!(PASSWORD_PATTERN.matcher(password).matches())) {
+            if ((PASSWORD_PATTERN.matcher(password).matches())) {
                 throw new Exception("CONTRASEÑA NO VALIDA");
             }
 
             //Si los campos de password y confirmPassword no coinciden, saldrá un label de error (lblError2) y limpia esos campos.
             if (!(txtPasswd2 != txtConfirmPasswd)) {
                 throw new Exception("LAS PASSWORD \n NO COINCIDEN");
-               
+
                 //throw new Exception("usuario registrado");
             } else {
 
-//                User user = new User();
-//                user.setLogin(txtNombre2.getText());
-//                user.setFullname(txtNombreComp.getText());
-//                user.setEmail(txtEmail.getText());
-//                user.setPassword(txtPasswd2.getText());
-//                user.setLastPasswordChange(Date.from(now()));
-//                interf.getExecuteSignUp(user);
-//                
+                User client = new Cliente();
+                User user = new User();
+                user.setLogin(txtNombre2.getText());
+                user.setNombre(txtNombreComp.getText());
+                user.setEmail(txtEmail.getText());
+                user.setPasswd(txtPasswd2.getText());
+                user.setConfPasswd(txtConfirmPasswd.getText());
+                user.setEmail(txtEdad.getText());
+                user.setPrivilege(UserPrivilege.CLIENT);
+                factUser.getFactory().create_XML(user);
+
                 throw new Exception("USUARIO REGISTRADO");
 
             }
 
             //Seguido, saldrá del método del botón.
         } catch (Exception e) {
+            new Alert(Alert.AlertType.INFORMATION, e.getMessage()).showAndWait();
 
-            lblError2.setVisible(true);
-            lblError2.setText(e.getMessage());
         }
 
     }
 
     /**
-     *'cancel' button method. It redirects us to the login window again. The
-     * current window is closed without saving the data if we have not pressed 'save'
-     *@param event
+     * 'cancel' button method. It redirects us to the login window again. The
+     * current window is closed without saving the data if we have not pressed
+     * 'save'
+     *
+     * @param event
      */
-  
     @FXML
     private void handleButtonCancel(ActionEvent event) {
         try {
@@ -212,6 +219,10 @@ public class SignUpController {
             new Exception("Error al cerrar la pestaña " + e.getMessage());
         }
 
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
     }
 
 }
