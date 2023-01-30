@@ -19,14 +19,15 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author 2dam
  */
-
-
+@XmlSeeAlso({Admin.class,Cliente.class})
+@XmlRootElement
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -72,12 +73,6 @@ public class User implements Serializable {
     public void setPrivilege(UserPrivilege privilege) {
         this.userPrivilege = privilege;
     }
-
-    
-    
-
-
-    
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
@@ -134,6 +129,10 @@ public class User implements Serializable {
     @Override
     public String toString() {
         return "entities.User[ id=" + idUser + " ]";
+    }
+
+    public Object target(String BASE_URI) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

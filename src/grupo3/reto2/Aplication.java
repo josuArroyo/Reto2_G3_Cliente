@@ -6,6 +6,8 @@
 package grupo3.reto2;
 
 import grupo3.reto2.controller.PlaceController;
+import grupo3.reto2.controller.SignInController;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,16 +19,20 @@ import javafx.stage.Stage;
  * @author 2dam
  */
 public class Aplication extends Application {
-    
+
+    private static final Logger LOGGER = Logger.getLogger(Aplication.class.getName());
+
     @Override
     public void start(Stage stage) throws Exception {
-        
-        FXMLLoader loader= new FXMLLoader(getClass().getResource("view/Place.fxml")); 
-        Parent root = (Parent)loader.load();
-        PlaceController place= ((PlaceController)loader.getController());
-        place.setStage(stage);
-        place.initStage(root);
-        
+
+        LOGGER.info("Carga del FXML de SignIn");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("view/SignIn.fxml"));
+        Parent root = (Parent) loader.load();
+        LOGGER.info("Llamada al controlador del FXML");
+        SignInController controller = ((SignInController) loader.getController());
+        controller.setStage(stage);
+        controller.initStage(root);
+
     }
 
     /**
@@ -35,5 +41,5 @@ public class Aplication extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    
+
 }
