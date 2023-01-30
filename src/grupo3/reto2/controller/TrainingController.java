@@ -13,12 +13,9 @@ import grupo3.reto2.logic.ObjectiveRESTfulclient;
 import grupo3.reto2.model.Entrenamiento;
 import grupo3.reto2.model.Objetivo;
 import grupo3.reto2.model.User;
-import grupo3.reto2.model.UserPrivilege;
-import static grupo3.reto2.model.UserPrivilege.ADMIN;
 import javafx.beans.value.ObservableValue;
 import java.util.List;
 import java.util.Optional;
-import java.util.regex.Pattern;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -26,8 +23,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -44,6 +39,24 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javax.ws.rs.core.GenericType;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.view.JasperViewer;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Collection;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+import javafx.scene.control.TableCell;
+import java.time.ZoneId;
+
+
+
+
 
 /**
  *
@@ -77,8 +90,13 @@ public class TrainingController {
     @FXML
     private ComboBox<Objetivo> objCombo;
     @FXML
-
-    private ComboBox filterCombo;
+    private ComboBox <String> filterCombo;
+    
+    @FXML
+    private TextField txtFilter;
+   
+    @FXML
+    private Button btnFilter;
 
     @FXML
     private Pane paneAdmin;
@@ -137,6 +155,27 @@ public class TrainingController {
         tcDescrip.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
         tcDuracion.setCellValueFactory(new PropertyValueFactory<>("duracion"));
         tcDate.setCellValueFactory(new PropertyValueFactory<>("fechaPeriod"));
+          tcDate.setCellFactory(column -> {
+            TableCell<Entrenamiento, Date> cell = new TableCell<Entrenamiento, Date>() {
+                private SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+
+                @Override
+                protected void updateItem(Date item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        setText(null);
+                    } else {
+                        if (item != null) {                      
+                            setText(format.format(item));
+                        }
+
+                        
+                    }
+                }
+            };
+
+            return cell;
+        });
         tcIntensidad.setCellValueFactory(new PropertyValueFactory<>("intensidad"));
         tcRepet.setCellValueFactory(new PropertyValueFactory<>("repeticion"));
         tcObjetivo.setCellValueFactory(new PropertyValueFactory<>("objetivo"));
@@ -155,7 +194,10 @@ public class TrainingController {
         filterCombo.setDisable(false);
         //Los tipos de filtro serán: Todo, duración, intensidad y objetivo.
         filterCombo.getItems().addAll("Todos", "Duración", "Intensidad", "Objetivo");
-        //filterCombo.setOnAction(this::handleActionFilter);
+       
+        txtFilter.setDisable(false);
+        btnFilter.setDisable(false);
+        btnFilter.setOnAction(this::handleActionFilterSearch);
 
         
 
@@ -210,6 +252,31 @@ public class TrainingController {
         return listObjetivos;
 
     }
+    
+    
+    private ObservableList<Entrenamiento> cargarDuracion() {
+        ObservableList<Entrenamiento> filtroEntrenamiento;
+        List<Entrenamiento> duracionFiltro;
+        duracionFiltro = tInter.findDuracion_XML(new GenericType<List<Entrenamiento>>() {
+        }, txtFilter.getText());
+
+        filtroEntrenamiento = FXCollections.observableArrayList(duracionFiltro);
+        table.setItems(filtroEntrenamiento);
+        table.refresh();
+        return filtroEntrenamiento;
+    }
+    
+    private ObservableList<Entrenamiento> cargarIntensidad() {
+        ObservableList<Entrenamiento> filtroEntrenamiento;
+        List<Entrenamiento> intensidadFiltro;
+        intensidadFiltro = fact.getFactory().findIntensidad_XML(new GenericType<List<Entrenamiento>>() {
+        }, txtFilter.getText());
+
+        filtroEntrenamiento = FXCollections.observableArrayList(intensidadFiltro);
+        table.setItems(filtroEntrenamiento);
+        table.refresh();
+        return filtroEntrenamiento;
+    }
 
     @FXML
     private void handleCrearButtonAction(ActionEvent event) {
@@ -218,6 +285,7 @@ public class TrainingController {
         entrena.setDescripcion(descripArea.getText());
         entrena.setDuracion(durCombo.getSelectionModel().getSelectedItem());
         //entrena.setFechaPeriod(fechdate.getValue());
+        //entrena.setFechaPeriod(Date.from(fechdate.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
         entrena.setIntensidad(intCombo.getSelectionModel().getSelectedItem());
         entrena.setRepeticion(repCombo.getSelectionModel().getSelectedItem());
         entrena.setObjetivo(objCombo.getSelectionModel().getSelectedItem());
@@ -276,7 +344,7 @@ public class TrainingController {
 
             descripArea.setText(entrena.getDescripcion());
             durCombo.setValue(entrena.getDuracion());
-            //fechdate.getValue(entrenamiento.getFechaPeriod());
+            fechdate.setValue(entrena.getFechaPeriod().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
             intCombo.setValue(entrena.getIntensidad());
             repCombo.setValue(entrena.getRepeticion());
             objCombo.setValue(entrena.getObjetivo());
@@ -331,62 +399,52 @@ public class TrainingController {
     }
     
     @FXML
-    private void handleActionFilter(ActionEvent event) {
-        //Todos", "Duración", "Intensidad", "Objetivo
+    private void handleActionFilterSearch(ActionEvent event){
         
-//        try {
-//            if(filterCombo.valueProperty().addListener(Todos)){
-//                 fact.getFactory().findAll_XML(responseType);
-//            }
-//                if(filterCombo.getSelectionModel().isSelected(2)){
-//                 fact.getFactory().findDuracion_XML(responseType, duracion);
-//                 
-//            }
-//                if(filterCombo.getSelectionModel().isSelected(3)){
-//                 fact.getFactory().findIntensidad_XML(responseType, intensidad);
-//                 
-//            }
-//                if(filterCombo.getSelectionModel().isSelected(4)){
-//                 fact.getFactory().findObjetivo_XML(responseType, idObjetivo);
-//                 
-//            }
-//           
-//            
-//            
-//        } catch (Exception e){
-//            new Alert(Alert.AlertType.ERROR, e.getMessage()).showAndWait();
-//            
-//        }
-            
+         //Object newValue = new Object();
         
-    }
+        
+            switch(filterCombo.getValue().toString()){
+                case("Todos"):
+                    cargarTodos();
+                break;
+                case("Duración"):
+                    cargarDuracion();
+                break;
+                case("Intensidad"):
+                    cargarIntensidad();
+                break;
+                case("Objetivo"):
+                    cargarObjetivos();
+                
+            }
+    
+   }
+    
+    
+ 
     
     @FXML
     private void handleButtonInformeAction(ActionEvent event) {
-//         try {
-//            LOGGER.info("Beginning printing action...");
-//            JasperReport report = JasperCompileManager.compileReport(getClass().getResourceAsStream("Reto2_G3_Client/grupo3c.reto2.report/TrainingReport.jrxml"));
-//            //Data for the report: a collection of UserBean passed as a JRDataSource 
-//            //implementation 
-//            JRBeanCollectionDataSource dataItems = new JRBeanCollectionDataSource((Collection<Entrenamienton>)this.table.getItems());
-//            //Map of parameter to be passed to the report
-//            Map<String,Object> parameters=new HashMap<>();
-//            //Fill report with data
-//            JasperPrint jasperPrint = JasperFillManager.fillReport(report,parameters,dataItems);
-//            //Create and show the report window. The second parameter false value makes 
-//            //report window not to close app.
-//            JasperViewer jasperViewer = new JasperViewer(jasperPrint,false);
-//            jasperViewer.setVisible(true);
-//           // jasperViewer.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
-//        } catch (JRException ex) {
-//            //If there is an error show message and
-//            //log it.
-//            showErrorAlert("Error al imprimir:\n"+
-//                            ex.getMessage());
-//            LOGGER.log(Level.SEVERE,
-//                        "UI GestionUsuariosController: Error printing report: {0}",
-//                        ex.getMessage());
-//        }
+         try {
+            //LOGGER.info("Beginning printing action...");
+            JasperReport report = JasperCompileManager.compileReport(getClass().getResourceAsStream("/grupo3/reto2/report/TrainingReport.jrxml"));
+             
+            JRBeanCollectionDataSource dataItems = new JRBeanCollectionDataSource((Collection<Entrenamiento>)this.table.getItems());
+           
+            Map<String,Object> parameters=new HashMap<>();
+            
+            JasperPrint jasperPrint = JasperFillManager.fillReport(report,parameters,dataItems);
+            
+            JasperViewer jasperViewer = new JasperViewer(jasperPrint,false);
+            jasperViewer.setVisible(true);
+           
+        } catch (JRException ex) {
+            //If there is an error show message and
+            //log it.
+             System.out.println("Error");
+        }
+
     }
     
 

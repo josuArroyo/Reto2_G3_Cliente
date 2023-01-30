@@ -37,13 +37,13 @@ public class TrainingRESTfulClient implements TrainingInterface{
         webTarget = client.target(BASE_URI).path("entities.entrenamiento");
     }
 
-    public <T> T findObjetivo_XML(Class<T> responseType, String idObjetivo) throws ClientErrorException {
+    public <T> T findObjetivo_XML(GenericType<T> responseType, String idObjetivo) throws ClientErrorException {
         WebTarget resource = webTarget;
         resource = resource.path(java.text.MessageFormat.format("getEntrenamientoObjetivo/{0}", new Object[]{idObjetivo}));
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_XML).get(responseType);
     }
 
-    public <T> T findObjetivo_JSON(Class<T> responseType, String idObjetivo) throws ClientErrorException {
+    public <T> T findObjetivo_JSON(GenericType<T> responseType, String idObjetivo) throws ClientErrorException {
         WebTarget resource = webTarget;
         resource = resource.path(java.text.MessageFormat.format("getEntrenamientoObjetivo/{0}", new Object[]{idObjetivo}));
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
@@ -69,13 +69,13 @@ public class TrainingRESTfulClient implements TrainingInterface{
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
-    public <T> T findDuracion_XML(Class<T> responseType, String duracion) throws ClientErrorException {
+    public <T> T findDuracion_XML(GenericType<T> responseType, String duracion) throws ClientErrorException {
         WebTarget resource = webTarget;
         resource = resource.path(java.text.MessageFormat.format("getEntrenamientoDuracion/{0}", new Object[]{duracion}));
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_XML).get(responseType);
     }
 
-    public <T> T findDuracion_JSON(Class<T> responseType, String duracion) throws ClientErrorException {
+    public <T> T findDuracion_JSON(GenericType<T> responseType, String duracion) throws ClientErrorException {
         WebTarget resource = webTarget;
         resource = resource.path(java.text.MessageFormat.format("getEntrenamientoDuracion/{0}", new Object[]{duracion}));
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);

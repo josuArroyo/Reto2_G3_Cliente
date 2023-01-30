@@ -8,19 +8,20 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane fx:id="paneAll" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="grupo3.reto2.controller.TrainingController">
+<Pane fx:id="paneAll" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="grupo3.reto2.controller.TrainingController">
    <children>
       <fx:include fx:id="hbox" source="MenuBar.fxml" />
-      <TableView fx:id="table" layoutX="38.0" layoutY="307.0" prefHeight="341.0" prefWidth="775.0">
+      <TableView fx:id="table" layoutX="38.0" layoutY="307.0" prefHeight="341.0" prefWidth="785.0">
         <columns>
           <TableColumn fx:id="tcDescrip" prefWidth="103.99999237060547" text="DESCRIPCIÓN" />
           <TableColumn fx:id="tcDuracion" prefWidth="111.99996948242188" text="DURACIÓN" />
             <TableColumn fx:id="tcDate" prefWidth="159.99996948242188" text="FECHA DE PERIODO" />
             <TableColumn fx:id="tcIntensidad" prefWidth="130.4000244140625" text="INTENSIDAD" />
             <TableColumn fx:id="tcRepet" prefWidth="138.39996337890625" text="REPETICIONES" />
-            <TableColumn fx:id="tcObjetivo" prefWidth="129.5999755859375" text="OBJETIVO" />
+            <TableColumn fx:id="tcObjetivo" prefWidth="138.60003662109375" text="OBJETIVO" />
         </columns>
       </TableView>
       <Button fx:id="btnCerrar" layoutX="862.0" layoutY="648.0" mnemonicParsing="false" text="CERRAR" />
@@ -47,7 +48,9 @@
             <Separator layoutX="949.0" layoutY="1.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="0.0" />
          </children>
       </Pane>
-      <ComboBox fx:id="filterCombo" layoutX="845.0" layoutY="307.0" prefHeight="25.0" prefWidth="112.0" promptText="Filtrar" />
+      <ComboBox fx:id="filterCombo" layoutX="840.0" layoutY="307.0" prefHeight="25.0" prefWidth="134.0" promptText="Filtrar" />
       <Button fx:id="btnInforme" layoutX="38.0" layoutY="652.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="112.0" text="INFORME" />
+      <TextField fx:id="txtFilter" layoutX="865.0" layoutY="338.0" prefHeight="25.0" prefWidth="112.0" />
+      <Button fx:id="btnFilter" layoutX="907.0" layoutY="372.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="71.0" text="Buscar" />
    </children>
 </Pane>

@@ -22,9 +22,9 @@ public interface TrainingInterface {
     
     
 
-    public <T> T findObjetivo_XML(Class<T> responseType, String idObjetivo) throws ClientErrorException;
+    public <T> T findObjetivo_XML(GenericType<T> responseType, String idObjetivo) throws ClientErrorException;
 
-    public <T> T findObjetivo_JSON(Class<T> responseType, String idObjetivo) throws ClientErrorException;
+    public <T> T findObjetivo_JSON(GenericType<T> responseType, String idObjetivo) throws ClientErrorException;
      
   
 
@@ -36,9 +36,9 @@ public interface TrainingInterface {
 
     public <T> T findById_JSON(Class<T> responseType, String idEntrenamiento) throws ClientErrorException ;
 
-    public <T> T findDuracion_XML(Class<T> responseType, String duracion) throws ClientErrorException;
+    public <T> T findDuracion_XML(GenericType<T> responseType, String duracion) throws ClientErrorException;
 
-    public <T> T findDuracion_JSON(Class<T> responseType, String duracion) throws ClientErrorException;
+    public <T> T findDuracion_JSON(GenericType<T> responseType, String duracion) throws ClientErrorException;
     
 
     public void create_XML(Object requestEntity) throws ClientErrorException ;
