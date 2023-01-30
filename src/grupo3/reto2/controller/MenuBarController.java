@@ -70,47 +70,22 @@ public class MenuBarController {
     private MenuItem miCerrarSesion;
     
     
-    public void initialize(URL url, ResourceBundle rb) {
-        //Habilitación del menu
-        menuHome.setDisable(false);
-        menuNavegar.setDisable(false);
-        menuCR.setDisable(false);
-        menuAyuda.setDisable(false);
-        miCerrarSesion.setDisable(false);
-        miDescripcionVentana.setDisable(false);
-        miEntrenamiento.setDisable(false);
-        miEvento.setDisable(false);
-        miLugar.setDisable(false);
-        miManualUsuario.setDisable(false);
-        miObjetivo.setDisable(false);
-        miSobreNosotros.setDisable(false);
-        miVolver.setDisable(false);
-        
-        //Meotdos de los menús y menúbars
-        miObjetivo.setOnAction(this::miObjetivo);
-        menuHome.setOnAction(this::menuHome);
-        miLugar.setOnAction(this::miLugar);
-        miEvento.setOnAction(this::miEvento);
-        miEntrenamiento.setOnAction(this::miEntrenamiento);
-        menuAyuda.setOnAction(this::menuAyuda);
-        menuCR.setOnAction(this::menuCR);
-        miDescripcionVentana.setOnAction(this::miDescripcionVentana);
-        miManualUsuario.setOnAction(this::miManualUsuario);
-        miSobreNosotros.setOnAction(this::miSobreNosotros);
-        
-    }    
+    
     @FXML
     private void menuHome(ActionEvent event){
+        
          try {
             
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("view/Principal.fxml"));
+            Stage PrincipalStage = new Stage();
+            
+            FXMLLoader loader= new FXMLLoader(getClass().getResource("view/Principal.fxml")); 
 
-            Parent root = (Parent) loader.load();
+            Parent root = loader.load();
             
             PrincipalController controller = ((PrincipalController) loader.getController());
 
-            //controller.setStage(stage);
-            //controller.initStage(root);
+            controller.setStage(PrincipalStage);
+            controller.initialize(root);
 
             hBoxMenu.getScene().getWindow().hide();
         } catch (IOException e) {
@@ -212,7 +187,7 @@ public class MenuBarController {
     }
     
     @FXML
-    private void menuCR(ActionEvent event){
+    private void miCerrarSesion(ActionEvent event){
     
     }
     

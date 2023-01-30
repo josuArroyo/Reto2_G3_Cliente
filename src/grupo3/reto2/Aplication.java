@@ -6,6 +6,7 @@
 package grupo3.reto2;
 
 import grupo3.reto2.controller.ObjectiveController;
+import grupo3.reto2.controller.PrincipalController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -27,6 +28,13 @@ public class Aplication extends Application {
             ObjectiveController objeti = (ObjectiveController)loader.getController();
             objeti.setStage(stage);
             objeti.initStage(root);
+            
+            /*FXMLLoader loader= new FXMLLoader(getClass().getResource("view/Principal.fxml")); 
+            Parent root = (Parent)loader.load();
+            PrincipalController principal = (PrincipalController)loader.getController();
+            principal.setStage(stage);
+            principal.initialize(root);*/
+            
     }
 
     /**

@@ -10,26 +10,37 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 /**
  *
  * @author 2dam
  */
-public class PrincipalController implements Initializable {
+public class PrincipalController {
     
     @FXML
     private Label label;
     
-    @FXML
-    private void handleButtonAction(ActionEvent event) {
-        System.out.println("You clicked me!");
-        label.setText("Hello World!");
-    }
     
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+    
+    public void initialize(Parent root) {
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        //La ventana es modal
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Principal");
+        stage.show();
     }    
+    public void setStage(Stage stage) {
+        
+        this.setStage(stage);
+    }
+
+    
     
 }
