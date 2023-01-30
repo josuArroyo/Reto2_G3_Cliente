@@ -246,31 +246,38 @@ public class ObjectiveController{
     
     @FXML
     private void handleDeleteButtonAction(ActionEvent event){
-        if(txtDescriObjeti.getText().length() > 100 || txtValorParam.getText().length() > 20){
-            Alert ventanita = new Alert(Alert.AlertType.ERROR);
+        
+        Alert ventanita = new Alert(Alert.AlertType.CONFIRMATION);
             ventanita.setHeaderText(null);
-            ventanita.setTitle("Error");
-            ventanita.setContentText("Demasiados carácteres"); 
+            ventanita.setTitle("Borrador");
+            ventanita.setContentText("¿Quieres borrar?"); 
             Optional<ButtonType> action = ventanita.showAndWait();           
             if (action.get() == ButtonType.OK) {
+                if(txtDescriObjeti.getText().length() > 100 || txtValorParam.getText().length() > 20){
+            Alert ventanita2 = new Alert(Alert.AlertType.ERROR);
+            ventanita2.setHeaderText(null);
+            ventanita2.setTitle("Error");
+            ventanita2.setContentText("Demasiados carácteres"); 
+            Optional<ButtonType> action2 = ventanita2.showAndWait();           
+            if (action2.get() == ButtonType.OK) {
                 txtDescriObjeti.setText("");
                 txtClaveObjet.setText("");
                 txtDescriParam.setText("");
                 txtValorParam.setText("");
-                ventanita.close();
+                ventanita2.close();
             }
         }else if (txtDescriObjeti.getText().trim().isEmpty() || txtDescriParam.getText().trim().isEmpty() || txtValorParam.getText().trim().isEmpty()){
-            Alert ventanita = new Alert(Alert.AlertType.ERROR);
-            ventanita.setHeaderText(null);
-            ventanita.setTitle("Error");
-            ventanita.setContentText("Campos vacios"); 
-            Optional<ButtonType> action = ventanita.showAndWait();           
-            if (action.get() == ButtonType.OK) {
+            Alert ventanita3 = new Alert(Alert.AlertType.ERROR);
+            ventanita3.setHeaderText(null);
+            ventanita3.setTitle("Error");
+            ventanita3.setContentText("Campos vacios"); 
+            Optional<ButtonType> action3 = ventanita3.showAndWait();           
+            if (action3.get() == ButtonType.OK) {
                 txtDescriObjeti.setText("");
                 txtClaveObjet.setText("");
                 txtDescriParam.setText("");
                 txtValorParam.setText("");
-                ventanita.close();
+                ventanita3.close();
             }
         }else{
                 Objetivo selectedObjective = TableObjetivo.getSelectionModel().getSelectedItem();
@@ -278,6 +285,13 @@ public class ObjectiveController{
                 objectiveData = FXCollections.observableArrayList(cargarTodo());
                 
             }
+                
+            }else{
+                ventanita.close();
+            }
+        
+        /**/
+        
     }
     
     @FXML
@@ -493,7 +507,7 @@ public class ObjectiveController{
                 txtFiltrarParam.setDisable(true);
                 txtFiltrarParam.setVisible(false);
                 btnFiltrar.setVisible(false);
-                btnFiltrar.setDisable(true);       
+                btnFiltrar.setDisable(true);
                 cargarTodo();
                 break;
         }
