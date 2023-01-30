@@ -33,7 +33,7 @@ public interface ObjectiveManager {
 
     public <T> T findAll_XML(GenericType<T> responseType) throws ClientErrorException;
 
-    public <T> T findAll_JSON(Class<T> responseType) throws ClientErrorException;
+    public <T> T findAll_JSON(GenericType<T> responseType) throws ClientErrorException;
 
     public void remove(String id) throws ClientErrorException;
 }
