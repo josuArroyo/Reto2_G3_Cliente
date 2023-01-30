@@ -54,10 +54,6 @@ import java.text.SimpleDateFormat;
 import javafx.scene.control.TableCell;
 import java.time.ZoneId;
 
-
-
-
-
 /**
  *
  * @author Jessica
@@ -79,7 +75,7 @@ public class TrainingController {
     private TextArea descripArea;
 
     @FXML
-    private DatePicker fechdate;
+    private DatePicker fechDate;
 
     @FXML
     private ComboBox<Integer> durCombo;
@@ -90,11 +86,11 @@ public class TrainingController {
     @FXML
     private ComboBox<Objetivo> objCombo;
     @FXML
-    private ComboBox <String> filterCombo;
-    
+    private ComboBox<String> filterCombo;
+
     @FXML
     private TextField txtFilter;
-   
+
     @FXML
     private Button btnFilter;
 
@@ -147,15 +143,13 @@ public class TrainingController {
         intCombo.getItems().addAll(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
         repCombo.getItems().addAll(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20);
         objCombo.getItems().addAll(cargarObjetivos());
-        
-        
 
         table.setDisable(false);
 
         tcDescrip.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
         tcDuracion.setCellValueFactory(new PropertyValueFactory<>("duracion"));
         tcDate.setCellValueFactory(new PropertyValueFactory<>("fechaPeriod"));
-          tcDate.setCellFactory(column -> {
+        tcDate.setCellFactory(column -> {
             TableCell<Entrenamiento, Date> cell = new TableCell<Entrenamiento, Date>() {
                 private SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
 
@@ -165,17 +159,17 @@ public class TrainingController {
                     if (empty) {
                         setText(null);
                     } else {
-                        if (item != null) {                      
+                        if (item != null) {
                             setText(format.format(item));
                         }
 
-                        
                     }
                 }
             };
 
             return cell;
         });
+
         tcIntensidad.setCellValueFactory(new PropertyValueFactory<>("intensidad"));
         tcRepet.setCellValueFactory(new PropertyValueFactory<>("repeticion"));
         tcObjetivo.setCellValueFactory(new PropertyValueFactory<>("objetivo"));
@@ -194,12 +188,10 @@ public class TrainingController {
         filterCombo.setDisable(false);
         //Los tipos de filtro serán: Todo, duración, intensidad y objetivo.
         filterCombo.getItems().addAll("Todos", "Duración", "Intensidad", "Objetivo");
-       
+
         txtFilter.setDisable(false);
         btnFilter.setDisable(false);
         btnFilter.setOnAction(this::handleActionFilterSearch);
-
-        
 
         //El botón informe está habilitado y visible.
         btnInforme.setDisable(false);
@@ -249,11 +241,12 @@ public class TrainingController {
         todosObjetivos = oInter.findAll_XML(new GenericType<List<Objetivo>>() {
         });
         listObjetivos = FXCollections.observableArrayList(todosObjetivos);
+        table.setItems(listEntrena);
+        table.refresh();
         return listObjetivos;
 
     }
-    
-    
+
     private ObservableList<Entrenamiento> cargarDuracion() {
         ObservableList<Entrenamiento> filtroEntrenamiento;
         List<Entrenamiento> duracionFiltro;
@@ -265,7 +258,7 @@ public class TrainingController {
         table.refresh();
         return filtroEntrenamiento;
     }
-    
+
     private ObservableList<Entrenamiento> cargarIntensidad() {
         ObservableList<Entrenamiento> filtroEntrenamiento;
         List<Entrenamiento> intensidadFiltro;
@@ -278,17 +271,21 @@ public class TrainingController {
         return filtroEntrenamiento;
     }
 
+    private ObservableList<Entrenamiento> cargarFiltroObjetivo() {
+        ObservableList<Entrenamiento> filtroObjetivo;
+        List<Entrenamiento> objetivoFiltro;
+        objetivoFiltro = fact.getFactory().findObjetivo_XML(new GenericType<List<Entrenamiento>>() {
+        }, txtFilter.getText());
+
+        filtroObjetivo = FXCollections.observableArrayList(objetivoFiltro);
+        table.setItems(filtroObjetivo);
+        table.refresh();
+        return filtroObjetivo;
+    }
+
     @FXML
     private void handleCrearButtonAction(ActionEvent event) {
         entrena = new Entrenamiento();
-
-        entrena.setDescripcion(descripArea.getText());
-        entrena.setDuracion(durCombo.getSelectionModel().getSelectedItem());
-        //entrena.setFechaPeriod(fechdate.getValue());
-        //entrena.setFechaPeriod(Date.from(fechdate.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
-        entrena.setIntensidad(intCombo.getSelectionModel().getSelectedItem());
-        entrena.setRepeticion(repCombo.getSelectionModel().getSelectedItem());
-        entrena.setObjetivo(objCombo.getSelectionModel().getSelectedItem());
 
         //Validar que los campos descripción, duración, intensidad y repeticiones y objetivo están informados.
         //Validar que los ComboBox estén seleccionados
@@ -299,34 +296,39 @@ public class TrainingController {
                     || this.objCombo.getSelectionModel().isEmpty()) {
                 throw new Exception("CAMPOS NO INFORMADOS");
             }
-        //Validar que el DatePicker esté informado.
-        //if (this.fechdate.getValue() == null) {
-        //        throw new Exception("LA FECHA NO HA SIDO SELECCIONADO");
-//            }
+            //Validar que el DatePicker esté informado.
+            if (this.fechDate.getValue() == null) {
+                throw new Exception("LA FECHA NO HA SIDO SELECCIONADO");
+            }
+
             //Validar que el máximo número de caracteres en el campo de descripción de entrenamiento sea de 100 caracteres.      
             if (this.descripArea.getText().length() > 100) {
                 throw new Exception("NUMERO CARACTERES \n INCORRECTOS");
 
-                } else {
-                    try {
+            } else {
+                try {
                     // tInter.create_XML(entrena);
-                        fact.getFactory().create_XML(entrena);
-                        listEntrena.add(entrena);
-                       // listEntrena = cargarTodos();
+                    entrena.setDescripcion(descripArea.getText());
+                    entrena.setDuracion(durCombo.getSelectionModel().getSelectedItem());
+                    entrena.setFechaPeriod(Date.from(fechDate.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+                    entrena.setIntensidad(intCombo.getSelectionModel().getSelectedItem());
+                    entrena.setRepeticion(repCombo.getSelectionModel().getSelectedItem());
+                    entrena.setObjetivo(objCombo.getSelectionModel().getSelectedItem());
+                    fact.getFactory().create_XML(entrena);
+                    listEntrena.add(entrena);
+                    // listEntrena = cargarTodos();
 
-                        throw new Exception("ENTRENAMIENTO CORRECTO");
+                    throw new Exception("ENTRENAMIENTO CORRECTO");
 
-                    } catch (Exception e) {
+                } catch (Exception e) {
                     new Alert(Alert.AlertType.INFORMATION, e.getMessage()).showAndWait();
 
                 }
 
             }
 
-            
 //        En caso de que todos los datos introducidos sean válidos y cumplan los requisitos mencionados anteriormente, 
 //        se llama al método create_XML de la interfaz pasándole un objeto (Entrenamiento) con los valores
-            
 //Seguido, saldrá del método del botón.
             //En caso de error salta la excepción con su mensaje correspondiente
         } catch (Exception e) {
@@ -344,7 +346,7 @@ public class TrainingController {
 
             descripArea.setText(entrena.getDescripcion());
             durCombo.setValue(entrena.getDuracion());
-            fechdate.setValue(entrena.getFechaPeriod().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+            fechDate.setValue(entrena.getFechaPeriod().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
             intCombo.setValue(entrena.getIntensidad());
             repCombo.setValue(entrena.getRepeticion());
             objCombo.setValue(entrena.getObjetivo());
@@ -354,22 +356,51 @@ public class TrainingController {
 
     @FXML
     private void handleModificarButtonAction(ActionEvent event) {
-        Entrenamiento entrena = new Entrenamiento();
 
-        Entrenamiento selected = table.getSelectionModel().getSelectedItem();
-        posicionEntrenamiento = selected.getIdEntrenamiento();
-        entrena.setIdEntrenamiento(posicionEntrenamiento);
-        
-        entrena.setDescripcion(descripArea.getText());
-        entrena.setDuracion(durCombo.getSelectionModel().getSelectedItem());
-        //entrenamiento.setFechaPeriod(fechdate.getValue());
-        entrena.setIntensidad(intCombo.getSelectionModel().getSelectedItem());
-        entrena.setRepeticion(repCombo.getSelectionModel().getSelectedItem());
-        entrena.setObjetivo(objCombo.getSelectionModel().getSelectedItem());
+        try {
+            //Si no están informados alguno de los campos saldrá un mensaje de error.
+            if (this.descripArea.getText().isEmpty() || this.durCombo.getSelectionModel().isEmpty()
+                    || this.intCombo.getSelectionModel().isEmpty() || this.repCombo.getSelectionModel().isEmpty()
+                    || this.objCombo.getSelectionModel().isEmpty()) {
+                throw new Exception("CAMPOS NO INFORMADOS");
+            }
+            //Validar que el DatePicker esté informado.
+            if (this.fechDate.getValue() == null) {
+                throw new Exception("LA FECHA NO HA SIDO SELECCIONADO");
+            }
 
-        tInter.edit_XML(entrena);
-        listEntrena = cargarTodos();
+            //Validar que el máximo número de caracteres en el campo de descripción de entrenamiento sea de 100 caracteres.      
+            if (this.descripArea.getText().length() > 100) {
+                throw new Exception("NUMERO CARACTERES \n INCORRECTOS");
 
+            } else {
+                try {
+                    Entrenamiento entrena = new Entrenamiento();
+
+                    Entrenamiento selected = table.getSelectionModel().getSelectedItem();
+                    posicionEntrenamiento = selected.getIdEntrenamiento();
+                    entrena.setIdEntrenamiento(posicionEntrenamiento);
+                    entrena.setDescripcion(descripArea.getText());
+                    entrena.setDuracion(durCombo.getSelectionModel().getSelectedItem());
+                    entrena.setFechaPeriod(Date.from(fechDate.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+                    entrena.setIntensidad(intCombo.getSelectionModel().getSelectedItem());
+                    entrena.setRepeticion(repCombo.getSelectionModel().getSelectedItem());
+                    entrena.setObjetivo(objCombo.getSelectionModel().getSelectedItem());
+
+                    tInter.edit_XML(entrena);
+                    listEntrena = cargarTodos();
+
+                    throw new Exception("ENTRENAMIENTO MODIFICADO CORRECTAMENTE");
+
+                } catch (Exception e) {
+                    new Alert(Alert.AlertType.INFORMATION, e.getMessage()).showAndWait();
+
+                }
+
+            }
+        }catch (Exception e) {
+                    new Alert(Alert.AlertType.ERROR, e.getMessage()).showAndWait();
+        }
     }
 
     @FXML
@@ -392,61 +423,56 @@ public class TrainingController {
             }
 
         } catch (Exception e) {
+            //throw new Exception("EL ENTRENAMIENTO NO SE HA PODIDO ELIMINAR ");
             new Alert(Alert.AlertType.ERROR, e.getMessage()).showAndWait();
             //throw new Exception("EL ENTRENAMIENTO NO SE HA PODIDO ELIMINAR ");
         }
 
     }
-    
+
     @FXML
-    private void handleActionFilterSearch(ActionEvent event){
-        
-         //Object newValue = new Object();
-        
-        
-            switch(filterCombo.getValue().toString()){
-                case("Todos"):
-                    cargarTodos();
+    private void handleActionFilterSearch(ActionEvent event) {
+
+        //Object newValue = new Object();
+        switch (filterCombo.getValue().toString()) {
+            case ("Todos"):
+                cargarTodos();
                 break;
-                case("Duración"):
-                    cargarDuracion();
+            case ("Duración"):
+                cargarDuracion();
                 break;
-                case("Intensidad"):
-                    cargarIntensidad();
+            case ("Intensidad"):
+                cargarIntensidad();
                 break;
-                case("Objetivo"):
-                    cargarObjetivos();
-                
-            }
-    
-   }
-    
-    
- 
-    
-    @FXML
-    private void handleButtonInformeAction(ActionEvent event) {
-         try {
-            //LOGGER.info("Beginning printing action...");
-            JasperReport report = JasperCompileManager.compileReport(getClass().getResourceAsStream("/grupo3/reto2/report/TrainingReport.jrxml"));
-             
-            JRBeanCollectionDataSource dataItems = new JRBeanCollectionDataSource((Collection<Entrenamiento>)this.table.getItems());
-           
-            Map<String,Object> parameters=new HashMap<>();
-            
-            JasperPrint jasperPrint = JasperFillManager.fillReport(report,parameters,dataItems);
-            
-            JasperViewer jasperViewer = new JasperViewer(jasperPrint,false);
-            jasperViewer.setVisible(true);
-           
-        } catch (JRException ex) {
-            //If there is an error show message and
-            //log it.
-             System.out.println("Error");
+            case ("Objetivo"):
+                cargarFiltroObjetivo();
+
         }
 
     }
-    
+
+    @FXML
+    private void handleButtonInformeAction(ActionEvent event) {
+        try {
+            //LOGGER.info("Beginning printing action...");
+            JasperReport report = JasperCompileManager.compileReport(getClass().getResourceAsStream("/grupo3/reto2/report/TrainingReport.jrxml"));
+
+            JRBeanCollectionDataSource dataItems = new JRBeanCollectionDataSource((Collection<Entrenamiento>) this.table.getItems());
+
+            Map<String, Object> parameters = new HashMap<>();
+
+            JasperPrint jasperPrint = JasperFillManager.fillReport(report, parameters, dataItems);
+
+            JasperViewer jasperViewer = new JasperViewer(jasperPrint, false);
+            jasperViewer.setVisible(true);
+
+        } catch (JRException ex) {
+            //If there is an error show message and
+            //log it.
+            System.out.println("Error");
+        }
+
+    }
 
     @FXML
     private void handleCerrarButtonAction(ActionEvent event) {
