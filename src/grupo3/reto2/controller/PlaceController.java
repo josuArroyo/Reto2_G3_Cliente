@@ -6,7 +6,9 @@
 package grupo3.reto2.controller;
 
 import grupo3.reto2.logic.PlaceManagerFactory;
+import grupo3.reto2.model.Admin;
 import grupo3.reto2.model.Lugar;
+import grupo3.reto2.model.User;
 import java.text.SimpleDateFormat;
 import java.time.ZoneId;
 import java.util.Collection;
@@ -53,7 +55,7 @@ import net.sf.jasperreports.view.JasperViewer;
 public class PlaceController {
 
     @FXML
-    private Stage stage;
+    private Stage stage = new Stage();
 
     @FXML
     private TextField txtNombreLugar;
@@ -126,7 +128,8 @@ public class PlaceController {
     //SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
     //SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
     // private SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
-
+    User user;
+    Admin admin;
     public void initStage(Parent root) {
 
         Scene scene = new Scene(root);
@@ -279,7 +282,7 @@ public class PlaceController {
 
     @FXML
     private void handleCrearButtonAction(ActionEvent event) {
-
+     
         try {
             //aqui estamos validando que los campos no esten vacios 
             if (this.txtNombreLugar.getText().isEmpty() || this.txtDescLugar.getText().isEmpty() || this.cbxTipoLugar.getSelectionModel().getSelectedItem().toString().isEmpty() || dteTiempoReservado.getValue() == null) {
@@ -299,6 +302,7 @@ public class PlaceController {
                     lugar.setDescripcion(txtDescLugar.getText());
                     lugar.setTipoLugar(cbxTipoLugar.getSelectionModel().getSelectedItem().toString());
                     lugar.setTiempo(Date.from(dteTiempoReservado.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+                    admin.setId(user.getId());
 
                     //llamamos a la factoria para crear ese lugar y lo introduzca en la base de datos 
                     placefact.getFactory().create_XML(lugar);

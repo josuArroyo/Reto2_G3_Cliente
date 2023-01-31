@@ -121,18 +121,18 @@ public class SignInController {
                 List<User> usersiden;
                 usersiden = userfact.getFactory().findUsersByLogin_XML(new GenericType<List<User>>(){}, txtNombre.getText(), txtPasswd.getText());
                 
-                /*esto esta mal hay que referenciar bn a la siguiente ventana
-                Stage PlaceStage = new Stage();
+                
+              
                 //cargar el fxml de la ventana de sign up utilizando un cargador no estatico
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("grupo3/reto2/view/Place.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/grupo3/reto2/view/Place.fxml"));
 
                 Parent root = (Parent) loader.load();
 
                 PlaceController placeController = ((PlaceController) loader.getController());
 
                 placeController.initStage(root);
-                */
-                System.out.println("patata");
+                
+              
             }
 
         } catch (Exception e) {
@@ -149,9 +149,9 @@ public class SignInController {
     private void handleSignUpButtonAction(ActionEvent event) {
 
         try {
-            Stage SignUpStage = new Stage();
+            
             //cargar el fxml de la ventana de sign up utilizando un cargador no estatico
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("view/Place.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/grupo3/reto2/view/Place.fxml"));
 
             Parent root = (Parent) loader.load();
 
