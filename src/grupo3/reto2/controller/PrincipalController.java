@@ -17,7 +17,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+
 import javafx.scene.image.ImageView;
+
 import javafx.stage.Stage;
 
 /**
@@ -26,11 +28,14 @@ import javafx.stage.Stage;
  */
 public class PrincipalController {
 
+
     @FXML
     private Stage stage;
 
+
     @FXML
     private Label label;
+
     String nombre = "Pablo";
     @FXML
     private Label lblTexto;
@@ -51,6 +56,7 @@ public class PrincipalController {
         lblTexto.setDisable(true);
         //El botón está habilitado
         btnExit.setDisable(false);
+        btnExit.setOnAction(this::handleExitButtonAction);
         lblTexto.setVisible(true);
         btnExit.setVisible(true);
 
@@ -93,14 +99,13 @@ public class PrincipalController {
         }
     }
 
+
+  
+
+
     @FXML
     private void handleButtonAction(ActionEvent event) {
         System.out.println("You clicked me!");
         label.setText("Hello World!");
     }
-
-    public void getUser(User user) {
-        this.user = user;
-    }
-
 }

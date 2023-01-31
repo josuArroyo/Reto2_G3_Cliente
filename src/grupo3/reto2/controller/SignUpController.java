@@ -141,9 +141,18 @@ public class SignUpController {
      *
      * @param event
      */
+   
+
+
+
+    /**
+     * 'save' button method with validations
+     *
+     * @param event
+     */
     @FXML
     //VALIDAR QUE TODO ESTE CORRECTO Y CUMPLA LOS REQUISITOS
-    private void handleButtonSaveAction(ActionEvent event) {
+    private void handleButtonSaveAction (ActionEvent event) {
 
         //Validar que los campos nombre de usuario, fullname, email, password y confirmPasswd estén informados.
         try {
@@ -180,15 +189,15 @@ public class SignUpController {
                 //throw new Exception("usuario registrado");
             } else {
 
-                User client = new Cliente();
                 User user = new User();
+
                 user.setLogin(txtNombre2.getText());
                 user.setNombre(txtNombreComp.getText());
                 user.setEmail(txtEmail.getText());
                 user.setPasswd(txtPasswd2.getText());
                 user.setConfPasswd(txtConfirmPasswd.getText());
                 user.setEmail(txtEdad.getText());
-                user.setPrivilege(UserPrivilege.CLIENT);
+                user.setUserPrivilege(UserPrivilege.CLIENT);
                 factUser.getFactory().create_XML(user);
 
                 throw new Exception("USUARIO REGISTRADO");

@@ -16,7 +16,7 @@ public class Admin extends User{
 
     private static final long serialVersionUID = 1L;
     
-    
+
     
     
     private String licencia;
@@ -25,25 +25,31 @@ public class Admin extends User{
     /**
      * @associates <{uml.Evento}>
      */
-   
+
     private Set<Evento> listaEvento;
 
     /**
      * @associates <{uml.Lugar}>
      */
     
+
     private Set<Lugar> listaLugar;
 
     /**
      * @associates <{uml.Entrenamiento}>
      */
    
+
+
+
     private Set<Entrenamiento> listaEntrenamiento;
 
     /**
      * @associates <{uml.Objetivo}>
      */
-   
+
+
+
     private Set<Objetivo> listaObjetivo;
 
 
@@ -59,7 +65,7 @@ public class Admin extends User{
         this.listaEvento = listaEvento;
     }
 
-    
+
     public Set<Evento> getListaEvento() {
         return listaEvento;
     }
@@ -68,7 +74,7 @@ public class Admin extends User{
         this.listaLugar = listaLugar;
     }
 
-    
+
     public Set<Lugar> getListaLugar() {
         return listaLugar;
     }
@@ -77,7 +83,7 @@ public class Admin extends User{
         this.listaEntrenamiento = listaEntrenamiento;
     }
 
-    
+
     public Set<Entrenamiento> getListaEntrenamiento() {
         return listaEntrenamiento;
     }
@@ -86,7 +92,7 @@ public class Admin extends User{
         this.listaObjetivo = listaObjetivo;
     }
 
-    
+
     public Set<Objetivo> getListaObjetivo() {
         return listaObjetivo;
     }

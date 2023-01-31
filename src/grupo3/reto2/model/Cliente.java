@@ -26,14 +26,15 @@ public class Cliente extends User{
     /**
      * @associates <{uml.ObjetivoUser}>
      */
-   
+
     private Set<ObjetivoCliente> listaObjetivoCliente;
 
     /**
      * @associates <{uml.Evento}>
      */
-  
+
     private Set<Evento> listaEvento;
+
 
     public Set<ObjetivoCliente> getListaObjetivoCliente() {
         return listaObjetivoCliente;
@@ -49,7 +50,7 @@ public class Cliente extends User{
         this.listaEvento = listaEvento;
     }
 
-    
+
     public Set<Evento> getListaEvento() {
         return listaEvento;
     }

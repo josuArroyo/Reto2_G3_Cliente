@@ -5,6 +5,10 @@
  */
 package grupo3.reto2;
 
+import grupo3.reto2.controller.PlaceController;
+import grupo3.reto2.controller.SignInController;
+import grupo3.reto2.controller.SignUpController;
+import java.util.logging.Logger;
 import grupo3.reto2.controller.PrincipalController;
 import grupo3.reto2.controller.TrainingController;
 import javafx.application.Application;
@@ -18,9 +22,12 @@ import javafx.stage.Stage;
  * @author 2dam
  */
 public class Aplication extends Application {
-    
+
+    private static final Logger LOGGER = Logger.getLogger(Aplication.class.getName());
+
     @Override
     public void start(Stage stage) throws Exception {
+
 
 //        FXMLLoader loader= new FXMLLoader(getClass().getResource("view/Principal.fxml")); 
 //        Parent root = (Parent)loader.load();
@@ -28,11 +35,11 @@ public class Aplication extends Application {
 //        principal  .setStage(stage);
 //        principal.initStage(root);
         
-        FXMLLoader loader= new FXMLLoader(getClass().getResource("view/Training.fxml")); 
-        Parent root = (Parent)loader.load();
-        TrainingController trainCont= ((TrainingController)loader.getController());
-        trainCont.setStage(stage);
-        trainCont.initStage(root);
+//        FXMLLoader loader= new FXMLLoader(getClass().getResource("view/Training.fxml")); 
+//        Parent root = (Parent)loader.load();
+//        TrainingController trainCont= ((TrainingController)loader.getController());
+//        trainCont.setStage(stage);
+//        trainCont.initStage(root);
         
 //      Parent root = FXMLLoader.load(getClass().getResource("Training.fxml"));
 //        
@@ -40,6 +47,16 @@ public class Aplication extends Application {
 //        
 //        stage.setScene(scene);
 //        stage.show();
+
+        LOGGER.info("Carga del FXML de SignIn");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("view/SignIn.fxml"));
+        Parent root = (Parent) loader.load();
+        LOGGER.info("Llamada al controlador del FXML");
+        SignInController controller = ((SignInController) loader.getController());
+        controller.setStage(stage);
+        controller.initStage(root);
+
+
     }
 
     /**
@@ -48,5 +65,5 @@ public class Aplication extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    
+
 }
