@@ -75,21 +75,16 @@ public class MenuBarController {
     private void menuHome(ActionEvent event){
         
          try {
-            
-            
-            
-            FXMLLoader loader= new FXMLLoader(getClass().getResource("view/principal.fxml")); 
-             System.out.println(loader.getLocation());
-            Parent root = (Parent)loader.load();
-            
-            PrincipalController controller = ((PrincipalController) loader.getController());
-           
-            controller.setStage(stage);
-            controller.initialize(root);
-            
-         
 
-            hBoxMenu.getScene().getWindow().hide();
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/grupo3/reto2/view/Principal.fxml"));
+
+                Parent root = (Parent) loader.load();
+
+                PrincipalController principalController = ((PrincipalController) loader.getController());
+
+                principalController.initiStage(root);
+            
+            
         } catch (IOException e) {
                 
         }
@@ -100,16 +95,15 @@ public class MenuBarController {
     private void miLugar(ActionEvent event){
         try {
             
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("view/Place.fxml"));
+           FXMLLoader loader = new FXMLLoader(getClass().getResource("/grupo3/reto2/view/Place.fxml"));
 
-            Parent root = (Parent) loader.load();
+                Parent root = (Parent) loader.load();
+
+                PrincipalController principalController = ((PrincipalController) loader.getController());
+
+                principalController.initiStage(root);
+
             
-            /*PlaceController controller = ((PlaceController) loader.getController());
-
-            controller.setStage(stage);
-            controller.initStage(root);*/
-
-            hBoxMenu.getScene().getWindow().hide();
         } catch (IOException e) {
             
         }
@@ -117,7 +111,7 @@ public class MenuBarController {
     @FXML
     private void miEvento(ActionEvent event){
         try{
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("view/Evento.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/grupo3/reto2/view/Ventana_Evento.fxml"));
 
             Parent root = (Parent) loader.load();
             
@@ -126,7 +120,7 @@ public class MenuBarController {
             controller.setStage(stage);
             controller.initStage(root);*/
 
-            hBoxMenu.getScene().getWindow().hide();
+           
         } catch (IOException e) {
             
         }
@@ -135,7 +129,7 @@ public class MenuBarController {
     @FXML
     private void miEntrenamiento(ActionEvent event){
         try{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("view/Training.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/grupo3/reto2/view/Training.fxml"));
 
             Parent root = (Parent) loader.load();
             
@@ -144,7 +138,7 @@ public class MenuBarController {
             controller.setStage(stage);
             controller.initStage(root);*/
 
-            hBoxMenu.getScene().getWindow().hide();
+           
         } catch (IOException e) {
             
         }
@@ -152,7 +146,7 @@ public class MenuBarController {
     @FXML
     private void miObjetivo(ActionEvent event){
         try{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("view/Objective.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/grupo3/reto2/view/Objective.fxml"));
 
             Parent root = (Parent) loader.load();
             
@@ -161,7 +155,7 @@ public class MenuBarController {
             controller.setStage(stage);
             controller.initStage(root);
 
-            hBoxMenu.getScene().getWindow().hide();
+            
         } catch (IOException e) {
             
         }

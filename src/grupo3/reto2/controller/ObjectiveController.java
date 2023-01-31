@@ -341,6 +341,11 @@ public class ObjectiveController{
         todosObjetivos = factoryObj.getFactory().findAll_XML(new GenericType<List<Objetivo>>(){});
         
         listObjetivo = FXCollections.observableArrayList(todosObjetivos);
+        //Vacia los datos cuando carga datos
+        txtClaveObjet.setText("");
+        txtDescriObjeti.setText("");
+        txtDescriParam.setText("");
+        txtValorParam.setText("");
         TableObjetivo.setItems(listObjetivo);
         TableObjetivo.refresh();
         return listObjetivo;
@@ -511,6 +516,7 @@ public class ObjectiveController{
                 txtFiltrarParam.setVisible(false);
                 btnFiltrar.setVisible(false);
                 btnFiltrar.setDisable(true);
+                
                 cargarTodo();
                 break;
         }
