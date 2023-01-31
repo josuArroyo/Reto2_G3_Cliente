@@ -29,19 +29,19 @@
 	<columnHeader>
 		<band height="61" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="93" height="61" uuid="9d620370-6cd7-4941-a8ca-d5aba638ccfa"/>
+				<reportElement x="0" y="0" width="114" height="61" uuid="9d620370-6cd7-4941-a8ca-d5aba638ccfa"/>
 				<text><![CDATA[Descripcion]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="93" y="0" width="96" height="61" uuid="a9cbbf54-f5ff-4543-861f-f8bb1a4d3e29"/>
+				<reportElement x="114" y="0" width="75" height="61" uuid="a9cbbf54-f5ff-4543-861f-f8bb1a4d3e29"/>
 				<text><![CDATA[Duracion]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="189" y="0" width="99" height="61" uuid="06f902d3-1e35-4962-b6c0-81ad3fb7758d"/>
+				<reportElement x="189" y="0" width="127" height="61" uuid="06f902d3-1e35-4962-b6c0-81ad3fb7758d"/>
 				<text><![CDATA[Fecha de entrenamiento]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="288" y="0" width="96" height="61" uuid="d696335d-5c85-48cb-84b3-461c8c4748ca"/>
+				<reportElement x="316" y="0" width="68" height="61" uuid="d696335d-5c85-48cb-84b3-461c8c4748ca"/>
 				<text><![CDATA[Intensidad]]></text>
 			</staticText>
 			<staticText>
@@ -57,19 +57,19 @@
 	<detail>
 		<band height="125" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="93" height="61" uuid="fe9078a9-0445-49dc-ac94-a67f4945ef93"/>
+				<reportElement x="0" y="0" width="114" height="61" uuid="fe9078a9-0445-49dc-ac94-a67f4945ef93"/>
 				<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="188" y="0" width="100" height="61" uuid="ea864fcd-da0a-461a-b8b9-4a8857d3cca9"/>
+				<reportElement x="188" y="0" width="128" height="61" uuid="ea864fcd-da0a-461a-b8b9-4a8857d3cca9"/>
 				<textFieldExpression><![CDATA[$F{fechaPeriod}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="93" y="0" width="95" height="61" uuid="471d16c8-637b-4631-a1b1-a053845a6fed"/>
+				<reportElement x="114" y="0" width="74" height="61" uuid="471d16c8-637b-4631-a1b1-a053845a6fed"/>
 				<textFieldExpression><![CDATA[$F{duracion}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="288" y="0" width="96" height="61" uuid="09c9a731-0eab-4b84-a161-1a2c2d45564b"/>
+				<reportElement x="316" y="0" width="68" height="61" uuid="09c9a731-0eab-4b84-a161-1a2c2d45564b"/>
 				<textFieldExpression><![CDATA[$F{intensidad}]]></textFieldExpression>
 			</textField>
 			<textField>

@@ -123,7 +123,7 @@ public class Objetivo implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Objetivo[ id=" + idObjetivo + " ]";
+        return this.idObjetivo.toString();
     }
 
 }

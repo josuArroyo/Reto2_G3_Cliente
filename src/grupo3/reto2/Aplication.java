@@ -5,12 +5,11 @@
  */
 package grupo3.reto2;
 
-import grupo3.reto2.controller.SignUpController;
+import grupo3.reto2.controller.PrincipalController;
 import grupo3.reto2.controller.TrainingController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 
@@ -23,17 +22,17 @@ public class Aplication extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-        FXMLLoader loader= new FXMLLoader(getClass().getResource("view/SignUp.fxml")); 
-        Parent root = (Parent)loader.load();
-        SignUpController signUp= ((SignUpController)loader.getController());
-        signUp.setStage(stage);
-        signUp.initStage(root);
-        
-//        FXMLLoader loader= new FXMLLoader(getClass().getResource("view/Training.fxml")); 
+//        FXMLLoader loader= new FXMLLoader(getClass().getResource("view/Principal.fxml")); 
 //        Parent root = (Parent)loader.load();
-//        TrainingController trainCont= ((TrainingController)loader.getController());
-//        trainCont.setStage(stage);
-//        trainCont.initStage(root);
+//        PrincipalController principal= ((PrincipalController)loader.getController());
+//        principal  .setStage(stage);
+//        principal.initStage(root);
+        
+        FXMLLoader loader= new FXMLLoader(getClass().getResource("view/Training.fxml")); 
+        Parent root = (Parent)loader.load();
+        TrainingController trainCont= ((TrainingController)loader.getController());
+        trainCont.setStage(stage);
+        trainCont.initStage(root);
         
 //      Parent root = FXMLLoader.load(getClass().getResource("Training.fxml"));
 //        
