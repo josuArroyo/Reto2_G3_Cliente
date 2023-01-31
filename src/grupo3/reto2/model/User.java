@@ -1,40 +1,49 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package grupo3.reto2.model;
 
 import java.io.Serializable;
 import java.util.Set;
-import javax.xml.bind.annotation.XmlElement;
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-
+import javax.xml.bind.annotation.XmlSeeAlso;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author 2dam
  */
-
+@XmlSeeAlso({Admin.class,Cliente.class})
 @XmlRootElement
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
-    
-    
-    private Integer idUser;
    
+    private Integer idUser;
     private String login;
     private String nombre;
     private String email;
     private String passwd;
     private String confPasswd;
     
-    
+
     private UserPrivilege userPrivilege;
     
-    @XmlElement(name="Id")
+    
     public Integer getId() {
         return idUser;
     }
@@ -48,7 +57,7 @@ public class User implements Serializable {
     }
     
     
-        @XmlElement(name="Login")
+
     public String getLogin() {
         return login;
     }
@@ -56,7 +65,7 @@ public class User implements Serializable {
     public void setLogin(String login) {
         this.login = login;
     }
-    @XmlElement(name="Privilege")
+
     public UserPrivilege getPrivilege() {
         return userPrivilege;
     }
@@ -68,7 +77,7 @@ public class User implements Serializable {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-    @XmlElement(name="Nombre")
+
     public String getNombre() {
         return nombre;
     }
@@ -76,7 +85,7 @@ public class User implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
-    @XmlElement(name="Email")
+
     public String getEmail() {
         return email;
     }
@@ -84,7 +93,7 @@ public class User implements Serializable {
     public void setPasswd(String passwd) {
         this.passwd = passwd;
     }
-    @XmlElement(name="Passwd")
+
     public String getPasswd() {
         return passwd;
     }
@@ -92,7 +101,7 @@ public class User implements Serializable {
     public void setConfPasswd(String confPasswd) {
         this.confPasswd = confPasswd;
     }
-    @XmlElement(name="ConfPasswd")
+
     public String getConfPasswd() {
         return confPasswd;
     }
@@ -119,7 +128,11 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return this.idUser.toString();
+        return "entities.User[ id=" + idUser + " ]";
+    }
+
+    public Object target(String BASE_URI) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

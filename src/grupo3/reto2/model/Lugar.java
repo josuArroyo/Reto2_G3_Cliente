@@ -10,13 +10,19 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 import javax.xml.bind.annotation.XmlElement;
+
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author josuA
+ * @author 2dam,josuA
  */
-@XmlRootElement
+
+
+
+//comienzo de la clase
+@XmlRootElement(name="lugar")
 public class Lugar implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -24,15 +30,16 @@ public class Lugar implements Serializable {
    
     private Integer idLugar;
 
-    
+   
     private String nombre;
 
-    
+   
     private String descripcion;
 
+   
     private String tipoLugar;
 
-    
+
     private Date tiempo;
 
     /**
@@ -48,6 +55,7 @@ public class Lugar implements Serializable {
         this.listaEvento = listaEvento;
     }
 
+    @XmlTransient
     public Set<Evento> getListaEvento() {
         return listaEvento;
     }
@@ -55,7 +63,7 @@ public class Lugar implements Serializable {
     public void setAdmin(Admin admin) {
         this.admin = admin;
     }
-    @XmlElement(name="Admin")
+
     public Admin getAdmin() {
         return admin;
     }
@@ -63,7 +71,7 @@ public class Lugar implements Serializable {
     public void setIdLugar(Integer idLugar) {
         this.idLugar = idLugar;
     }
-    @XmlElement(name="IdLugar")
+
     public Integer getIdLugar() {
         return idLugar;
     }
@@ -71,7 +79,8 @@ public class Lugar implements Serializable {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-    @XmlElement(name="Nombre")
+
+    @XmlElement(name="nombre")
     public String getNombre() {
         return nombre;
     }
@@ -79,7 +88,8 @@ public class Lugar implements Serializable {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-    @XmlElement(name="Descripcion")
+
+    @XmlElement(name="descripcion")
     public String getDescripcion() {
         return descripcion;
     }
@@ -87,7 +97,8 @@ public class Lugar implements Serializable {
     public void setTipoLugar(String tipoLugar) {
         this.tipoLugar = tipoLugar;
     }
-    @XmlElement(name="TipoLugar")
+
+    @XmlElement(name="tipoLugar")
     public String getTipoLugar() {
         return tipoLugar;
     }
@@ -95,7 +106,8 @@ public class Lugar implements Serializable {
     public void setTiempo(Date tiempo) {
         this.tiempo = tiempo;
     }
-    @XmlElement(name="Tiempo")
+
+    @XmlElement(name="tiempo")
     public Date getTiempo() {
         return tiempo;
     }
@@ -126,5 +138,3 @@ public class Lugar implements Serializable {
     }
 
 }
-
-

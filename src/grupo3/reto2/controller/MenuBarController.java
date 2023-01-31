@@ -84,7 +84,7 @@ public class MenuBarController {
 
                 principalController.initiStage(root);
             
-            
+                
         } catch (IOException e) {
                 
         }
@@ -99,9 +99,9 @@ public class MenuBarController {
 
                 Parent root = (Parent) loader.load();
 
-                PrincipalController principalController = ((PrincipalController) loader.getController());
+                PlaceController PlaceController = ((PlaceController) loader.getController());
 
-                principalController.initiStage(root);
+                PlaceController.initStage(root);
 
             
         } catch (IOException e) {
@@ -184,7 +184,7 @@ public class MenuBarController {
     
     @FXML
     private void miCerrarSesion(ActionEvent event){
-    
+        
     }
     
 }
