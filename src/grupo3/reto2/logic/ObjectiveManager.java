@@ -6,7 +6,7 @@
 package grupo3.reto2.logic;
 
 import javax.ws.rs.ClientErrorException;
-import javax.ws.rs.client.WebTarget;
+
 import javax.ws.rs.core.GenericType;
 
 /**
@@ -16,7 +16,7 @@ import javax.ws.rs.core.GenericType;
 public interface ObjectiveManager {
     
      
-   public void edit_XML(Object requestEntity) throws ClientErrorException;
+    public void edit_XML(Object requestEntity) throws ClientErrorException;
        
     public void edit_JSON(Object requestEntity) throws ClientErrorException;
         
