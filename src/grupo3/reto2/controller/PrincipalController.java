@@ -21,7 +21,7 @@ import javafx.stage.Stage;
  * @author 2dam
  */
 public class PrincipalController {
-    
+    Stage stage = new Stage();
     @FXML
     private Label label;
     
@@ -29,17 +29,21 @@ public class PrincipalController {
     
     public void initialize(Parent root) {
         Scene scene = new Scene(root);
-        Stage stage = new Stage();
+        
         stage.setScene(scene);
         //La ventana es modal
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Principal");
         stage.show();
-    }    
+    }  
+
     public void setStage(Stage stage) {
-        
-        this.setStage(stage);
+        this.stage = stage;
     }
+
+    
+    
+  
 
     
     

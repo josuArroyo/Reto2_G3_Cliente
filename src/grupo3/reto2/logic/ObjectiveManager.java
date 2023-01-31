@@ -15,11 +15,12 @@ import javax.ws.rs.core.GenericType;
  */
 public interface ObjectiveManager {
     
-    public void edit_XML(Object requestEntity) throws ClientErrorException;
+     
+   public void edit_XML(Object requestEntity) throws ClientErrorException;
        
     public void edit_JSON(Object requestEntity) throws ClientErrorException;
         
-    public <T> T find_XML(GenericType<T> responseType, String id) throws ClientErrorException;
+    public <T> T find_XML(Class<T> responseType, String id) throws ClientErrorException;
       
     public <T> T find_JSON(Class<T> responseType, String id) throws ClientErrorException;
         

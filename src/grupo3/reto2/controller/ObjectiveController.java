@@ -360,9 +360,10 @@ public class ObjectiveController{
     
     @FXML
     private ObservableList<Objetivo> cargarFiltro2(){
+        ID = Integer.parseInt(txtFiltrarParam.getText());
         ObservableList<Objetivo> listObjetivo;
         List<Objetivo> FiltradoParam;
-        FiltradoParam = FXCollections.observableArrayList(factoryObj.getFactory().find_XML(new GenericType<List<Objetivo>>(){}, txtFiltrarParam.getText()));
+        FiltradoParam = FXCollections.observableArrayList(factoryObj.getFactory().find_XML(Objetivo.class, txtFiltrarParam.getText()));
         
         listObjetivo = FXCollections.observableArrayList(FiltradoParam);
         TableObjetivo.setItems(listObjetivo);

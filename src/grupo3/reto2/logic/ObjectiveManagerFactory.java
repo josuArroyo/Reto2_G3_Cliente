@@ -11,7 +11,7 @@ package grupo3.reto2.logic;
  */
 public class ObjectiveManagerFactory {
     public ObjectiveManager getFactory(){
-        ObjectiveManager objeti = new ObjectiveRESTfulclient();
+        ObjectiveManager objeti = new ObjectiveRESTfulClient();
         return objeti;
     }
 }

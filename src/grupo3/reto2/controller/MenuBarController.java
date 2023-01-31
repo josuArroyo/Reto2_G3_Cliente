@@ -76,20 +76,22 @@ public class MenuBarController {
         
          try {
             
-            Stage PrincipalStage = new Stage();
             
-            FXMLLoader loader= new FXMLLoader(getClass().getResource("view/Principal.fxml")); 
-
-            Parent root = loader.load();
+            
+            FXMLLoader loader= new FXMLLoader(getClass().getResource("view/principal.fxml")); 
+             System.out.println(loader.getLocation());
+            Parent root = (Parent)loader.load();
             
             PrincipalController controller = ((PrincipalController) loader.getController());
-
-            controller.setStage(PrincipalStage);
+           
+            controller.setStage(stage);
             controller.initialize(root);
+            
+         
 
             hBoxMenu.getScene().getWindow().hide();
         } catch (IOException e) {
-            
+                
         }
     }
     
