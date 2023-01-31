@@ -9,6 +9,8 @@ import grupo3.reto2.logic.PlaceManagerFactory;
 import grupo3.reto2.model.Admin;
 import grupo3.reto2.model.Lugar;
 import grupo3.reto2.model.User;
+import java.io.IOException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.time.ZoneId;
 import java.util.Collection;
@@ -25,6 +27,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -38,7 +41,10 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javax.ws.rs.core.GenericType;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -98,6 +104,9 @@ public class PlaceController {
 
     @FXML
     private Button btnInforme;
+    
+    @FXML
+    private Button btnAyuda;
 
     @FXML
     private ComboBox cbxTipoLugar;
@@ -116,6 +125,8 @@ public class PlaceController {
 
     @FXML
     private TableColumn tblcTipoLugar;
+    
+
 
     private static final Logger LOGGER = Logger.getLogger("grupo3.reto2.Controller");
     Integer index;
@@ -145,6 +156,7 @@ public class PlaceController {
         btnModificar.setDisable(false);
         btnInforme.setDisable(false);
         btnSalir.setDisable(false);
+        btnAyuda.setDisable(false);
 
         //habilitamos las combo box
         cbxTipoLugar.setDisable(false);
@@ -177,6 +189,7 @@ public class PlaceController {
         btnInforme.setOnAction(this::handleInformeButtonAction);
         btnEliminar.setOnAction(this::handleEliminarButtonAction);
         btnModificar.setOnAction(this::handleModificarButtonAction);
+        btnAyuda.setOnAction(this::handleAyudaButtonAction);
         tblvTabla.getSelectionModel().selectedItemProperty().addListener(this::handleUsersTableSelectionChanged);
         cbxFiltroTipoLugar.valueProperty().addListener(this::handleFiltradoTipoLugar);
         //cargar combobox
@@ -454,6 +467,29 @@ public class PlaceController {
                 cargarTodo();
         }
 
+    }
+    
+    @FXML
+    private void handleAyudaButtonAction(ActionEvent event) {
+       try {
+            Stage mainStage = new Stage();
+            URL viewLink = getClass().getResource("/grupo3/reto2/view/Help.fxml");
+            // initialition loader
+            FXMLLoader loader = new FXMLLoader(viewLink);
+            //make the root with the loader
+            Parent root = (Parent) loader.load();
+            //Get the controller
+            HelpController mainStageController = ((HelpController) loader.getController());
+            //set the stage
+            mainStageController.setStage(mainStage);
+            //start the stage
+            mainStageController.initStage(root);
+            this.stage.close();
+        } catch (IOException ex) {
+            Logger.getLogger(PlaceController.class.getName())
+                    .log(Level.SEVERE, null, ex);
+        }
+        
     }
 
 }
