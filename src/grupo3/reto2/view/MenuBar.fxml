@@ -7,11 +7,11 @@
 
 <HBox fx:id="hbox" maxHeight="30.0" maxWidth="1000.0" prefHeight="30.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="grupo3.reto2.controller.MenuBarController">
    <children>
-      <MenuBar fx:id="menuBar" prefHeight="30.0"  prefWidth="1000.0">
+      <MenuBar fx:id="menuBar" prefHeight="30.0" prefWidth="1000.0">
         <menus>
           <Menu fx:id="menuHome" mnemonicParsing="false" onAction="#menuHome" text="Home">
             <items>
-              <MenuItem fx:id="miVolver" mnemonicParsing="false"  text="Volver a la principal" />
+              <MenuItem fx:id="miVolver" mnemonicParsing="false" text="Volver a la principal" />
             </items>
           </Menu>
           <Menu fx:id="menuNavegar" mnemonicParsing="false" text="Navegar">
@@ -22,16 +22,9 @@
                   <MenuItem fx:id="miObjetivo" mnemonicParsing="false" onAction="#miObjetivo" text="Objetivo" />
             </items>
           </Menu>
-          <Menu fx:id="menuAyuda" mnemonicParsing="false" text="Ayuda">
-            <items>
-                  <MenuItem fx:id="miDescripcionVentana" mnemonicParsing="false" onAction="#miDescripcionVentana" text="Descripcion de la ventana" />
-              <MenuItem fx:id="miManualUsuario" mnemonicParsing="false" onAction="#miManualUsuario" text="Manual de usuario" />
-                  <MenuItem fx:id="miSobreNosotros" mnemonicParsing="false" onAction="#miSobreNosotros" text="Sobre Fuerza_G3..." />
-            </items>
-          </Menu>
-            <Menu fx:id="menuCR" mnemonicParsing="false"  text="Cerrar sesión">
+            <Menu fx:id="menuCR" mnemonicParsing="false" text="Cerrar sesión">
               <items>
-                <MenuItem fx:id="miCerrarSesion" mnemonicParsing="false" onAction="#miCerrarSesion"  text="Cerrar sesión" />
+                <MenuItem fx:id="miCerrarSesion" mnemonicParsing="false" onAction="#miCerrarSesion" text="Cerrar sesión" />
               </items>
             </Menu>
         </menus>

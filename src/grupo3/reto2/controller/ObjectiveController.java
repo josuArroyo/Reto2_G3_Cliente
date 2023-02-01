@@ -11,6 +11,7 @@ import grupo3.reto2.model.Lugar;
 import grupo3.reto2.model.Objetivo;
 import grupo3.reto2.model.User;
 import grupo3.reto2.model.UserPrivilege;
+import java.io.IOException;
 import java.net.URL;
 import java.util.Collection;
 import java.util.HashMap;
@@ -29,6 +30,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -90,6 +92,9 @@ public class ObjectiveController{
     
     @FXML
     private Button btnInform;
+    
+    @FXML
+    private Button btnhelp;
     
     @FXML
     private TableView<Objetivo> TableObjetivo;
@@ -333,6 +338,28 @@ public class ObjectiveController{
             }
         }
     }
+    
+    @FXML
+    private void handleHelpButton(ActionEvent event){
+        try {
+            Stage mainStage = new Stage();
+            URL viewLink = getClass().getResource("/grupo3/reto2/view/Help.fxml");
+            // initialition loader
+            FXMLLoader loader = new FXMLLoader(viewLink);
+            //make the root with the loader
+            Parent root = (Parent) loader.load();
+            //Get the controller
+            HelpObjectiveController mainStageController = ((HelpObjectiveController) loader.getController());
+            //set the stage
+            mainStageController.setStage(mainStage);
+            //start the stage
+            mainStageController.initStage(root);
+            this.stage.close();
+        } catch (IOException ex) {
+            Logger.getLogger(PlaceController.class.getName())
+                    .log(Level.SEVERE, null, ex);
+        }
+    }
        
     @FXML
     private ObservableList<Objetivo> cargarTodo(){
@@ -458,9 +485,11 @@ public class ObjectiveController{
         btnDelete.setDisable(true);
         btnModifi.setDisable(true);
         
+        
         //Los otros botones están habilitados
         btnInform.setDisable(false);
         btnSalir.setDisable(false);
+        btnhelp.setDisable(false);
         
         
         
@@ -492,6 +521,7 @@ public class ObjectiveController{
         btnDelete.setOnAction(this::handleDeleteButtonAction);
         btnFiltrar.setOnAction(this::handleSearchButton);
         btnInform.setOnAction(this::handleInformButton);
+        btnhelp.setOnAction(this::handleHelpButton);
         
         cbxFiltr.setOnAction(new EventHandler<ActionEvent>(){
             public void handle(ActionEvent event) {

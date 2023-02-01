@@ -58,5 +58,6 @@
             <Tooltip text="Breve descripcion del parametro deseado" />
          </tooltip></TextField>
       <Button fx:id="btnInform" layoutX="49.0" layoutY="637.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="86.0" text="Informe" />
+      <Button fx:id="btnhelp" layoutX="697.0" layoutY="637.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="86.0" text="Ayuda" />
    </children>
 </Pane>
