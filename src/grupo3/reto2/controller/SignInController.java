@@ -119,27 +119,20 @@ public class SignInController {
                 user.setLogin(txtNombre.getText());
                 user.setPasswd(txtPasswd.getText());
                 List<User> usersiden;
-                usersiden = userfact.getFactory().findUsersByLogin_XML(new GenericType<List<User>>() {
-                }, txtNombre.getText(), txtPasswd.getText());
+                usersiden = userfact.getFactory().findUsersByLogin_XML(new GenericType<List<User>>(){}, txtNombre.getText(), txtPasswd.getText());
+                
+                
+              
+                //cargar el fxml de la ventana de sign up utilizando un cargador no estatico
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/grupo3/reto2/view/Place.fxml"));
 
-                try {
+                Parent root = (Parent) loader.load();
 
-                    Stage PlaceStage = new Stage();
-                    //cargar el fxml de la ventana de sign up utilizando un cargador no estatico
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("view/Place.fxml"));
+                PlaceController placeController = ((PlaceController) loader.getController());
 
-                    Parent root = (Parent) loader.load();
-
-                    PlaceController placeController = ((PlaceController) loader.getController());
-                    
-                    placeController.initStage(root);
-
-                } catch (Exception e) {
-                    
-                    Logger.getLogger(SignInController.class.getName()).log(Level.SEVERE, null, e);
-                }
-
-                System.out.println("patata");
+                placeController.initStage(root);
+                
+              
             }
 
         } catch (Exception e) {
@@ -156,15 +149,15 @@ public class SignInController {
     private void handleSignUpButtonAction(ActionEvent event) {
 
         try {
-           // Stage SignUpStage = new Stage();
+            
             //cargar el fxml de la ventana de sign up utilizando un cargador no estatico
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("grupo3/reto2/view/SignUp.fxml"));
-            System.out.println(loader.getLocation());
-            Parent root = loader.load();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/grupo3/reto2/view/Place.fxml"));
 
-            SignUpController signUpController = ((SignUpController) loader.getController());
-         
-            signUpController.initStage(root);
+            Parent root = (Parent) loader.load();
+
+            PlaceController placeController = ((PlaceController) loader.getController());
+
+            placeController.initStage(root);
         } catch (IOException ex) {
             Logger.getLogger(SignInController.class.getName()).log(Level.SEVERE, null, ex);
         }
