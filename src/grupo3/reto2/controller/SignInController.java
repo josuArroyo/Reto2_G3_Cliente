@@ -5,19 +5,22 @@
  */
 package grupo3.reto2.controller;
 
+import grupo3.reto2.logic.PlaceManagerFactory;
 import grupo3.reto2.logic.UserFactory;
+import grupo3.reto2.model.Admin;
+import grupo3.reto2.model.Lugar;
 import grupo3.reto2.model.User;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -52,9 +55,6 @@ public class SignInController {
 
     @FXML
     private Button btnSignUp;
-    
-    @FXML
-    private Hyperlink idPasswdOlvidada;
 
     // @FXML
     //con esta sentencia en orden le estamos diciendo que tiene que tener minimo un numero una letra minuscula una mayuscula y que no puede tener espacios en blanco
@@ -91,8 +91,6 @@ public class SignInController {
 
         btnLogin.setOnAction(this::handleLoginButtonAction);
         btnSignUp.setOnAction(this::handleSignUpButtonAction);
-        
-        idPasswdOlvidada.setOnAction(this::handlePasswdButtonAction);
 
         stage.show();
 
@@ -125,24 +123,13 @@ public class SignInController {
                 usersiden = userfact.getFactory().findUsersByLogin_XML(new GenericType<List<User>>() {
                 }, txtNombre.getText(), txtPasswd.getText());
 
-                try {
+                //cargar el fxml de la ventana de sign up utilizando un cargador no estatico
+               FXMLLoader loader= new FXMLLoader(getClass().getResource("view/Training.fxml")); 
+        Parent root = (Parent)loader.load();
+        TrainingController trainCont= ((TrainingController)loader.getController());
+        trainCont.setStage(stage);
+        trainCont.initStage(root);
 
-                    Stage PlaceStage = new Stage();
-                    //cargar el fxml de la ventana de sign up utilizando un cargador no estatico
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("view/Place.fxml"));
-
-                    Parent root = (Parent) loader.load();
-
-                    PlaceController placeController = ((PlaceController) loader.getController());
-                    
-                    placeController.initStage(root);
-
-                } catch (Exception e) {
-                    
-                    Logger.getLogger(SignInController.class.getName()).log(Level.SEVERE, null, e);
-                }
-
-                System.out.println("patata");
             }
 
         } catch (Exception e) {
@@ -159,20 +146,22 @@ public class SignInController {
     private void handleSignUpButtonAction(ActionEvent event) {
 
         try {
-           // Stage SignUpStage = new Stage();
+
             //cargar el fxml de la ventana de sign up utilizando un cargador no estatico
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("view/SignUp.fxml"));
-            //System.out.println(loader.getLocation());
-            Parent root = loader.load();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/grupo3/reto2/view/SignUp.fxml"));
+
+            Parent root = (Parent) loader.load();
 
             SignUpController signUpController = ((SignUpController) loader.getController());
-         
+
             signUpController.initStage(root);
         } catch (IOException ex) {
             Logger.getLogger(SignInController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
+
+
     
      @FXML
     private void handlePasswdButtonAction(ActionEvent event) {

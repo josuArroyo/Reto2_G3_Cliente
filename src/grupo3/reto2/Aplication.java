@@ -35,11 +35,11 @@ public class Aplication extends Application {
 //        principal  .setStage(stage);
 //        principal.initStage(root);
         
-        FXMLLoader loader= new FXMLLoader(getClass().getResource("view/Training.fxml")); 
-        Parent root = (Parent)loader.load();
-        TrainingController trainCont= ((TrainingController)loader.getController());
-        trainCont.setStage(stage);
-        trainCont.initStage(root);
+//        FXMLLoader loader= new FXMLLoader(getClass().getResource("view/Training.fxml")); 
+//        Parent root = (Parent)loader.load();
+//        TrainingController trainCont= ((TrainingController)loader.getController());
+//        trainCont.setStage(stage);
+//        trainCont.initStage(root);
         
 //      Parent root = FXMLLoader.load(getClass().getResource("Training.fxml"));
 //        
@@ -48,13 +48,13 @@ public class Aplication extends Application {
 //        stage.setScene(scene);
 //        stage.show();
 
-//        LOGGER.info("Carga del FXML de SignIn");
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource("view/SignIn.fxml"));
-//        Parent root = (Parent) loader.load();
-//        LOGGER.info("Llamada al controlador del FXML");
-//        SignInController controller = ((SignInController) loader.getController());
-//        controller.setStage(stage);
-//        controller.initStage(root);
+        LOGGER.info("Carga del FXML de SignIn");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("view/SignIn.fxml"));
+        Parent root = (Parent) loader.load();
+        LOGGER.info("Llamada al controlador del FXML");
+        SignInController controller = ((SignInController) loader.getController());
+        controller.setStage(stage);
+        controller.initStage(root);
 
 
     }

@@ -47,7 +47,7 @@ public class PrincipalController {
     private User user;
 
     @FXML
-    public void initStage(Parent root, User user) {
+    public void initStage(Parent root) {
 
         LOGGER.info("Initializing Principal stage.");
 

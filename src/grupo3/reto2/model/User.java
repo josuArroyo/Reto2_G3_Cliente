@@ -1,4 +1,3 @@
-
 package grupo3.reto2.model;
 
 import java.io.Serializable;
@@ -26,13 +25,13 @@ import javax.xml.bind.annotation.XmlTransient;
  *
  * @author 2dam
  */
-
-
+@XmlSeeAlso({Admin.class,Cliente.class})
+@XmlRootElement
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
-    
+   
     private Integer idUser;
     private String login;
     private String nombre;
@@ -44,18 +43,19 @@ public class User implements Serializable {
     private UserPrivilege userPrivilege;
     
     
-   
+    public Integer getId() {
+        return idUser;
+    }
+    
+    public void setId(Integer id) {
+        this.idUser = id;
+    }
+    
         public User() {
         super();
     }
-
-    public Integer getIdUser() {
-        return idUser;
-    }
-
-    public void setIdUser(Integer idUser) {
-        this.idUser = idUser;
-    }
+    
+    
 
     public String getLogin() {
         return login;
@@ -65,51 +65,45 @@ public class User implements Serializable {
         this.login = login;
     }
 
-    public String getNombre() {
-        return nombre;
+    public UserPrivilege getPrivilege() {
+        return userPrivilege;
+    }
+
+    public void setPrivilege(UserPrivilege privilege) {
+        this.userPrivilege = privilege;
     }
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
-    public String getEmail() {
-        return email;
+    public String getNombre() {
+        return nombre;
     }
 
     public void setEmail(String email) {
         this.email = email;
     }
 
-    public String getPasswd() {
-        return passwd;
+    public String getEmail() {
+        return email;
     }
 
     public void setPasswd(String passwd) {
         this.passwd = passwd;
     }
 
-    public String getConfPasswd() {
-        return confPasswd;
+    public String getPasswd() {
+        return passwd;
     }
 
     public void setConfPasswd(String confPasswd) {
         this.confPasswd = confPasswd;
     }
 
-    public UserPrivilege getUserPrivilege() {
-        return userPrivilege;
+    public String getConfPasswd() {
+        return confPasswd;
     }
-
-    public void setUserPrivilege(UserPrivilege userPrivilege) {
-        this.userPrivilege = userPrivilege;
-    }
-        
-    
-    
-   
-
-    
 
     @Override
     public int hashCode() {
@@ -141,3 +135,4 @@ public class User implements Serializable {
     }
     
 }
+

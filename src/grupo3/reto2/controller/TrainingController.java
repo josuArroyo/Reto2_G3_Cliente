@@ -136,13 +136,13 @@ public class TrainingController {
 
 //        El (paneAdmin) estará habilitado cuando se inicie sesión 
 //        como administrador, si se inicia como usuario estará deshabilitado. 
-//        if (user.getPrivilege() == user.getPrivilege().ADMIN) {
-//            paneAdmin.setDisable(false);
-//            paneAdmin.setVisible(false);
-//        } else {
-//            paneAdmin.setDisable(true);
-//            paneAdmin.setVisible(true);
-//        }
+        if (user.getPrivilege()== user.getPrivilege().ADMIN) {
+            paneAdmin.setDisable(false);
+            paneAdmin.setVisible(false);
+        } else {
+            paneAdmin.setDisable(true);
+            paneAdmin.setVisible(true);
+        }
 //        Los label que hay en el panel (paneAdmin) de descripción del entrenamiento, 
 //        duración del entrenamiento, fecha del periodo, intensidad, repeticiones y 
 //        objetivo estarán visibles si se inicia como administrador, si se inicia como usuario no.
@@ -412,7 +412,7 @@ public class TrainingController {
      */
     
     @FXML
-    private void handleModificarButtonAction(ActionEvent event) {
+    private void handleModificarButtonAction(ActionEvent event)  {
 
         try {
             //Si no están informados alguno de los campos saldrá un mensaje de error.
