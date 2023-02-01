@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b8ad7e01-5fdd-4887-8a3b-f50d199a29e2">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="idEvento" class="java.lang.Integer"/>
+	<field name="descripcion" class="java.lang.String"/>
+	<field name="fecha" class="java.util.Date"/>
+	<field name="premio" class="java.lang.String"/>
+	<field name="tipoEvento" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -20,81 +28,64 @@
 	<columnHeader>
 		<band height="61" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="39" width="83" height="22" uuid="ef5f8ae9-0dcd-4201-8841-ad6b53a19d93"/>
+				<reportElement x="0" y="39" width="84" height="22" uuid="ef5f8ae9-0dcd-4201-8841-ad6b53a19d93"/>
 				<textElement textAlignment="Center">
 					<font size="14"/>
 				</textElement>
 				<text><![CDATA[Id de Evento]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="83" y="39" width="99" height="22" uuid="d5c7f944-34d3-471c-8cc7-8f613a69857f"/>
+				<reportElement x="84" y="39" width="116" height="22" uuid="d5c7f944-34d3-471c-8cc7-8f613a69857f"/>
 				<textElement textAlignment="Center">
 					<font size="14"/>
 				</textElement>
 				<text><![CDATA[Descripcion]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="182" y="39" width="91" height="22" uuid="006a471c-23ba-49f6-91e6-81a44d439c65"/>
+				<reportElement x="200" y="39" width="131" height="22" uuid="006a471c-23ba-49f6-91e6-81a44d439c65"/>
 				<textElement textAlignment="Center">
 					<font size="14"/>
 				</textElement>
 				<text><![CDATA[Fecha]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="273" y="39" width="82" height="22" uuid="e5b6ab1f-ede6-4c72-adf3-e96be8b64f15"/>
+				<reportElement x="331" y="39" width="101" height="22" uuid="e5b6ab1f-ede6-4c72-adf3-e96be8b64f15"/>
 				<textElement textAlignment="Center">
 					<font size="14"/>
 				</textElement>
 				<text><![CDATA[Premio]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="355" y="39" width="98" height="22" uuid="33e65400-f62b-4698-86f5-8a59b4fba8a4"/>
+				<reportElement x="432" y="39" width="123" height="22" uuid="33e65400-f62b-4698-86f5-8a59b4fba8a4"/>
 				<textElement textAlignment="Center">
 					<font size="14"/>
 				</textElement>
 				<text><![CDATA[Tipo de Evento]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="453" y="39" width="102" height="22" uuid="8e584aa4-fb0f-4c48-8be4-09ff6fbf10cf"/>
-				<textElement textAlignment="Center">
-					<font size="14"/>
-				</textElement>
-				<text><![CDATA[Id de Lugar]]></text>
-			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="125" splitType="Stretch">
-			<staticText>
-				<reportElement x="0" y="0" width="83" height="125" uuid="d15a83d0-07ab-43ff-a1f7-b32f55b1db74"/>
-				<textElement textAlignment="Center"/>
-				<text><![CDATA[Static text]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="83" y="0" width="99" height="125" uuid="b46d9a60-afb7-4ba4-8156-efcc833bb557"/>
-				<textElement textAlignment="Center"/>
-				<text><![CDATA[Static text]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="182" y="0" width="91" height="125" uuid="017fbf42-8ab2-407c-bdbb-e29526522786"/>
-				<textElement textAlignment="Center"/>
-				<text><![CDATA[Static text]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="273" y="0" width="82" height="125" uuid="d9ad624a-2f9f-4344-ada0-db8fdd228aa4"/>
-				<textElement textAlignment="Center"/>
-				<text><![CDATA[Static text]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="355" y="0" width="98" height="125" uuid="65c4a11c-673f-470f-830f-f3b2003cd67d"/>
-				<textElement textAlignment="Center"/>
-				<text><![CDATA[Static text]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="453" y="0" width="102" height="125" uuid="ec9c480d-152f-42b5-8f87-387357be6958"/>
-				<textElement textAlignment="Center"/>
-				<text><![CDATA[Static text]]></text>
-			</staticText>
+			<textField>
+				<reportElement x="84" y="0" width="116" height="125" uuid="38c76991-649f-4d12-ac6d-b0e75735db9f"/>
+				<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="200" y="0" width="131" height="125" uuid="1fe7b030-14e8-4690-9847-a1073ac04dfb"/>
+				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="331" y="0" width="101" height="125" uuid="c01b0c31-4608-41f3-8346-efc325a8fbe4"/>
+				<textFieldExpression><![CDATA[$F{premio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="432" y="0" width="123" height="125" uuid="76f9b658-4ee7-46e2-936f-f1520fcbeb80"/>
+				<textFieldExpression><![CDATA[$F{tipoEvento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="84" height="125" uuid="9c16e144-c460-46dc-9498-968cc9d85070"/>
+				<textFieldExpression><![CDATA[$F{idEvento}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<columnFooter>
@@ -104,6 +95,6 @@
 		<band height="54" splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band height="42" splitType="Stretch"/>
+		<band height="46" splitType="Stretch"/>
 	</summary>
 </jasperReport>
