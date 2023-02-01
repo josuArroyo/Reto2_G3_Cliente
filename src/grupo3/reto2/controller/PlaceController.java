@@ -318,7 +318,6 @@ public class PlaceController {
                     lugar.setDescripcion(txtDescLugar.getText());
                     lugar.setTipoLugar(cbxTipoLugar.getSelectionModel().getSelectedItem().toString());
                     lugar.setTiempo(Date.from(dteTiempoReservado.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
-
                     lugar.setAdmin(admin);
                     //llamamos a la factoria para crear ese lugar y lo introduzca en la base de datos 
                     placefact.getFactory().create_XML(lugar);
@@ -426,6 +425,8 @@ public class PlaceController {
                     lugar.setDescripcion(txtDescLugar.getText());
                     lugar.setTipoLugar(cbxTipoLugar.getSelectionModel().getSelectedItem().toString());
                     lugar.setTiempo(Date.from(dteTiempoReservado.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+                    lugar.setAdmin(admin);
+                    
 
                     //llamamos a la factoria para crear ese lugar y lo introduzca en la base de datos 
                     placefact.getFactory().edit_XML(lugar);
@@ -483,7 +484,7 @@ public class PlaceController {
             //make the root with the loader
             Parent root = (Parent) loader.load();
             //Get the controller
-            HelpController mainStageController = ((HelpController) loader.getController());
+            HelpPlaceController mainStageController = ((HelpPlaceController) loader.getController());
             //set the stage
             mainStageController.setStage(mainStage);
             //start the stage
