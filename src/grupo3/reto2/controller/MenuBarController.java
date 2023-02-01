@@ -132,10 +132,10 @@ public class MenuBarController {
 
             Parent root = (Parent) loader.load();
             
-            /*TrainingController controller = ((TrainingController) loader.getController());
+            TrainingController controller = ((TrainingController) loader.getController());
 
             controller.setStage(stage);
-            controller.initStage(root);*/
+            controller.initStage(root);
 
            
         } catch (IOException e) {
@@ -160,26 +160,6 @@ public class MenuBarController {
         }
     }
     
-    @FXML
-    private void menuAyuda(ActionEvent event){
-        
-        
-    }
-    
-    @FXML
-    private void miDescripcionVentana(ActionEvent event){
-        
-    }
-    
-    @FXML
-    private void miManualUsuario(ActionEvent event){
-        
-    }
-    
-    @FXML
-    private void miSobreNosotros(ActionEvent event){
-    
-    }
     
     @FXML
     private void miCerrarSesion(ActionEvent event){

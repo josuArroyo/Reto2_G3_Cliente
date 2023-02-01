@@ -9,6 +9,7 @@ import grupo3.reto2.logic.PlaceManagerFactory;
 import grupo3.reto2.logic.UserFactory;
 import grupo3.reto2.model.Lugar;
 import grupo3.reto2.model.User;
+import grupo3.reto2.model.UserPrivilege;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
@@ -118,6 +119,7 @@ public class SignInController {
                 User user = new User();
                 user.setLogin(txtNombre.getText());
                 user.setPasswd(txtPasswd.getText());
+                
                 List<User> usersiden;
                 usersiden = userfact.getFactory().findUsersByLogin_XML(new GenericType<List<User>>(){}, txtNombre.getText(), txtPasswd.getText());
                 

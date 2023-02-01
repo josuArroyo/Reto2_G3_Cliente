@@ -4,77 +4,54 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane fx:id="paneAll" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<Pane fx:id="paneAll" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="grupo3.reto2.controller.TrainingController">
    <children>
-      <TableView fx:id="table" layoutX="38.0" layoutY="307.0" prefHeight="341.0" prefWidth="745.0">
+      <fx:include fx:id="hbox" source="MenuBar.fxml" />
+      <TableView fx:id="table" layoutX="38.0" layoutY="307.0" prefHeight="341.0" prefWidth="785.0">
         <columns>
           <TableColumn fx:id="tcDescrip" prefWidth="103.99999237060547" text="DESCRIPCIÓN" />
-          <TableColumn fx:id="rcDuracion" prefWidth="111.99996948242188" text="DURACIÓN" />
-            <TableColumn fx:id="tdDate" prefWidth="134.39996337890625" text="FECHA DE PERIODO" />
-            <TableColumn fx:id="tcIntensidad" prefWidth="130.40005493164062" text="INTENSIDAD" />
-            <TableColumn fx:id="tcRepet" prefWidth="130.4000244140625" text="REPETICIONES" />
-            <TableColumn fx:id="tcObjetivo" prefWidth="130.4000244140625" text="OBJETIVO" />
+          <TableColumn fx:id="tcDuracion" prefWidth="111.99996948242188" text="DURACIÓN" />
+            <TableColumn fx:id="tcDate" prefWidth="159.99996948242188" text="FECHA DE PERIODO" />
+            <TableColumn fx:id="tcIntensidad" prefWidth="130.4000244140625" text="INTENSIDAD" />
+            <TableColumn fx:id="tcRepet" prefWidth="138.39996337890625" text="REPETICIONES" />
+            <TableColumn fx:id="tcObjetivo" prefWidth="138.60003662109375" text="OBJETIVO" />
         </columns>
       </TableView>
-      <Button fx:id="btnCerrar" layoutX="813.0" layoutY="640.0" mnemonicParsing="false" text="CERRAR" />
-      <Pane fx:id="paneAdmin" layoutX="18.0" layoutY="53.0" prefHeight="202.0" prefWidth="864.0">
+      <Button fx:id="btnCerrar" layoutX="862.0" layoutY="648.0" mnemonicParsing="false" text="CERRAR" />
+      <Pane fx:id="paneAdmin" layoutX="22.0" layoutY="47.0" prefHeight="202.0" prefWidth="952.0">
          <children>
-            <Button fx:id="btnCrear" layoutX="726.0" layoutY="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="112.0" text="CREAR" />
-            <Button fx:id="btnModificar" layoutX="726.0" layoutY="75.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="112.0" text="MODIFICAR" />
-            <Button fx:id="btnEliminar" layoutX="726.0" layoutY="163.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="112.0" text="ELIMINAR" />
-            <TextArea fx:id="descripArea" layoutX="45.0" layoutY="34.0" prefHeight="66.0" prefWidth="173.0" promptText="Describe brevemente de que trata el entrenamiento" />
-            <Label fx:id="lblDescritp" layoutX="45.0" layoutY="17.0" text="DESCRIBE EL ENTRENAMIENTO" />
-            <ComboBox fx:id="durCombo" layoutX="279.0" layoutY="37.0" prefHeight="25.0" prefWidth="183.0" promptText="Tiempo del entrenamiento" />
-            <Label fx:id="lblDuracion" layoutX="279.0" layoutY="18.0" text="DURACIÓN DEL ENTRENAMIENTO" />
-            <DatePicker fx:id="fechDate" layoutX="518.0" layoutY="38.0" promptText="Indica la fecha" />
-            <Label fx:id="lblFecha" layoutX="518.0" layoutY="17.0" text="FECHA DEL PERIODO" />
-            <Label fx:id="lblIntensidad" layoutX="45.0" layoutY="110.0" text="INTENSIDAD" />
-            <ComboBox fx:id="intCombo" layoutX="45.0" layoutY="127.0" prefHeight="25.0" prefWidth="174.0" promptText="Nivel de intensidad" />
-            <Label fx:id="lblRepeticiones" layoutX="286.0" layoutY="108.0" prefWidth="79.0" text="REPETICIONES" />
-            <ComboBox fx:id="repCombo" layoutX="279.0" layoutY="127.0" prefHeight="25.0" prefWidth="183.0" promptText="Número de repeticiones" />
-            <Label fx:id="lblObjetivo" layoutX="521.0" layoutY="108.0" text="OBJETIVO" />
-            <ComboBox fx:id="objCombo" layoutX="521.0" layoutY="127.0" prefHeight="25.0" prefWidth="173.0" promptText="Seleccione el objetivo" />
-            <Separator layoutX="3.0" prefHeight="0.0" prefWidth="853.0" />
-            <Separator layoutX="6.0" layoutY="201.0" prefHeight="0.0" prefWidth="853.0" />
+            <Button fx:id="btnCrear" layoutX="815.0" layoutY="26.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="112.0" text="CREAR" />
+            <Button fx:id="btnModificar" layoutX="815.0" layoutY="89.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="112.0" text="MODIFICAR" />
+            <Button fx:id="btnEliminar" layoutX="815.0" layoutY="152.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="112.0" text="ELIMINAR" />
+            <TextArea fx:id="descripArea" layoutX="14.0" layoutY="43.0" prefHeight="66.0" prefWidth="173.0" promptText="Describe brevemente de que trata el entrenamiento" />
+            <Label fx:id="lblDescritp" layoutX="18.0" layoutY="22.0" prefHeight="17.0" prefWidth="206.0" text="DESCRIBE EL ENTRENAMIENTO" />
+            <ComboBox fx:id="durCombo" layoutX="282.0" layoutY="42.0" prefHeight="25.0" prefWidth="230.0" promptText="Tiempo del entrenamiento" />
+            <Label fx:id="lblDuracion" layoutX="282.0" layoutY="22.0" prefHeight="17.0" prefWidth="230.0" text="DURACIÓN DEL ENTRENAMIENTO" />
+            <DatePicker fx:id="fechDate" layoutX="562.0" layoutY="43.0" prefHeight="25.0" prefWidth="219.0" promptText="Indica la fecha" />
+            <Label fx:id="lblFecha" layoutX="563.0" layoutY="22.0" prefHeight="17.0" prefWidth="230.0" text="FECHA DEL PERIODO" />
+            <Label fx:id="lblIntensidad" layoutX="18.0" layoutY="114.0" prefHeight="17.0" prefWidth="206.0" text="INTENSIDAD" />
+            <ComboBox fx:id="intCombo" layoutX="18.0" layoutY="132.0" prefHeight="25.0" prefWidth="206.0" promptText="Nivel de intensidad" />
+            <Label fx:id="lblRepeticiones" layoutX="282.0" layoutY="114.0" prefHeight="17.0" prefWidth="230.0" text="REPETICIONES" />
+            <ComboBox fx:id="repCombo" layoutX="282.0" layoutY="132.0" prefHeight="25.0" prefWidth="230.0" promptText="Número de repeticiones" />
+            <Label fx:id="lblObjetivo" layoutX="562.0" layoutY="115.0" prefHeight="17.0" prefWidth="174.0" text="OBJETIVO" />
+            <ComboBox fx:id="objCombo" layoutX="562.0" layoutY="132.0" prefHeight="25.0" prefWidth="219.0" promptText="Seleccione el objetivo" />
+            <Separator layoutX="3.0" prefHeight="3.0" prefWidth="945.0" />
+            <Separator layoutX="6.0" layoutY="201.0" prefHeight="3.0" prefWidth="945.0" />
             <Separator layoutX="3.0" layoutY="1.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="0.0" />
-            <Separator layoutX="856.0" layoutY="1.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="0.0" />
+            <Separator layoutX="949.0" layoutY="1.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="0.0" />
          </children>
       </Pane>
-      <ComboBox fx:id="filterCombo" layoutX="793.0" layoutY="307.0" prefHeight="25.0" prefWidth="79.0" promptText="Filtrar" />
-      <MenuBar fx:id="menu" layoutY="1.0" prefHeight="26.0" prefWidth="269.0">
-        <menus>
-          <Menu fx:id="menu1" mnemonicParsing="false" text="Home">
-            <items>
-              <MenuItem fx:id="mItem" mnemonicParsing="false" text="Volver a la principal" />
-            </items>
-          </Menu>
-          <Menu fx:id="menu2" mnemonicParsing="false" text="Navegar">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Objetivo" />
-                  <MenuItem mnemonicParsing="false" text="Lugar" />
-                  <MenuItem mnemonicParsing="false" text="Evento" />
-                  <MenuItem mnemonicParsing="false" text="Entrenamiento" />
-            </items>
-          </Menu>
-          <Menu fx:id="menu3" mnemonicParsing="false" text="Ayuda">
-            <items>
-              <MenuItem fx:id="mItem5" mnemonicParsing="false" text="Manual de usuario" />
-                  <MenuItem fx:id="mItem6" mnemonicParsing="false" text="Sobre Fuerza G3..." />
-                  <MenuItem fx:id="mItem61" mnemonicParsing="false" text="Descripción de la ventana" />
-            </items>
-          </Menu>
-            <Menu fx:id="menu4" mnemonicParsing="false" text="Cerrar sesión" />
-        </menus>
-      </MenuBar>
+      <ComboBox fx:id="filterCombo" layoutX="840.0" layoutY="307.0" prefHeight="25.0" prefWidth="134.0" promptText="Filtrar" />
       <Button fx:id="btnInforme" layoutX="38.0" layoutY="652.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="112.0" text="INFORME" />
+      <TextField fx:id="txtFilter" layoutX="865.0" layoutY="338.0" prefHeight="25.0" prefWidth="112.0" />
+      <Button fx:id="btnFilter" layoutX="907.0" layoutY="372.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="71.0" text="Buscar" />
+      <Button fx:id="btnAyuda" layoutX="849.0" layoutY="565.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="71.0" text="AYUDA" />
    </children>
 </Pane>
