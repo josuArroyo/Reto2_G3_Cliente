@@ -7,6 +7,7 @@ package grupo3.reto2;
 
 import grupo3.reto2.controller.PlaceController;
 import grupo3.reto2.controller.SignInController;
+import grupo3.reto2.controller.SignUpController;
 import java.util.logging.Logger;
 import grupo3.reto2.controller.ObjectiveController;
 import grupo3.reto2.controller.PrincipalController;

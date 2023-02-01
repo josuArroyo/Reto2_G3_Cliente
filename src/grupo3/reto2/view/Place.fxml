@@ -10,7 +10,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="grupo3.reto2.controller.PlaceController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="grupo3.reto2.controller.PlaceController">
     <children>
         <fx:include fx:id="hbox" source="MenuBar.fxml" />
         <TextField fx:id="txtNombreLugar" layoutX="70.0" layoutY="87.0" prefHeight="25.0" prefWidth="204.0" promptText="Introduzca el nombre del Lugar" />
@@ -39,5 +39,6 @@
         <Button fx:id="btnSalir" layoutX="783.0" layoutY="620.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="137.0" text="Salir" />
         <ComboBox fx:id="cbxFiltroTipoLugar" layoutX="777.0" layoutY="246.0" minHeight="-Infinity" minWidth="150.0" prefWidth="150.0" promptText="Filtrado TipoLugar" />
         <Button fx:id="btnInforme" layoutX="49.0" layoutY="620.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="137.0" text="Informe" />
+      <Button fx:id="btnAyuda" layoutX="581.0" layoutY="620.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="137.0" text="Ayuda" />
     </children>
 </Pane>

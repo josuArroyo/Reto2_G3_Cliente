@@ -36,10 +36,4 @@ public class PrincipalController {
         this.stage = stage;
     }
 
-    
-    
-  
-
-    
-    
 }

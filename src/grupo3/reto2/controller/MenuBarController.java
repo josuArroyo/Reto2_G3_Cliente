@@ -81,7 +81,6 @@ public class MenuBarController {
                 Parent root = (Parent) loader.load();
 
                 PrincipalController principalController = ((PrincipalController) loader.getController());
-
                 principalController.initiStage(root);
             
                 

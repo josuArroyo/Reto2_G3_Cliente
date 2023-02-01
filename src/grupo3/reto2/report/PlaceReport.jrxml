@@ -51,39 +51,39 @@
 	<detail>
 		<band height="125" splitType="Stretch">
 			<staticText>
-				<reportElement x="51" y="0" width="111" height="62" uuid="ed73ceb1-4db1-41a3-b2a3-9ab4eacb6dcc"/>
+				<reportElement x="0" y="0" width="111" height="62" uuid="ed73ceb1-4db1-41a3-b2a3-9ab4eacb6dcc"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[Nombre]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="162" y="0" width="111" height="62" uuid="508fdef9-104d-4393-ad0a-ab5c23d8033e"/>
+				<reportElement x="141" y="0" width="111" height="62" uuid="508fdef9-104d-4393-ad0a-ab5c23d8033e"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[Descripcion]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="273" y="0" width="111" height="62" uuid="1fbbdd8a-a5ad-4a05-a74a-1d0d2c301c6a"/>
+				<reportElement x="285" y="0" width="111" height="62" uuid="1fbbdd8a-a5ad-4a05-a74a-1d0d2c301c6a"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[Tiempo]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="384" y="0" width="111" height="62" uuid="8800616e-ed61-406c-887e-1e1d1b0edf75"/>
+				<reportElement x="444" y="0" width="111" height="62" uuid="8800616e-ed61-406c-887e-1e1d1b0edf75"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[TipoLugar]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="51" y="62" width="111" height="63" uuid="96cb6b7c-8b12-406d-9095-38134997d218"/>
+				<reportElement x="0" y="62" width="111" height="63" uuid="96cb6b7c-8b12-406d-9095-38134997d218"/>
 				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="162" y="62" width="111" height="63" uuid="16fbea61-ecfc-40bc-9e1d-6cc05f9849da"/>
+				<reportElement x="141" y="62" width="111" height="63" uuid="16fbea61-ecfc-40bc-9e1d-6cc05f9849da"/>
 				<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="273" y="62" width="111" height="63" uuid="509d7cc3-eb69-4f88-9928-8cc5d7871bf6"/>
+				<reportElement x="285" y="62" width="111" height="63" uuid="509d7cc3-eb69-4f88-9928-8cc5d7871bf6"/>
 				<textFieldExpression><![CDATA[$F{tiempo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="384" y="62" width="111" height="63" uuid="18fa484a-ec6e-4991-b403-6a1e1d1c3a94"/>
+				<reportElement x="444" y="62" width="111" height="63" uuid="18fa484a-ec6e-4991-b403-6a1e1d1c3a94"/>
 				<textFieldExpression><![CDATA[$F{tipoLugar}]]></textFieldExpression>
 			</textField>
 		</band>
