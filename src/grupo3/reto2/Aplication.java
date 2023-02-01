@@ -5,44 +5,36 @@
  */
 package grupo3.reto2;
 
+import java.util.logging.Logger;
 import grupo3.reto2.controller.EventController;
 import grupo3.reto2.controller.PrincipalController;
+import grupo3.reto2.controller.SignInController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
-
-
 
 /*
  * @author 2dam
  */
 public class Aplication extends Application {
 
+    private static final Logger LOGGER = Logger.getLogger(Aplication.class.getName());
+
     @Override
     public void start(Stage stage) throws Exception {
 
-        FXMLLoader loader= new FXMLLoader(getClass().getResource("view/Ventana_evento.fxml")); 
-        Parent root = (Parent)loader.load();
-        EventController ec = ((EventController)loader.getController());
-        ec.setStage(stage);
-        ec.initStage(root);
+        LOGGER.info("Carga del FXML de SignIn");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("view/SignIn.fxml"));
+        Parent root = (Parent) loader.load();
+        LOGGER.info("Llamada al controlador del FXML");
+        SignInController controller = ((SignInController) loader.getController());
+        controller.setStage(stage);
+        controller.initStage(root);
 
-//        FXMLLoader loader= new FXMLLoader(getClass().getResource("view/Training.fxml")); 
-//        Parent root = (Parent)loader.load();
-//        TrainingController trainCont= ((TrainingController)loader.getController());
-//        trainCont.setStage(stage);
-//        trainCont.initStage(root);
-
-//      Parent root = FXMLLoader.load(getClass().getResource("Training.fxml"));
-//
-//        Scene scene = new Scene(root);
-//
-//        stage.setScene(scene);
-//        stage.show();
     }
 
-     /* @param args the command line arguments
+    /* @param args the command line arguments
      */
     public static void main(String[] args) {
         launch(args);

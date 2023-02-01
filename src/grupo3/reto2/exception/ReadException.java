@@ -9,20 +9,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Data entered in the user field is wrong
- *
- * @author Alejandro y Jessica
- *
+ * Error for when training cannot be filtered
+ * @author Alejandro y Jessi
  */
-public class UserNameErrorException extends Exception {
+public class ReadException extends Exception{
 
-    private static final long serialVersionUID = 1L;
-
-    public UserNameErrorException() {
+    public ReadException() {
         try {
-            throw new Exception("Error. El usuario con ese nombre no existe. ");
+            throw new Exception ("Error en el filtrado. ");
         } catch (Exception ex) {
             Logger.getLogger(UserAlreadyExitsException.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    
 }

@@ -9,18 +9,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Data entered in the user field is wrong
- *
- * @author Alejandro y Jessica
- *
+ *This exception is used to show a warning if the user registered already exists
+ * @author Alejandro
  */
-public class UserNameErrorException extends Exception {
-
-    private static final long serialVersionUID = 1L;
-
-    public UserNameErrorException() {
+public class UserAlreadyExitsException extends Exception{
+    public UserAlreadyExitsException() {
         try {
-            throw new Exception("Error. El usuario con ese nombre no existe. ");
+            throw new Exception ("El usuario ya existe ");
         } catch (Exception ex) {
             Logger.getLogger(UserAlreadyExitsException.class.getName()).log(Level.SEVERE, null, ex);
         }

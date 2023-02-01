@@ -6,7 +6,6 @@
 package grupo3.reto2.controller;
 
 import static grupo3.reto2.controller.SignUpController.LOGGER;
-import grupo3.reto2.entities.User;
 import java.util.Optional;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -16,68 +15,77 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
-
-import javafx.scene.image.ImageView;
-
+import javafx.scene.control.TextField;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
  *
- * @author 2dam
+ * @author poker
  */
-public class PrincipalController {
-
+public class RecuperarPasswdController {
+    
     @FXML
-    private Stage stage;
-
+    private TextField txtNomb, txtEmailRecup;
+    
     @FXML
-    private Label label;
-
-    String nombre = "Pablo";
-    @FXML
-    private Label lblTexto;
-    @FXML
-    private Button btnExit;
-    @FXML
-    private ImageView image;
-
-    private User user;
-
+    private Button btnEnviarEmail, btnCancelar;
+    
+    
+    
     @FXML
     public void initStage(Parent root) {
-
-        LOGGER.info("Initializing Principal stage.");
+        LOGGER.info("Initializing Passwd stage.");
 
         Scene scene = new Scene(root);
-        //El campo de texto está deshabilitado
-        lblTexto.setDisable(true);
-        //El botón está habilitado
-        btnExit.setDisable(false);
-        btnExit.setOnAction(this::handleExitButtonAction);
-        lblTexto.setVisible(true);
-        btnExit.setVisible(true);
-
+        
+        btnEnviarEmail.setDisable(false);
+        btnEnviarEmail.setOnAction(this:: handleEnviarButtonAction);
+        
+         //El botón cerrar está habilitado y visible. 
+        btnCancelar.setDisable(false);
+        btnCancelar.setOnAction(this::handleCancelarButtonAction);
+        
+        //La ventana no es redimensionable.
         Stage stage = new Stage();
         stage.setResizable(false);
 
+        //La ventana es una ventana modal.
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(scene);
-        stage.setTitle("PRINCIPAL");
+
+        //El foco inicialmente estará en el campo de nombre de usuario.
+        txtNomb.requestFocus();
+
+        //El título de la ventana es “Training”.
+        stage.setTitle("Forgot Passwd");
 
         stage.show();
-        lblTexto.setText(user.getLogin() + " " + lblTexto.getText());
-
     }
-
+ 
+    
     @FXML
-    private void handleExitButtonAction(ActionEvent event) {
+    private void handleEnviarButtonAction(ActionEvent event) {
+        
+        try {
+                //Introducir el nombre de usuario y verificar que existe en la base de datos
+                
+                //Introducir el correo electronico y verificar qque esta en la BD para enviarle un email
+                
+                
+            
+        }catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage() + ButtonType.OK).showAndWait();
+        }
+        
+    }
+    @FXML
+    private void handleCancelarButtonAction(ActionEvent event) {
         try {
 
-            //El campo de texto está deshabilitado
-            lblTexto.setDisable(true);
 
             //El botón está habilitado
-            btnExit.setDisable(false);
+            btnCancelar.setDisable(false);
             //Con esto vamos a crear una ventana de confirmación al pulsar el botón de salir
             Alert ventanita = new Alert(Alert.AlertType.CONFIRMATION);
             ventanita.setHeaderText(null);
@@ -95,11 +103,5 @@ public class PrincipalController {
         } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage() + ButtonType.OK).showAndWait();
         }
-    }
-
-    @FXML
-    private void handleButtonAction(ActionEvent event) {
-        System.out.println("You clicked me!");
-        label.setText("Hello World!");
     }
 }

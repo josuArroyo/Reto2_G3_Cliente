@@ -9,20 +9,19 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Data entered in the user field is wrong
- *
- * @author Alejandro y Jessica
- *
+ * Exception to warn that the password format is incorrect
+ * @author Jessica y Alejandro
  */
-public class UserNameErrorException extends Exception {
-
-    private static final long serialVersionUID = 1L;
-
-    public UserNameErrorException() {
+public class PasswdFormatException extends Exception{
+ 
+     
+    public PasswdFormatException() {
         try {
-            throw new Exception("Error. El usuario con ese nombre no existe. ");
+            throw new Exception ("Error en el formato de la contraseña introducida. Vuelve a intentarlo. ");
         } catch (Exception ex) {
             Logger.getLogger(UserAlreadyExitsException.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    
 }
