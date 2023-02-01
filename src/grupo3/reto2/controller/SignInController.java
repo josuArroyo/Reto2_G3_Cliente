@@ -151,13 +151,13 @@ public class SignInController {
         try {
             
             //cargar el fxml de la ventana de sign up utilizando un cargador no estatico
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/grupo3/reto2/view/Place.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/grupo3/reto2/view/SignUp.fxml"));
 
             Parent root = (Parent) loader.load();
 
-            PlaceController placeController = ((PlaceController) loader.getController());
+            SignUpController signUpController = ((SignUpController) loader.getController());
 
-            placeController.initStage(root);
+            signUpController.initStage(root);
         } catch (IOException ex) {
             Logger.getLogger(SignInController.class.getName()).log(Level.SEVERE, null, ex);
         }

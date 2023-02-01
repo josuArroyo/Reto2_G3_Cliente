@@ -10,6 +10,7 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -17,7 +18,7 @@ import javax.xml.bind.annotation.XmlTransient;
  *
  * @author grupo3c
  */
-
+@XmlRootElement
 public class Cliente extends User{
 
     private static final long serialVersionUID = 1L;
@@ -61,7 +62,7 @@ public class Cliente extends User{
     public void setEdad(int edad) {
         this.edad = edad;
     }
-
+    @XmlElement(name="edad")
     public int getEdad() {
         return edad;
     }

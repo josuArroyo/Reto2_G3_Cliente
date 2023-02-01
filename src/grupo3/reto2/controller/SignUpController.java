@@ -5,6 +5,7 @@
  */
 package grupo3.reto2.controller;
 
+import grupo3.reto2.logic.ClientFactory;
 import grupo3.reto2.logic.UserFactory;
 import grupo3.reto2.model.Cliente;
 import grupo3.reto2.model.User;
@@ -42,7 +43,7 @@ public class SignUpController {
 
     @FXML
     private Stage stage;
-    UserFactory factUser = new UserFactory();
+    ClientFactory factClient = new ClientFactory();
 
     //Declaramos los campos que utilizaremos en esta ventana
     @FXML
@@ -70,8 +71,6 @@ public class SignUpController {
     //FORMATO CORRECTO DEL EMAIL
     @FXML
     private static final String EMAIL_REGEX = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
-    // private static final String  EMAIL_REGEX = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$.{10,30}";
-    // private static final String EMAIL_REGEX = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
 
     @FXML
     private static final Pattern EMAIL_PATTERN = Pattern.compile(EMAIL_REGEX);
@@ -167,7 +166,9 @@ public class SignUpController {
             //Validar que la password tenga formato especifico
             String password = this.txtPasswd2.getText();
             if ((PASSWORD_PATTERN.matcher(password).matches())) {
+                 System.out.println("contraseña no valida");
                 throw new Exception("CONTRASEÑA NO VALIDA");
+               
             }
 
             //Si los campos de password y confirmPassword no coinciden, saldrá un label de error (lblError2) y limpia esos campos.
@@ -177,16 +178,18 @@ public class SignUpController {
                 //throw new Exception("usuario registrado");
             } else {
 
-                User user = new User();
+ 
+                Cliente client = new Cliente();
 
-                user.setLogin(txtNombre2.getText());
-                user.setNombre(txtNombreComp.getText());
-                user.setEmail(txtEmail.getText());
-                user.setPasswd(txtPasswd2.getText());
-                user.setConfPasswd(txtConfirmPasswd.getText());
-                user.setEmail(txtEdad.getText());
-                user.setPrivilege(UserPrivilege.CLIENT);
-                factUser.getFactory().create_XML(user);
+                client.setLogin(txtNombre2.getText());
+                client.setNombre(txtNombreComp.getText());
+                client.setEmail(txtEmail.getText());
+                client.setPasswd(txtPasswd2.getText());
+                client.setConfPasswd(txtConfirmPasswd.getText());
+                client.setEdad(Integer.parseInt(txtEdad.getText()));
+                client.setPrivilege(UserPrivilege.CLIENT);
+                //factUser.getFactory().create_XML(client);
+                factClient.getFactory().create_XML(client);
 
                 throw new Exception("USUARIO REGISTRADO");
 
