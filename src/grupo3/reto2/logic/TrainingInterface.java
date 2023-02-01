@@ -16,7 +16,7 @@ import javax.ws.rs.core.GenericType;
 
 /**
  *
- * @author 2dam
+ * @author Jessica
  */
 public interface TrainingInterface {
     

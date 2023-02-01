@@ -5,26 +5,23 @@
  */
 package grupo3.reto2.exception;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
- *
- * @author Diego
+ * Error for when training cannot be modified
+ * @author Alejandro y Jessi
  */
 public class UpdateException extends Exception{
     
-    /**
-     * Creates a new instance of <code>UpdateException</code> without detail
-     * message.
-     */
+ 
     public UpdateException() {
+        try {
+            throw new Exception ("Error al intentar modificar. ");
+        } catch (Exception ex) {
+            Logger.getLogger(UserAlreadyExitsException.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
-    /**
-     * Constructs an instance of <code>UpdateException</code> with the specified
-     * detail message.
-     *
-     * @param msg the detail message.
-     */
-    public UpdateException(String msg) {
-        super(msg);
-    }
+    
 }

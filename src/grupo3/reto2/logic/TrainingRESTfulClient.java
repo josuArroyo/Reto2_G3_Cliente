@@ -11,15 +11,7 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 
 /**
- * Jersey REST client generated for REST resource:EntrenamientoFacadeREST
- * [entities.entrenamiento]<br>
- * USAGE:
- * <pre>
- *        TrainingRESTfulClient client = new TrainingRESTfulClient();
- *        Object response = client.XXX(...);
- *        // do whatever with response
- *        client.close();
- * </pre>
+ * 
  *
  * @author Jessica
  */

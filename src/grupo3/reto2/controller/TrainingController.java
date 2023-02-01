@@ -13,6 +13,8 @@ import grupo3.reto2.logic.ObjectiveRESTfulclient;
 import grupo3.reto2.model.Entrenamiento;
 import grupo3.reto2.model.Objetivo;
 import grupo3.reto2.model.User;
+import java.io.IOException;
+import java.net.URL;
 import javafx.beans.value.ObservableValue;
 import java.util.List;
 import java.util.Optional;
@@ -53,9 +55,11 @@ import java.util.Date;
 import java.text.SimpleDateFormat;
 import javafx.scene.control.TableCell;
 import java.time.ZoneId;
+import java.util.logging.Level;
+import javafx.fxml.FXMLLoader;
 
 /**
- *
+ * This is the controller for the training window
  * @author Jessica
  */
 public class TrainingController {
@@ -98,7 +102,7 @@ public class TrainingController {
     private Pane paneAdmin;
 
     @FXML
-    private Button btnCrear, btnModificar, btnEliminar, btnInforme, btnCerrar;
+    private Button btnCrear, btnModificar, btnEliminar, btnInforme, btnCerrar, btnAyuda;
 
     @FXML
     private Label lblDscript, lblDuracion, lblFecha, lblIntensidad, lblRepeticiones, lblObjetivo;
@@ -117,6 +121,12 @@ public class TrainingController {
     @FXML
     protected static final Logger LOGGER = Logger.getLogger("/controller/TrainingController");
 
+    
+    /**
+     * Method to initialize the window
+     * @param root the root of the window
+     */
+    
     @FXML
     public void initStage(Parent root) {
         LOGGER.info("Initializing Training stage");
@@ -196,6 +206,10 @@ public class TrainingController {
         //El botón informe está habilitado y visible.
         btnInforme.setDisable(false);
         btnInforme.setOnAction(this::handleButtonInformeAction);
+        
+        //El boton de ayuda estara habilitado
+        btnAyuda.setDisable(false);
+        btnAyuda.setOnAction(this::handleAyudaButtonAction);
 
         //El botón cerrar está habilitado y visible. 
         btnCerrar.setDisable(false);
@@ -223,6 +237,13 @@ public class TrainingController {
         this.stage = stage;
     }
 
+    
+    
+      /**
+     * Method to load all trainings
+     * @param 
+     */
+    
     private ObservableList<Entrenamiento> cargarTodos() {
         ObservableList<Entrenamiento> listEntrena;
         List<Entrenamiento> todosEntrenas;
@@ -235,6 +256,11 @@ public class TrainingController {
 
     }
 
+    /**
+     * Method to load all objectives
+     * @param 
+     */
+    
     private ObservableList<Objetivo> cargarObjetivos() {
         ObservableList<Objetivo> listObjetivos;
         List<Objetivo> todosObjetivos;
@@ -247,6 +273,11 @@ public class TrainingController {
 
     }
 
+    /**
+     * Method to filter by training duration
+     * @param 
+     */
+    
     private ObservableList<Entrenamiento> cargarDuracion() {
         ObservableList<Entrenamiento> filtroEntrenamiento;
         List<Entrenamiento> duracionFiltro;
@@ -259,6 +290,10 @@ public class TrainingController {
         return filtroEntrenamiento;
     }
 
+    /**
+     * Method to filter by training intensity
+     * @param 
+     */
     private ObservableList<Entrenamiento> cargarIntensidad() {
         ObservableList<Entrenamiento> filtroEntrenamiento;
         List<Entrenamiento> intensidadFiltro;
@@ -271,6 +306,10 @@ public class TrainingController {
         return filtroEntrenamiento;
     }
 
+     /**
+     * Method to filter by objective id
+     * @param 
+     */
     private ObservableList<Entrenamiento> cargarFiltroObjetivo() {
         ObservableList<Entrenamiento> filtroObjetivo;
         List<Entrenamiento> objetivoFiltro;
@@ -282,9 +321,14 @@ public class TrainingController {
         table.refresh();
         return filtroObjetivo;
     }
+    
+    /**
+     * 'Crear' button method with validations
+     * @param event
+     */
 
     @FXML
-    private void handleCrearButtonAction(ActionEvent event) {
+    private void handleCrearButtonAction(ActionEvent event){
         entrena = new Entrenamiento();
 
         //Validar que los campos descripción, duración, intensidad y repeticiones y objetivo están informados.
@@ -338,6 +382,11 @@ public class TrainingController {
 
     }
 
+    /**
+     * method for when we select an element of the table the
+     * data is displayed in the administrator panel
+     * @param event
+     */
     @FXML
     private void handleTrainingTableSelectionChanged(ObservableValue observable, Object oldValue, Object newValue) {
 
@@ -354,6 +403,14 @@ public class TrainingController {
         }
     }
 
+    /**
+     * 'Modificar' button method with validations
+     * When selecting the training in the table it 
+     * will appear in the admin panel and when changing 
+     * something and clicking on modify it will update us
+     * @param event
+     */
+    
     @FXML
     private void handleModificarButtonAction(ActionEvent event) {
 
@@ -403,6 +460,14 @@ public class TrainingController {
         }
     }
 
+    /**
+     * 'Elimiinar' button method 
+     * when selecting the training in the table it will 
+     * appear in the admin panel and when changing something 
+     * and clicking on delete it will be deleted
+     * @param event
+     */
+    
     @FXML
     private void handleEliminarButtonAction(ActionEvent event) {
         Entrenamiento selectedEntrena = (Entrenamiento) table.getSelectionModel().getSelectedItem();
@@ -430,6 +495,11 @@ public class TrainingController {
 
     }
 
+    /**
+     * 'Filter' comboBox method to filter by each selected option
+     * @param event
+     */
+    
     @FXML
     private void handleActionFilterSearch(ActionEvent event) {
 
@@ -450,7 +520,12 @@ public class TrainingController {
         }
 
     }
-
+    
+    /**
+     * 'Informe' button method to display the table report
+     * @param event
+     */
+    
     @FXML
     private void handleButtonInformeAction(ActionEvent event) {
         try {
@@ -474,6 +549,56 @@ public class TrainingController {
 
     }
 
+    @FXML
+    private void handleAyudaButtonAction(ActionEvent event) {
+
+        
+       try {
+            Stage mainStage = new Stage();
+            URL viewLink = getClass().getResource("/grupo3/reto2/view/Help.fxml");
+            // initialition loader
+            FXMLLoader loader = new FXMLLoader(viewLink);
+            //make the root with the loader
+            Parent root = (Parent) loader.load();
+            //Get the controller
+            HelpController mainStageController = ((HelpController) loader.getController());
+            //set the stage
+            mainStageController.setStage(mainStage);
+            //start the stage
+            mainStageController.initStage(root);
+            this.stage.close();
+        } catch (IOException ex) {
+            Logger.getLogger(PlaceController.class.getName())
+                    .log(Level.SEVERE, null, ex);
+        }
+         
+        /*
+        try {
+            LOGGER.info("Loading help view...");
+            //Load node graph from fxml file
+            FXMLLoader loader= new FXMLLoader(getClass().getResource("/grupo3/reto2/view/Help.fxml"));
+            Parent root = (Parent) loader.load();
+            HelpController helpController = ((HelpController) loader.getController());
+            //Initializes and shows help stage
+            helpController.initStage(root);
+        } catch (Exception ex) {
+            //If there is an error show message and
+            //log it.
+         
+            LOGGER.log(Level.SEVERE,
+                    "UI GestionUsuariosController: Error loading help window: {0}",
+                    ex.getMessage());
+        }
+*/
+        
+        
+    }
+    
+    /**
+     *'Cerrar' button method. It redirects us to the login window again. The
+     * current window is closed without saving the data if we have not pressed 'crear/modificar'
+     *@param event
+     */
     @FXML
     private void handleCerrarButtonAction(ActionEvent event) {
         try {

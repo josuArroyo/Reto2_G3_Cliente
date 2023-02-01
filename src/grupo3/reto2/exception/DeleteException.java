@@ -5,9 +5,12 @@
  */
 package grupo3.reto2.exception;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
- *
- * @author Ale
+ * Error for when training cannot be deleted
+ * @author Ale y jessi
  */
 public class DeleteException extends Exception{
     
@@ -16,15 +19,12 @@ public class DeleteException extends Exception{
      * message.
      */
     public DeleteException() {
+        try {
+            throw new Exception ("Error al intentar borrar. ");
+        } catch (Exception ex) {
+            Logger.getLogger(UserAlreadyExitsException.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
-    /**
-     * Constructs an instance of <code>DeleteException</code> with the specified
-     * detail message.
-     *
-     * @param msg the detail message.
-     */
-    public DeleteException(String msg) {
-        super(msg);
-    }
+    
 }

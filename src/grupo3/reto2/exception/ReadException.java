@@ -5,26 +5,22 @@
  */
 package grupo3.reto2.exception;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
- *
- * @author Josu
+ * Error for when training cannot be filtered
+ * @author Alejandro y Jessi
  */
 public class ReadException extends Exception{
 
-    /**
-     * Creates a new instance of <code>ReadException</code> without detail
-     * message.
-     */
     public ReadException() {
+        try {
+            throw new Exception ("Error en el filtrado. ");
+        } catch (Exception ex) {
+            Logger.getLogger(UserAlreadyExitsException.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
-    /**
-     * Constructs an instance of <code>ReadException</code> with the specified
-     * detail message.
-     *
-     * @param msg the detail message.
-     */
-    public ReadException(String msg) {
-        super(msg);
-    }
+    
 }

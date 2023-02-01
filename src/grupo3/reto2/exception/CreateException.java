@@ -5,9 +5,12 @@
  */
 package grupo3.reto2.exception;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
- *
- * @author Jessica
+ * Error for when training cannot be created
+ * @author Jessica y Alejandro
  */
 public class CreateException extends Exception{
  
@@ -15,16 +18,13 @@ public class CreateException extends Exception{
      * Creates a new instance of <code>CreateException</code> without detail
      * message.
      */
-    public CreateException() {
+   
+        public CreateException() {
+        try {
+            throw new Exception ("Error al intentar crear. ");
+        } catch (Exception ex) {
+            Logger.getLogger(UserAlreadyExitsException.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-
-    /**
-     * Constructs an instance of <code>CreateException</code> with the specified
-     * detail message.
-     *
-     * @param msg the detail message.
-     */
-    public CreateException(String msg) {
-        super(msg);
-    }
+    
 }

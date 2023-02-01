@@ -16,8 +16,12 @@ public class ServerConnectionException extends Exception{
     
    private static final long serialVersionUID = 1L;
     
-    public ServerConnectionException (String message){
-        super(message);
+    public ServerConnectionException (){
+       try {
+            throw new Exception ("Error al intentar conectar con el servidor. Disculpe las molestias. ");
+        } catch (Exception ex) {
+            Logger.getLogger(UserAlreadyExitsException.class.getName()).log(Level.SEVERE, null, ex);
+        }
            
     } 
 }

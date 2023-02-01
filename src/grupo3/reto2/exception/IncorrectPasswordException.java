@@ -16,8 +16,12 @@ public class IncorrectPasswordException extends Exception {
 
          private static final long serialVersionUID = 1L;
     
-    public IncorrectPasswordException (String message){
-        super(message);
+    public IncorrectPasswordException (){
+        try {
+            throw new Exception ("La contraseña no es correcta. Vuelva a introducirla. ");
+        } catch (Exception ex) {
+            Logger.getLogger(UserAlreadyExitsException.class.getName()).log(Level.SEVERE, null, ex);
+        }
            
     } 
            
