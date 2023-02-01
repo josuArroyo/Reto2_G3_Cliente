@@ -138,7 +138,7 @@ public class PlaceController {
     //SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
     // private SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
     User user;
-    Admin admin;
+    private Admin admin;
 
     public void initStage(Parent root) {
 
@@ -230,6 +230,11 @@ public class PlaceController {
 
     }
 
+    public void setAdmin(Admin admin) {
+        this.admin = admin;
+
+    }
+
     public void setStage(Stage stage) {
         this.stage = stage;
     }
@@ -313,8 +318,8 @@ public class PlaceController {
                     lugar.setDescripcion(txtDescLugar.getText());
                     lugar.setTipoLugar(cbxTipoLugar.getSelectionModel().getSelectedItem().toString());
                     lugar.setTiempo(Date.from(dteTiempoReservado.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
-                    admin.setId(user.getId());
 
+                    lugar.setAdmin(admin);
                     //llamamos a la factoria para crear ese lugar y lo introduzca en la base de datos 
                     placefact.getFactory().create_XML(lugar);
                     //llamamos a nuestro metodo de cargarTodo para refrescar nuestra tabla y salga el nuevo lugar creado
@@ -470,8 +475,7 @@ public class PlaceController {
     @FXML
     private void handleAyudaButtonAction(ActionEvent event) {
 
-        
-       try {
+        try {
             Stage mainStage = new Stage();
             URL viewLink = getClass().getResource("/grupo3/reto2/view/Help.fxml");
             // initialition loader
@@ -489,7 +493,7 @@ public class PlaceController {
             Logger.getLogger(PlaceController.class.getName())
                     .log(Level.SEVERE, null, ex);
         }
-         
+
         /*
         try {
             LOGGER.info("Loading help view...");
@@ -507,9 +511,7 @@ public class PlaceController {
                     "UI GestionUsuariosController: Error loading help window: {0}",
                     ex.getMessage());
         }
-*/
-        
-        
+         */
     }
 
 }

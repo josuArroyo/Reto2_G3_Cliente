@@ -7,6 +7,7 @@ package grupo3.reto2.controller;
 
 import grupo3.reto2.logic.PlaceManagerFactory;
 import grupo3.reto2.logic.UserFactory;
+import grupo3.reto2.model.Admin;
 import grupo3.reto2.model.Lugar;
 import grupo3.reto2.model.User;
 import java.io.IOException;
@@ -119,20 +120,22 @@ public class SignInController {
                 user.setLogin(txtNombre.getText());
                 user.setPasswd(txtPasswd.getText());
                 List<User> usersiden;
-                usersiden = userfact.getFactory().findUsersByLogin_XML(new GenericType<List<User>>(){}, txtNombre.getText(), txtPasswd.getText());
-                
-                
-              
+                usersiden = userfact.getFactory().findUsersByLogin_XML(new GenericType<List<User>>() {
+                }, txtNombre.getText(), txtPasswd.getText());
+
                 //cargar el fxml de la ventana de sign up utilizando un cargador no estatico
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/grupo3/reto2/view/Place.fxml"));
 
                 Parent root = (Parent) loader.load();
 
+                Admin admin = new Admin();
+                admin.setId(usersiden.get(0).getId());
+                
                 PlaceController placeController = ((PlaceController) loader.getController());
+                placeController.setAdmin(admin);
 
                 placeController.initStage(root);
-                
-              
+
             }
 
         } catch (Exception e) {
@@ -149,7 +152,7 @@ public class SignInController {
     private void handleSignUpButtonAction(ActionEvent event) {
 
         try {
-            
+
             //cargar el fxml de la ventana de sign up utilizando un cargador no estatico
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/grupo3/reto2/view/SignUp.fxml"));
 
