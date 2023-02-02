@@ -12,6 +12,8 @@ import static grupo3.reto2.model.UserPrivilege.ADMIN;
 import static grupo3.reto2.model.UserPrivilege.CLIENT;
 import grupo3.reto2.logic.EventManagerFactory;
 import grupo3.reto2.cipher.Mail;
+import java.io.IOException;
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -35,6 +37,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -92,6 +95,9 @@ public class EventController extends GenericController {
 
     @FXML
     private Button btnInforme;
+    
+    @FXML
+    private Button btnayuda;
 
     @FXML
     private Button btnCerrar;
@@ -174,6 +180,7 @@ public class EventController extends GenericController {
             btnSubscribir.setOnAction(this::subscribirse);
             btnBorrar.setOnAction(this::borrar);
             btnInforme.setOnAction(this::informe);
+            btnayuda.setOnAction(this::ayuda);
 
             tvTablaEvento.getSelectionModel().selectedItemProperty().addListener(this::handleTableSelection);
             tcIdEvento.setCellValueFactory(new PropertyValueFactory<>("idEvento"));
@@ -221,6 +228,7 @@ public class EventController extends GenericController {
             btnCerrar.setOnAction(this::salir);
             btnSubscribir.setOnAction(this::subscribirse);
             btnInforme.setOnAction(this::informe);
+            btnayuda.setOnAction(this::ayuda);
 
             tvTablaEvento.getSelectionModel().selectedItemProperty().addListener(this::handleTableSelection);
             tcIdEvento.setCellValueFactory(new PropertyValueFactory<>("idEvento"));
@@ -275,6 +283,7 @@ public class EventController extends GenericController {
             btnModificar.setDisable(true);
             btnBorrar.setDisable(true);
             btnSubscribir.setDisable(true);
+            
 
             tfDescripcion.setPromptText("De que trata el evento...");
             dpFecha.setValue(LocalDate.of(2023, Month.JANUARY, 1));
@@ -617,6 +626,28 @@ public class EventController extends GenericController {
         } catch (JRException ex) {
             Logger.getLogger(EventController.class.getName()).log(Level.SEVERE, null, ex);
 
+        }
+    }
+    
+    @FXML
+    private void ayuda(ActionEvent event){
+        try {
+            Stage mainStage = new Stage();
+            URL viewLink = getClass().getResource("/grupo3/reto2/view/HelpEvent.fxml");
+            // initialition loader
+            FXMLLoader loader = new FXMLLoader(viewLink);
+            //make the root with the loader
+            Parent root = (Parent) loader.load();
+            //Get the controller
+            HelpEventController mainStageController = ((HelpEventController) loader.getController());
+            //set the stage
+            mainStageController.setStage(mainStage);
+            //start the stage
+            mainStageController.initStage(root);
+            this.stage.close();
+        } catch (IOException ex) {
+            Logger.getLogger(PlaceController.class.getName())
+                    .log(Level.SEVERE, null, ex);
         }
     }
 
