@@ -140,13 +140,13 @@ public class TrainingController {
         List<User> usersiden;
         
         
-        if (user.getPrivilege() == user.getPrivilege().CLIENT) {
+        /*if (user.getPrivilege() == user.getPrivilege().CLIENT) {
             paneAdmin.setDisable(true);
             paneAdmin.setVisible(false);
         } else  {
             paneAdmin.setDisable(false);
             paneAdmin.setVisible(true);
-        }
+        }*/
 //        Los label que hay en el panel (paneAdmin) de descripción del entrenamiento, 
 //        duración del entrenamiento, fecha del periodo, intensidad, repeticiones y 
 //        objetivo estarán visibles si se inicia como administrador, si se inicia como usuario no.

@@ -10,7 +10,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="grupo3.reto2.controller.PlaceController">
+<Pane fx:id = "paneLugar" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="grupo3.reto2.controller.PlaceController">
     <children>
         <fx:include fx:id="hbox" source="MenuBar.fxml" />
         <TextField fx:id="txtNombreLugar" layoutX="70.0" layoutY="87.0" prefHeight="25.0" prefWidth="204.0" promptText="Introduzca el nombre del Lugar" />

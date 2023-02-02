@@ -313,7 +313,7 @@ public class PlaceController {
                     lugar.setDescripcion(txtDescLugar.getText());
                     lugar.setTipoLugar(cbxTipoLugar.getSelectionModel().getSelectedItem().toString());
                     lugar.setTiempo(Date.from(dteTiempoReservado.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
-                    user.setId(1);
+                    //user.setId(1);
 
                     //llamamos a la factoria para crear ese lugar y lo introduzca en la base de datos 
                     placefact.getFactory().create_XML(lugar);
