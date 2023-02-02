@@ -473,13 +473,13 @@ public class PlaceController {
         
        try {
             Stage mainStage = new Stage();
-            URL viewLink = getClass().getResource("/grupo3/reto2/view/Help.fxml");
+            URL viewLink = getClass().getResource("/grupo3/reto2/view/HelpPlace.fxml");
             // initialition loader
             FXMLLoader loader = new FXMLLoader(viewLink);
             //make the root with the loader
             Parent root = (Parent) loader.load();
             //Get the controller
-            HelpController mainStageController = ((HelpController) loader.getController());
+            HelpPlaceController mainStageController = ((HelpPlaceController) loader.getController());
             //set the stage
             mainStageController.setStage(mainStage);
             //start the stage

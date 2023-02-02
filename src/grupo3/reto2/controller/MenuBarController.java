@@ -5,6 +5,7 @@
  */
 package grupo3.reto2.controller;
 
+import grupo3.reto2.model.User;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -27,6 +28,7 @@ public class MenuBarController {
     
     private Stage stage = new Stage();
     
+    private User user;
     @FXML
     private HBox hBoxMenu;
     
@@ -81,7 +83,7 @@ public class MenuBarController {
                 Parent root = (Parent) loader.load();
 
                 PrincipalController principalController = ((PrincipalController) loader.getController());
-                principalController.initiStage(root);
+                principalController.initiStage(root, user);
             
                 
         } catch (IOException e) {

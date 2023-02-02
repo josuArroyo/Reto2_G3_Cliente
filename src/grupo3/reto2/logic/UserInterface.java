@@ -37,7 +37,7 @@ public interface UserInterface {
     
     public void create_JSON(Object requestEntity) throws ClientErrorException;
     
-    public <T> T findUsersByPrivilege_XML(Class<T> responseType, String userPrivilege) throws ClientErrorException;
+    public <T> T findUsersByPrivilege_XML(GenericType<T> responseType, String userPrivilege) throws ClientErrorException;
     
     public <T> T findUsersByPrivilege_JSON(Class<T> responseType, String userPrivilege) throws ClientErrorException;
     

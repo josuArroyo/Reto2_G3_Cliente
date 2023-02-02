@@ -137,13 +137,16 @@ public class TrainingController {
 //        El (paneAdmin) estará habilitado cuando se inicie sesión 
 //        como administrador, si se inicia como usuario estará deshabilitado. 
         
-//        if (user.getPrivilege() == user.getPrivilege().CLIENT) {
-//            paneAdmin.setDisable(true);
-//            paneAdmin.setVisible(false);
-//        } else  {
-//            paneAdmin.setDisable(false);
-//            paneAdmin.setVisible(true);
-//        }
+        List<User> usersiden;
+        
+        
+        if (user.getPrivilege() == user.getPrivilege().CLIENT) {
+            paneAdmin.setDisable(true);
+            paneAdmin.setVisible(false);
+        } else  {
+            paneAdmin.setDisable(false);
+            paneAdmin.setVisible(true);
+        }
 //        Los label que hay en el panel (paneAdmin) de descripción del entrenamiento, 
 //        duración del entrenamiento, fecha del periodo, intensidad, repeticiones y 
 //        objetivo estarán visibles si se inicia como administrador, si se inicia como usuario no.
@@ -556,20 +559,20 @@ public class TrainingController {
         
        try {
             Stage mainStage = new Stage();
-            URL viewLink = getClass().getResource("/grupo3/reto2/view/Help.fxml");
+            URL viewLink = getClass().getResource("/grupo3/reto2/view/HelpTraining.fxml");
             // initialition loader
             FXMLLoader loader = new FXMLLoader(viewLink);
             //make the root with the loader
             Parent root = (Parent) loader.load();
             //Get the controller
-            HelpController mainStageController = ((HelpController) loader.getController());
+            HelpTrainingController mainStageController = ((HelpTrainingController) loader.getController());
             //set the stage
             mainStageController.setStage(mainStage);
             //start the stage
             mainStageController.initStage(root);
             this.stage.close();
         } catch (IOException ex) {
-            Logger.getLogger(PlaceController.class.getName())
+            Logger.getLogger(TrainingController.class.getName())
                     .log(Level.SEVERE, null, ex);
         }
          

@@ -7,6 +7,8 @@ package grupo3.reto2.controller;
 
 import grupo3.reto2.logic.PlaceManagerFactory;
 import grupo3.reto2.logic.UserFactory;
+import grupo3.reto2.model.Admin;
+import grupo3.reto2.model.Cliente;
 import grupo3.reto2.model.Lugar;
 import grupo3.reto2.model.User;
 import grupo3.reto2.model.UserPrivilege;
@@ -119,18 +121,26 @@ public class SignInController {
                 User user = new User();
                 user.setLogin(txtNombre.getText());
                 user.setPasswd(txtPasswd.getText());
+
                 
-                if(user.getLogin().equals("Manoloxxx") && user.getPasswd().equals("adbc*1234")){
-                    user.setPrivilege(UserPrivilege.ADMIN);
-                    user.setId(1);
-                }else{
-                    user.setPrivilege(UserPrivilege.CLIENT);
-                }
                 
                 
                 List<User> usersiden;
+                //List<User> userprivl;
                 usersiden = userfact.getFactory().findUsersByLogin_XML(new GenericType<List<User>>(){}, txtNombre.getText(), txtPasswd.getText());
+                //userprivl = userfact.getFactory().findUsersByPrivilege_XML(new GenericType<List<User>>(){}, user.getPrivilege().toString());
+                Admin admin = new Admin();         
+                Cliente client = new Cliente();
                 
+                if(user.getLogin().equals("Manoloxxx") && user.getPasswd().equals("adbc*1234")){
+                    user.setPrivilege(UserPrivilege.ADMIN);    
+                    admin.setId(usersiden.get(0).getId());
+                    admin.setPrivilege(user.getPrivilege());
+                }else{
+                    user.setPrivilege(UserPrivilege.CLIENT);
+                    client.setId(usersiden.get(0).getId());
+                    client.setPrivilege(user.getPrivilege());
+                }
                 
               
                 //cargar el fxml de la ventana de sign up utilizando un cargador no estatico
@@ -139,8 +149,9 @@ public class SignInController {
                 Parent root = (Parent) loader.load();
 
                 PrincipalController princiController = ((PrincipalController) loader.getController());
-
-                princiController.initiStage(root);
+                princiController.setUser(user);
+                
+                princiController.initiStage(root, user);
                 
               
             }

@@ -92,7 +92,7 @@ public class UserRESTfulClient implements UserInterface{
         webTarget.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON));
     }
 
-    public <T> T findUsersByPrivilege_XML(Class<T> responseType, String userPrivilege) throws ClientErrorException {
+    public <T> T findUsersByPrivilege_XML(GenericType<T> responseType, String userPrivilege) throws ClientErrorException {
         WebTarget resource = webTarget;
         resource = resource.path(java.text.MessageFormat.format("findUserbyPrivilege/{0}", new Object[]{userPrivilege}));
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_XML).get(responseType);

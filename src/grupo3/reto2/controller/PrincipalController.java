@@ -5,6 +5,9 @@
  */
 package grupo3.reto2.controller;
 
+import grupo3.reto2.model.Admin;
+import grupo3.reto2.model.Cliente;
+import grupo3.reto2.model.User;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -23,14 +26,26 @@ import javafx.stage.Stage;
 public class PrincipalController {
     Stage stage = new Stage();
 
-    public void initiStage(Parent root) {
+    private User user;
+
+    
+
+    public void initiStage(Parent root, User user) {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         //La ventana es modal
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Principal");
         stage.show();
+        System.out.println(user.getId());
+        System.out.println(user.getPrivilege());
+        
     }  
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+    
 
     public void setStage(Stage stage) {
         this.stage = stage;
