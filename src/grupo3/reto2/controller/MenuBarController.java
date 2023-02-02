@@ -114,10 +114,10 @@ public class MenuBarController {
 
             Parent root = (Parent) loader.load();
             
-            /*EventController controller = ((EventController) loader.getController());
+            EventController eventcontroller = ((EventController) loader.getController());
 
-            controller.setStage(stage);
-            controller.initStage(root);*/
+            eventcontroller.setStage(stage);
+            eventcontroller.initStage(root);
 
            
         } catch (IOException e) {

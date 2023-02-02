@@ -120,19 +120,27 @@ public class SignInController {
                 user.setLogin(txtNombre.getText());
                 user.setPasswd(txtPasswd.getText());
                 
+                if(user.getLogin().equals("Manoloxxx") && user.getPasswd().equals("adbc*1234")){
+                    user.setPrivilege(UserPrivilege.ADMIN);
+                    user.setId(1);
+                }else{
+                    user.setPrivilege(UserPrivilege.CLIENT);
+                }
+                
+                
                 List<User> usersiden;
                 usersiden = userfact.getFactory().findUsersByLogin_XML(new GenericType<List<User>>(){}, txtNombre.getText(), txtPasswd.getText());
                 
                 
               
                 //cargar el fxml de la ventana de sign up utilizando un cargador no estatico
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/grupo3/reto2/view/Place.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/grupo3/reto2/view/Principal.fxml"));
 
                 Parent root = (Parent) loader.load();
 
-                PlaceController placeController = ((PlaceController) loader.getController());
+                PrincipalController princiController = ((PrincipalController) loader.getController());
 
-                placeController.initStage(root);
+                princiController.initiStage(root);
                 
               
             }
@@ -153,13 +161,13 @@ public class SignInController {
         try {
             
             //cargar el fxml de la ventana de sign up utilizando un cargador no estatico
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/grupo3/reto2/view/Place.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/grupo3/reto2/view/SignUp.fxml"));
 
             Parent root = (Parent) loader.load();
 
-            PlaceController placeController = ((PlaceController) loader.getController());
+            SignUpController signUpController = ((SignUpController) loader.getController());
 
-            placeController.initStage(root);
+            signUpController.initStage(root);
         } catch (IOException ex) {
             Logger.getLogger(SignInController.class.getName()).log(Level.SEVERE, null, ex);
         }

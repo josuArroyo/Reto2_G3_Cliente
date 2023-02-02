@@ -71,7 +71,7 @@ public class TrainingController {
     Entrenamiento entrena = null;
     //Invocamos a la factoria
     TrainingFactory fact = new TrainingFactory();
-
+    private User user;
     Objetivo objetivo = new Objetivo();
 
     //Declaramos los campos que utilizaremos en esta ventana
@@ -132,18 +132,18 @@ public class TrainingController {
         LOGGER.info("Initializing Training stage");
         Scene scene = new Scene(root);
         //Entrenamiento entrenamiento = new Entrenamiento;
-        User user = new User();
+        
 
 //        El (paneAdmin) estará habilitado cuando se inicie sesión 
 //        como administrador, si se inicia como usuario estará deshabilitado. 
-        System.out.println(user.getPrivilege());
-        if (user.getPrivilege() == user.getPrivilege().CLIENT) {
-            paneAdmin.setDisable(true);
-            paneAdmin.setVisible(false);
-        } else if(user.getPrivilege() == user.getPrivilege().ADMIN) {
-            paneAdmin.setDisable(false);
-            paneAdmin.setVisible(true);
-        }
+        
+//        if (user.getPrivilege() == user.getPrivilege().CLIENT) {
+//            paneAdmin.setDisable(true);
+//            paneAdmin.setVisible(false);
+//        } else  {
+//            paneAdmin.setDisable(false);
+//            paneAdmin.setVisible(true);
+//        }
 //        Los label que hay en el panel (paneAdmin) de descripción del entrenamiento, 
 //        duración del entrenamiento, fecha del periodo, intensidad, repeticiones y 
 //        objetivo estarán visibles si se inicia como administrador, si se inicia como usuario no.
