@@ -5,31 +5,50 @@
  */
 package grupo3.reto2.controller;
 
+import grupo3.reto2.model.Admin;
+import grupo3.reto2.model.Cliente;
+import grupo3.reto2.model.User;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 /**
  *
  * @author 2dam
  */
-public class PrincipalController implements Initializable {
+public class PrincipalController {
+    Stage stage = new Stage();
+
+    private User user;
+
     
-    @FXML
-    private Label label;
-    
-    @FXML
-    private void handleButtonAction(ActionEvent event) {
-        System.out.println("You clicked me!");
-        label.setText("Hello World!");
+
+    public void initiStage(Parent root, User user) {
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        //La ventana es modal
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Principal");
+        stage.show();
+        System.out.println(user.getId());
+        System.out.println(user.getPrivilege());
+        
+    }  
+
+    public void setUser(User user) {
+        this.user = user;
     }
     
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
-    
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
+
 }

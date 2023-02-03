@@ -10,15 +10,20 @@ import java.util.logging.Logger;
 
 /**
  * Incorrectly introduced password
+ *
  * @author Alejandro y Jessica
  */
 public class IncorrectPasswordException extends Exception {
 
-         private static final long serialVersionUID = 1L;
-    
-    public IncorrectPasswordException (String message){
-        super(message);
-           
-    } 
-           
+    private static final long serialVersionUID = 1L;
+
+    public IncorrectPasswordException() {
+        try {
+            throw new Exception("La contraseña no es correcta. Vuelva a introducirla. ");
+        } catch (Exception ex) {
+            Logger.getLogger(UserAlreadyExistsException.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
 }

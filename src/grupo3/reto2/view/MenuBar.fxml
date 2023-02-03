@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.HBox?>
+
+<HBox fx:id="hbox" maxHeight="30.0" maxWidth="1000.0" prefHeight="30.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="grupo3.reto2.controller.MenuBarController">
+   <children>
+      <MenuBar fx:id="menuBar" prefHeight="30.0" prefWidth="1000.0">
+        <menus>
+          <Menu fx:id="menuHome" mnemonicParsing="false" onAction="#menuHome" text="Home">
+            <items>
+              <MenuItem fx:id="miVolver" mnemonicParsing="false" text="Volver a la principal" />
+            </items>
+          </Menu>
+          <Menu fx:id="menuNavegar" mnemonicParsing="false" text="Navegar">
+            <items>
+                  <MenuItem fx:id="miEvento" mnemonicParsing="false" onAction="#miEvento" text="Evento" />
+                  <MenuItem fx:id="miEntrenamiento" mnemonicParsing="false" onAction="#miEntrenamiento" text="Entrenamiento" />
+              <MenuItem fx:id="miLugar" mnemonicParsing="false" onAction="#miLugar" text="Lugar" />
+                  <MenuItem fx:id="miObjetivo" mnemonicParsing="false" onAction="#miObjetivo" text="Objetivo" />
+            </items>
+          </Menu>
+            <Menu fx:id="menuCR" mnemonicParsing="false" text="Cerrar sesión">
+              <items>
+                <MenuItem fx:id="miCerrarSesion" mnemonicParsing="false" onAction="#miCerrarSesion" text="Cerrar sesión" />
+              </items>
+            </Menu>
+        </menus>
+      </MenuBar>
+   </children>
+</HBox>
