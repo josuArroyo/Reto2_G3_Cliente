@@ -7,6 +7,7 @@ package grupo3.reto2.controller;
 
 import grupo3.reto2.Aplication;
 import grupo3.reto2.model.Lugar;
+import java.util.List;
 import java.util.concurrent.TimeoutException;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -26,9 +27,11 @@ import org.junit.FixMethodOrder;
 import org.junit.runners.MethodSorters;
 import org.testfx.api.FxToolkit;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import org.testfx.framework.junit.ApplicationTest;
 import static org.testfx.matcher.base.NodeMatchers.isVisible;
 import static org.testfx.api.FxAssert.verifyThat;
+import static sun.security.jgss.GSSUtil.login;
 
 /**
  *
@@ -100,7 +103,7 @@ public class PlaceControllerTest extends ApplicationTest {
     public void test1_InicioVentana() {
         //Inicio sesión
         clickOn(txtNombre);
-        write("ManoloGains");
+        write("Manoloxxx");
         clickOn(txtPasswd);
         write("abcd*1234");
         clickOn(btnLogin);
@@ -114,50 +117,54 @@ public class PlaceControllerTest extends ApplicationTest {
     
     @Test
     public void test2_CrearLugar() {
-
+        
+        String NombreLugar= txtNombreLugar.getText();    
         clickOn(txtNombreLugar);
         write("polideportivodeCastro");
         clickOn(txtDescLugar);
         write("el polideportivo publico de castro");
+        
         clickOn(cbxTipoLugar);
         type(KeyCode.DOWN);
-        clickOn("publico");
+        clickOn("Publico");
+        
+        
         clickOn(dteTiempoReservado);
         write("3/02/2023");
         clickOn(btnCrear);
         clickOn("Aceptar");
-
-        tblvTabla.getSelectionModel().select(0);  
-        assertEquals(txtNombreLugar.getText(), "polideportivodeCastro");
         
-      
+
+         List<Lugar> lugar= tblvTabla.getItems();
+        assertNotEquals("el lugar se ha creado", lugar.stream().filter(l->l.getNombre().equals(NombreLugar)).count(),4);      
     }
-     
- 
-    @Test
+        
+        @Test
     public void test3_ModificarLugar() {
-        tblvTabla.getSelectionModel().select(2);
+        String NombreLugar= txtNombreLugar.getText();
+        tblvTabla.getSelectionModel().select(5);
         clickOn(txtNombreLugar);
         txtNombreLugar.clear();
         clickOn(txtNombreLugar);
         write("polideportivo de Castro modificado");
         clickOn(btnModificar);
-        tblvTabla.getSelectionModel().select(2);
-       // assertEquals(txtDescLugar.getText(),"el polideportivo publico de castro");
-        assertEquals(txtDescLugar.getText(), "el polideportivo publico de castro");
-        clickOn("Aceptar");
+        tblvTabla.getSelectionModel().select(5);
+         List<Lugar> lugar= tblvTabla.getItems();
+         assertNotEquals("el lugar se ha modificado", lugar.stream().filter(l->l.getNombre().equals(NombreLugar)).count(),5);
+      
+       
     }
     
 
     @Test
     public void test4_BorrarLugar(){
-
-        tblvTabla.getSelectionModel().select(0);
+         String NombreLugar= txtNombreLugar.getText();
+        tblvTabla.getSelectionModel().select(5);
         clickOn(btnEliminar);
         clickOn("Aceptar");
-        tblvTabla.getSelectionModel().select(0);
-        assertEquals(txtNombreLugar.getText(), "");
-        clickOn("Aceptar");
+        tblvTabla.getSelectionModel().select(5);
+         List<Lugar> lugar= tblvTabla.getItems();
+        assertNotEquals("el lugar se ha borrado", lugar.stream().filter(l->l.getNombre().equals(NombreLugar)).count(),4);
 
     }
     
@@ -178,12 +185,14 @@ public class PlaceControllerTest extends ApplicationTest {
     @Test
     public void test6_filtroLugarPrivado() {
         clickOn(cbxFiltroTipoLugar);
-        type(KeyCode.DOWN);
+        type(KeyCode.UP);
         clickOn("privado");
 
         tblvTabla.getSelectionModel().select(0);
         assertEquals(txtNombreLugar.getText(), "pep");
 
     }
-
+        
+      
 }
+

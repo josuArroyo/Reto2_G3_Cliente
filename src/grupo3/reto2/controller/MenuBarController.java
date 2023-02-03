@@ -5,10 +5,13 @@
  */
 package grupo3.reto2.controller;
 
+import grupo3.reto2.exception.ReadException;
 import grupo3.reto2.model.User;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,6 +22,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import javax.ws.rs.WebApplicationException;
 
 /**
  *
@@ -119,7 +123,13 @@ public class MenuBarController {
             EventController eventcontroller = ((EventController) loader.getController());
 
             eventcontroller.setStage(stage);
-            eventcontroller.initStage(root);
+            try {
+                eventcontroller.initStage(root);
+            } catch (WebApplicationException ex) {
+                Logger.getLogger(MenuBarController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ReadException ex) {
+                Logger.getLogger(MenuBarController.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
            
         } catch (IOException e) {

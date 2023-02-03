@@ -127,7 +127,7 @@ public class EventControllerTest extends ApplicationTest {
     }
 
     @Test
-    public void test2_InicioVentana() {
+    public void test2_Crear() {
         clickOn(tfDescripcion);
         write("Competicion de remo");
         clickOn(dpFecha);
@@ -144,14 +144,13 @@ public class EventControllerTest extends ApplicationTest {
         verifyThat("#btnModificar", isVisible());
 
         clickOn("#btnCrear");
-
         tvTablaEvento.getSelectionModel().select(4);
 
     }
 
     @Test
-    public void test3_InicioVentana() {
-        clickOn("Competicion de remo");
+    public void test3_Modificar() {
+        clickOn("ascenso");
         verifyThat("#btnCrear", isVisible());
         verifyThat("#btnBorrar", isVisible());
         verifyThat("#btnModificar", isVisible());
@@ -165,7 +164,7 @@ public class EventControllerTest extends ApplicationTest {
     }
 
     @Test
-    public void test4_InicioVentana() {
+    public void test4_Borrar() {
         clickOn("Competicion de remo");
         verifyThat("#btnCrear", isVisible());
         verifyThat("#btnBorrar", isVisible());
@@ -177,7 +176,7 @@ public class EventControllerTest extends ApplicationTest {
     }
     
     @Test
-    public void test5_InicioVentana() {
+    public void test5_FalloCrear() {
         clickOn(tfDescripcion);
         write("Competicion de remo");
         clickOn(dpFecha);
@@ -200,7 +199,7 @@ public class EventControllerTest extends ApplicationTest {
     }
     
     @Test
-    public void test6_InicioVentana() {
+    public void test6_FiltroId() {
         clickOn(cbFiltro);
         type(KeyCode.DOWN);
         clickOn("Filtrar por Id de evento");
@@ -222,7 +221,7 @@ public class EventControllerTest extends ApplicationTest {
     }
     
     @Test
-    public void test7_InicioVentana() {
+    public void test7_FiltroTipo() {
         clickOn(cbFiltro);
         type(KeyCode.DOWN);
         clickOn("Filtrar por tipo de evento");

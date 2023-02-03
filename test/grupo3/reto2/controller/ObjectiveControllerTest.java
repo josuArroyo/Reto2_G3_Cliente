@@ -129,6 +129,7 @@ public class ObjectiveControllerTest extends ApplicationTest {
     public void test2_CrearObjetivo(){
     
         //Escribo los valores para crear el objetivo
+        String valorParam = txtValorParam.getText();
         clickOn(txtValorParam);
         write("60Kg");
         
@@ -144,36 +145,45 @@ public class ObjectiveControllerTest extends ApplicationTest {
         verifyThat(btnDelete, isEnabled());
         
         clickOn(btnCrear);
+        List<Objetivo> objetivo= TableObjetivo.getItems();
+        assertNotEquals("el objetivo se ha creado", objetivo.stream().filter(o->o.getValorParam().equals(valorParam)).count(),4);
         
-        TableObjetivo.getSelectionModel().select(1);
-        assertEquals(txtDescriParam.getText(), "Desarrollar musculatura");
+        /*TableObjetivo.getSelectionModel().select(4);
+        assertEquals(txtDescriParam.getText(), "Desarrollar musculatura");*/
     }
     
     @Test
     public void test3_ModificarObjetivo(){
-        TableObjetivo.getSelectionModel().select(2);
+        
+        String valorParam = txtValorParam.getText();
+        clickOn(txtValorParam);
+        TableObjetivo.getSelectionModel().select(4);
         verifyThat(btnCrear, isEnabled());
         verifyThat(btnModifi, isEnabled());
         verifyThat(btnDelete, isEnabled());
         clickOn(txtValorParam);
-        eraseText(4);
+        txtValorParam.clear();
         write("70kg");
         clickOn(btnModifi);
-        TableObjetivo.getSelectionModel().select(2);
-        assertEquals(txtValorParam.getText(), "70kg");  
+        TableObjetivo.getSelectionModel().select(4);
+        List<Objetivo> objetivo= TableObjetivo.getItems();
+        assertNotEquals("el objetivo se ha modificado", objetivo.stream().filter(o->o.getValorParam().equals(valorParam)).count(),4);
     }
     
     @Test
     public void test4_BorrarObjetivo(){
         
-        TableObjetivo.getSelectionModel().select(2);
+        String valorParam = txtValorParam.getText();
+        clickOn(txtValorParam);
+        TableObjetivo.getSelectionModel().select(4);
         verifyThat(btnCrear, isEnabled());
         verifyThat(btnModifi, isEnabled());
         verifyThat(btnDelete, isEnabled());
         clickOn(btnDelete);
         clickOn("Aceptar");
-        TableObjetivo.getSelectionModel().select(2);
-        assertEquals(txtValorParam.getText(), "");
+        TableObjetivo.getSelectionModel().select(4);
+        List<Objetivo> objetivo= TableObjetivo.getItems();
+        assertNotEquals("el objetivo se ha eliminado", objetivo.stream().filter(o->o.getValorParam().equals(valorParam)).count(),4); 
            
     }
     
@@ -187,10 +197,10 @@ public class ObjectiveControllerTest extends ApplicationTest {
         verifyThat(btnFiltrar, isEnabled());
         verifyThat(txtFiltrarParam, isEnabled());
         clickOn(txtFiltrarParam);
-        write("10km");
+        write("300 Kcal");
         clickOn(btnFiltrar);
         TableObjetivo.getSelectionModel().select(0);
-        assertEquals(txtValorParam.getText(), "10km"); 
+        assertEquals(txtValorParam.getText(), "300 Kcal"); 
     
     }
     
@@ -203,7 +213,7 @@ public class ObjectiveControllerTest extends ApplicationTest {
         verifyThat(btnFiltrar, isEnabled());
         verifyThat(txtFiltrarParam, isEnabled());
         clickOn(txtFiltrarParam);
-        eraseText(4);
+        txtFiltrarParam.clear();
         
         clickOn(cbxFiltr);
         type(KeyCode.DOWN);

@@ -12,6 +12,9 @@ import static grupo3.reto2.model.UserPrivilege.ADMIN;
 import static grupo3.reto2.model.UserPrivilege.CLIENT;
 import grupo3.reto2.logic.EventManagerFactory;
 import grupo3.reto2.cipher.Mail;
+import grupo3.reto2.exception.CreateException;
+import grupo3.reto2.exception.DeleteException;
+import grupo3.reto2.exception.ReadException;
 import java.io.IOException;
 import java.net.URL;
 import java.text.ParseException;
@@ -63,6 +66,8 @@ import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.ws.rs.ClientErrorException;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.GenericType;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -83,7 +88,6 @@ public class EventController extends GenericController {
     private Evento e = new Evento();
 
     //private User user;
-
     @FXML
     private Button btnCrear;
 
@@ -95,7 +99,7 @@ public class EventController extends GenericController {
 
     @FXML
     private Button btnInforme;
-    
+
     @FXML
     private Button btnayuda;
 
@@ -153,8 +157,8 @@ public class EventController extends GenericController {
     private ObservableList<Evento> eventsData;
 
     private static final Logger LOGGER = Logger.getLogger("/controller/EventController");
-    
-    public void initStage(Parent root) {
+
+    public void initStage(Parent root) throws WebApplicationException, ReadException {
         User user = new User();
         user.setPrivilege(ADMIN);
         if (user.getPrivilege() == user.getPrivilege().ADMIN) {
@@ -265,11 +269,9 @@ public class EventController extends GenericController {
         }
     }
 
-    
-
     @FXML
     private void vistaVentana(WindowEvent event) {
-         User user = new User();
+        User user = new User();
         user.setPrivilege(ADMIN);
         if (user.getPrivilege() == user.getPrivilege().ADMIN) {
             LOGGER.info("Iniciando método vista ventana");
@@ -283,7 +285,6 @@ public class EventController extends GenericController {
             btnModificar.setDisable(true);
             btnBorrar.setDisable(true);
             btnSubscribir.setDisable(true);
-            
 
             tfDescripcion.setPromptText("De que trata el evento...");
             dpFecha.setValue(LocalDate.of(2023, Month.JANUARY, 1));
@@ -322,7 +323,15 @@ public class EventController extends GenericController {
                                 tfFiltro.setVisible(false);
                                 btnBuscar.setVisible(false);
                                 btnBuscar.setDisable(true);
-                                cargarDatos();
+                                 {
+                                    try {
+                                        cargarDatos();
+                                    } catch (WebApplicationException ex) {
+                                        Logger.getLogger(EventController.class.getName()).log(Level.SEVERE, null, ex);
+                                    } catch (ReadException ex) {
+                                        Logger.getLogger(EventController.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }
                                 break;
                         }
                     }
@@ -341,7 +350,7 @@ public class EventController extends GenericController {
             btnModificar.setDisable(true);
             btnBorrar.setDisable(true);
             btnSubscribir.setDisable(true);
-            
+
             tfDescripcion.setDisable(true);
             dpFecha.setDisable(true);
             tfTipoEvento.setDisable(true);
@@ -379,7 +388,15 @@ public class EventController extends GenericController {
                                 tfFiltro.setVisible(false);
                                 btnBuscar.setVisible(false);
                                 btnBuscar.setDisable(true);
-                                cargarDatos();
+                                 {
+                                    try {
+                                        cargarDatos();
+                                    } catch (WebApplicationException ex) {
+                                        Logger.getLogger(EventController.class.getName()).log(Level.SEVERE, null, ex);
+                                    } catch (ReadException ex) {
+                                        Logger.getLogger(EventController.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }
                                 break;
                         }
                     }
@@ -391,11 +408,11 @@ public class EventController extends GenericController {
 
     @FXML
     private void cambioDeTexto(ObservableValue observable, String oldValue, String newValue) {
-         User user = new User();
+        User user = new User();
         user.setPrivilege(ADMIN);
         if (user.getPrivilege() == user.getPrivilege().ADMIN) {
             String fecha = dpFecha.getValue().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
-            if (tfDescripcion.getText().trim().isEmpty() || tfTipoEvento.getText().trim().isEmpty() || fecha.isEmpty() || tfPremio.getText().trim().isEmpty() || tfIdLugar.getText().trim().isEmpty()) {
+            if (tfDescripcion.getText().trim().isEmpty() || tfTipoEvento.getText().trim().isEmpty() || tfPremio.getText().trim().isEmpty() || tfIdLugar.getText().trim().isEmpty()) {
                 btnCrear.setDisable(true);
                 btnModificar.setDisable(true);
                 btnBorrar.setDisable(true);
@@ -436,8 +453,8 @@ public class EventController extends GenericController {
 
     @FXML
     private void subscribirse(ActionEvent event) {
-         User user = new User();
-        
+        User user = new User();
+        user.setEmail("admin@gmail.com");
         String host = "localhost";
 
         Properties properties = System.getProperties();
@@ -449,7 +466,7 @@ public class EventController extends GenericController {
             message.setFrom(new InternetAddress("tartangagrupo3c@gmail.com"));
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(user.getEmail()));
             message.setHeader("Hi", user.getLogin());
-            message.setText("Hi, This mail is to remind you that u have subscribed to an event");
+            message.setText("Hi, This mail is to remind you that u have subscribed to the event " + e.getDescripcion());
         } catch (MessagingException ex) {
             Logger.getLogger(EventController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -457,31 +474,18 @@ public class EventController extends GenericController {
 
     @FXML
     private void modificar(ActionEvent event) {
-         User user = new User();
+        User user = new User();
         user.setPrivilege(ADMIN);
-        if (user.getPrivilege() == user.getPrivilege().ADMIN) {
-            try {
+        try {
+            if (user.getPrivilege() == user.getPrivilege().ADMIN) {
                 char filtroString = tfTipoEvento.getText().charAt(0);
                 String filtroNumerico = tfIdLugar.getText();
                 if (filtroNumerico.matches("-?([0-9]*)?") && ((filtroString >= 'a' && filtroString <= 'z') || (filtroString >= 'A' && filtroString <= 'Z') || filtroString == ' ')) {
-                    Lugar l = new Lugar();
-                    int lug = Integer.parseInt(tfIdLugar.getText());
-                    l.setIdLugar(lug);
 
-                    String fecha = dpFecha.getValue().toString();
-                    Date fech;
-                    fech = new SimpleDateFormat("dd-MM-yyyy").parse(fecha);
-                    /*                    
-                    LocalDate now = LocalDate.now();                   
-                    if (fech.before(now)) {
-                    } else {
-                        
-                    }
-                     */
+                    e.setFecha(Date.from(dpFecha.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+                    e.setLugar(tvTablaEvento.getSelectionModel().getSelectedItem().getLugar());
                     e.setIdEvento(tvTablaEvento.getSelectionModel().getSelectedItem().getIdEvento());
                     e.setDescripcion(tfDescripcion.getText());
-                    e.setFecha(fech);
-                    e.setLugar(l);
                     e.setPremio(tfPremio.getText());
                     e.setTipoEvento(tfTipoEvento.getText());
 
@@ -501,9 +505,9 @@ public class EventController extends GenericController {
                         ventanita.close();
                     }
                 }
-            } catch (ParseException ex) {
-                Logger.getLogger(EventController.class.getName()).log(Level.SEVERE, null, ex);
             }
+        } catch (WebApplicationException | ReadException e) {
+            e.getMessage();
         }
     }
 
@@ -525,8 +529,9 @@ public class EventController extends GenericController {
     private void crear(ActionEvent event) {
         User user = new User();
         user.setPrivilege(ADMIN);
-        if (user.getPrivilege() == user.getPrivilege().ADMIN) {
-            try {
+
+        try {
+            if (user.getPrivilege() == user.getPrivilege().ADMIN) {
                 char filtroString = tfTipoEvento.getText().charAt(0);
                 String filtroNumerico = tfIdLugar.getText();
                 if (filtroNumerico.matches("-?([0-9]*)?") && ((filtroString >= 'a' && filtroString <= 'z') || (filtroString >= 'A' && filtroString <= 'Z'))) {
@@ -534,17 +539,18 @@ public class EventController extends GenericController {
                     int lug = Integer.parseInt(tfIdLugar.getText());
                     l.setIdLugar(lug);
 
-                    String fecha = dpFecha.getValue().toString();
-                    Date fech;
-                    fech = new SimpleDateFormat("dd-MM-yyyy").parse(fecha);
                     e.setDescripcion(tfDescripcion.getText());
-                    e.setFecha(fech);
+                    e.setFecha(Date.from(dpFecha.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
                     e.setLugar(l);
                     e.setPremio(tfPremio.getText());
                     e.setTipoEvento(tfTipoEvento.getText());
 
                     emf.getFactory().createEvent_XML(e);
                     eventsData = FXCollections.observableArrayList(cargarDatos());
+                    tfDescripcion.setText("");
+                    tfIdLugar.setText("");
+                    tfPremio.setText("");
+                    tfTipoEvento.setText("");
                 } else {
                     Alert ventanita = new Alert(Alert.AlertType.ERROR);
                     ventanita.setHeaderText(null);
@@ -559,55 +565,41 @@ public class EventController extends GenericController {
                         ventanita.close();
                     }
                 }
-            } catch (ParseException ex) {
-                Logger.getLogger(EventController.class.getName()).log(Level.SEVERE, null, ex);
             }
+        } catch (WebApplicationException e) {
+            e.getMessage();
+        } catch (CreateException e) {
+            e.getMessage();
+        } catch (ReadException e) {
+            e.getMessage();
         }
     }
 
     private void borrar(ActionEvent event) {
-         User user = new User();
+        User user = new User();
         user.setPrivilege(ADMIN);
-        if (user.getPrivilege() == user.getPrivilege().ADMIN) {
-            Evento es = tvTablaEvento.getSelectionModel().getSelectedItem();
-            emf.getFactory().deleteEvent(es.getIdEvento().toString());
-            eventsData = FXCollections.observableArrayList(cargarDatos());
+        try {
+            if (user.getPrivilege() == user.getPrivilege().ADMIN) {
+                Evento es = tvTablaEvento.getSelectionModel().getSelectedItem();
+                emf.getFactory().deleteEvent(es.getIdEvento().toString());
+                eventsData = FXCollections.observableArrayList(cargarDatos());
+                tfDescripcion.setText("");
+                tfIdLugar.setText("");
+                tfPremio.setText("");
+                tfTipoEvento.setText("");
+            }
+        } catch (WebApplicationException | DeleteException | ReadException e) {
+            e.getMessage();
         }
     }
 
     @FXML
-    private ObservableList<Evento> cargarDatos() {
+    private ObservableList<Evento> cargarDatos() throws WebApplicationException, ReadException {
         ObservableList<Evento> listEvento;
         List<Evento> todosEventos;
 
         todosEventos = emf.getFactory().viewEvents_XML(new GenericType<List<Evento>>() {
         });
-        listEvento = FXCollections.observableArrayList(todosEventos);
-        tvTablaEvento.setItems(listEvento);
-        tvTablaEvento.refresh();
-        return listEvento;
-    }
-
-    @FXML
-    private ObservableList<Evento> cargarFiltroIdEvento() {
-        ObservableList<Evento> listEvento;
-        List<Evento> todosEventos;
-
-        todosEventos = emf.getFactory().findEventByEventId_XML(new GenericType<List<Evento>>() {
-        }, tfFiltro.getText());
-        listEvento = FXCollections.observableArrayList(todosEventos);
-        tvTablaEvento.setItems(listEvento);
-        tvTablaEvento.refresh();
-        return listEvento;
-    }
-
-    @FXML
-    private ObservableList<Evento> cargarFiltroTipoEvento() {
-        ObservableList<Evento> listEvento;
-        List<Evento> todosEventos;
-
-        todosEventos = emf.getFactory().findEventByType_XML(new GenericType<List<Evento>>() {
-        }, tfFiltro.getText());
         listEvento = FXCollections.observableArrayList(todosEventos);
         tvTablaEvento.setItems(listEvento);
         tvTablaEvento.refresh();
@@ -628,9 +620,9 @@ public class EventController extends GenericController {
 
         }
     }
-    
+
     @FXML
-    private void ayuda(ActionEvent event){
+    private void ayuda(ActionEvent event) {
         try {
             Stage mainStage = new Stage();
             URL viewLink = getClass().getResource("/grupo3/reto2/view/HelpEvent.fxml");
@@ -679,54 +671,75 @@ public class EventController extends GenericController {
         } else {
             switch (cbFiltro.getValue().toString()) {
                 case ("Filtrar por Id de evento"):
-                    integerTextField(tfFiltro);
+                    try {
+                        String filtroNumerico = tfFiltro.getText();
+                        if (filtroNumerico.matches("-?([0-9]*)?")) {
+                            ObservableList<Evento> listEvento;
+                            List<Evento> todosEventos;
+                            todosEventos = emf.getFactory().findEventByEventId_XML(new GenericType<List<Evento>>() {
+                            }, tfFiltro.getText());
+                            listEvento = FXCollections.observableArrayList(todosEventos);
+                            tvTablaEvento.setItems(listEvento);
+                            tvTablaEvento.refresh();
+                        } else {
+                            tfFiltro.setText("");
+                            Alert ventanita = new Alert(Alert.AlertType.ERROR);
+                            ventanita.setHeaderText(null);
+                            ventanita.setTitle("Error");
+                            ventanita.setContentText("Caracteres incorrectos");
+                            Optional<ButtonType> action = ventanita.showAndWait();
+                            if (action.get() == ButtonType.OK) {
+                                tfDescripcion.setText("");
+                                tfIdLugar.setText("");
+                                tfPremio.setText("");
+                                tfTipoEvento.setText("");
+                                ventanita.close();
+                            }
+                        }
+                    } catch (ClientErrorException e) {
+                        e.getMessage();
+                    } catch (ReadException e) {
+                        e.getMessage();
+                    }
                     break;
                 case ("Filtrar por tipo de evento"):
-                    stringTextField(tfFiltro);
+                    try {
+                        char filtroString = tfFiltro.getText().charAt(0);
+                        // Si no está entre a y z, ni entre A y Z, ni es un espacio
+                        if (((filtroString >= 'a' && filtroString <= 'z') || (filtroString >= 'A' && filtroString <= 'Z') || filtroString == ' ')) {
+                            try {
+                                ObservableList<Evento> listEvento;
+                                List<Evento> todosEventos;
+
+                                todosEventos = emf.getFactory().findEventByType_XML(new GenericType<List<Evento>>() {
+                                }, tfFiltro.getText());
+                                listEvento = FXCollections.observableArrayList(todosEventos);
+                                tvTablaEvento.setItems(listEvento);
+                                tvTablaEvento.refresh();
+                            } catch (ClientErrorException e) {
+                                e.getMessage();
+                            } catch (ReadException ex) {
+                                Logger.getLogger(EventController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        } else {
+                            tfFiltro.setText("");
+                            Alert ventanita = new Alert(Alert.AlertType.ERROR);
+                            ventanita.setHeaderText(null);
+                            ventanita.setTitle("Error");
+                            ventanita.setContentText("Caracteres incorrectos");
+                            Optional<ButtonType> action = ventanita.showAndWait();
+                            if (action.get() == ButtonType.OK) {
+                                tfDescripcion.setText("");
+                                tfIdLugar.setText("");
+                                tfPremio.setText("");
+                                tfTipoEvento.setText("");
+                                ventanita.close();
+                            }
+                        }
+                    } catch (ClientErrorException e) {
+                        e.getMessage();
+                    }
                     break;
-            }
-        }
-    }
-
-    public void integerTextField(TextField texto) {
-        String filtroNumerico = texto.getText();
-        if (filtroNumerico.matches("-?([0-9]*)?")) {
-            cargarFiltroIdEvento();
-        } else {
-            texto.setText("");
-            Alert ventanita = new Alert(Alert.AlertType.ERROR);
-            ventanita.setHeaderText(null);
-            ventanita.setTitle("Error");
-            ventanita.setContentText("Caracteres incorrectos");
-            Optional<ButtonType> action = ventanita.showAndWait();
-            if (action.get() == ButtonType.OK) {
-                tfDescripcion.setText("");
-                tfIdLugar.setText("");
-                tfPremio.setText("");
-                tfTipoEvento.setText("");
-                ventanita.close();
-            }
-        }
-    }
-
-    public void stringTextField(TextField texto) {
-        char filtroString = texto.getText().charAt(0);
-        // Si no está entre a y z, ni entre A y Z, ni es un espacio
-        if (((filtroString >= 'a' && filtroString <= 'z') || (filtroString >= 'A' && filtroString <= 'Z') || filtroString == ' ')) {
-            cargarFiltroTipoEvento();
-        } else {
-            texto.setText("");
-            Alert ventanita = new Alert(Alert.AlertType.ERROR);
-            ventanita.setHeaderText(null);
-            ventanita.setTitle("Error");
-            ventanita.setContentText("Caracteres incorrectos");
-            Optional<ButtonType> action = ventanita.showAndWait();
-            if (action.get() == ButtonType.OK) {
-                tfDescripcion.setText("");
-                tfIdLugar.setText("");
-                tfPremio.setText("");
-                tfTipoEvento.setText("");
-                ventanita.close();
             }
         }
     }

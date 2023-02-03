@@ -134,7 +134,7 @@ public class Lugar implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Lugar[ id=" + idLugar + " ]";
+        return this.idLugar.toString();
     }
 
 }

@@ -192,8 +192,8 @@ public class PlaceController {
         tblvTabla.getSelectionModel().selectedItemProperty().addListener(this::handleUsersTableSelectionChanged);
         cbxFiltroTipoLugar.valueProperty().addListener(this::handleFiltradoTipoLugar);
         //cargar combobox
-        cbxTipoLugar.getItems().addAll("privado", "publico");
-        cbxFiltroTipoLugar.getItems().addAll("privado", "publico", "ninguno");
+        cbxTipoLugar.getItems().addAll("Privado", "Publico");
+        cbxFiltroTipoLugar.getItems().addAll("Privado", "Publico", "ninguno");
         tblcNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         tblcDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
         tblcTiempo.setCellValueFactory(new PropertyValueFactory<>("tiempo"));
@@ -455,10 +455,10 @@ public class PlaceController {
     private void handleFiltradoTipoLugar(ObservableValue observable, Object oldValue, Object newValue) {
 
         switch (cbxFiltroTipoLugar.getValue()) {
-            case ("publico"):
+            case ("Publico"):
                 cargarFiltro();
                 break;
-            case ("privado"):
+            case ("Privado"):
                 cargarFiltro();
                 break;
             case ("ninguno"):

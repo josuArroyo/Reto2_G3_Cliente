@@ -145,7 +145,7 @@ public class Evento implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Evento[ id=" + idEvento + " ]";
+        return this.idEvento.toString();
     }
     
 }
