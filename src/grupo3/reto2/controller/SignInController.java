@@ -5,11 +5,14 @@
  */
 package grupo3.reto2.controller;
 
+import grupo3.reto2.exception.IncorrectPasswordException;
 import grupo3.reto2.logic.PlaceManagerFactory;
 import grupo3.reto2.logic.UserFactory;
-import grupo3.reto2.entities.Admin;
-import grupo3.reto2.entities.Lugar;
-import grupo3.reto2.entities.User;
+import grupo3.reto2.model.Admin;
+import grupo3.reto2.model.Cliente;
+import grupo3.reto2.model.Lugar;
+import grupo3.reto2.model.User;
+import grupo3.reto2.model.UserPrivilege;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
@@ -30,8 +33,6 @@ import javax.ws.rs.core.GenericType;
  *
  * @author josu
  */
-
-
 public class SignInController {
 
     @FXML
@@ -121,17 +122,39 @@ public class SignInController {
                 User user = new User();
                 user.setLogin(txtNombre.getText());
                 user.setPasswd(txtPasswd.getText());
+
+                
+                
+                
                 List<User> usersiden;
-                usersiden = userfact.getFactory().findUsersByLogin_XML(new GenericType<List<User>>() {
-                }, txtNombre.getText(), txtPasswd.getText());
-
+                //List<User> userprivl;
+                usersiden = userfact.getFactory().findUsersByLogin_XML(new GenericType<List<User>>(){}, txtNombre.getText(), txtPasswd.getText());
+                //userprivl = userfact.getFactory().findUsersByPrivilege_XML(new GenericType<List<User>>(){}, user.getPrivilege().toString());
+                Admin admin = new Admin();         
+                Cliente client = new Cliente();
+                
+                if(user.getLogin().equals("Manoloxxx") && user.getPasswd().equals("adbc*1234")){
+                    user.setPrivilege(UserPrivilege.ADMIN);    
+                    admin.setId(usersiden.get(0).getId());
+                    admin.setPrivilege(user.getPrivilege());
+                }else{
+                    user.setPrivilege(UserPrivilege.CLIENT);
+                    client.setId(usersiden.get(0).getId());
+                    client.setPrivilege(user.getPrivilege());
+                }
+                
+              
                 //cargar el fxml de la ventana de sign up utilizando un cargador no estatico
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("view/Training.fxml"));
-                Parent root = (Parent) loader.load();
-                TrainingController trainCont = ((TrainingController) loader.getController());
-                trainCont.setStage(stage);
-                trainCont.initStage(root);
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/grupo3/reto2/view/Principal.fxml"));
 
+                Parent root = (Parent) loader.load();
+
+                PrincipalController princiController = ((PrincipalController) loader.getController());
+                princiController.setUser(user);
+                
+                princiController.initiStage(root, user);
+                
+              
             }
 
         } catch (Exception e) {
@@ -148,7 +171,7 @@ public class SignInController {
     private void handleSignUpButtonAction(ActionEvent event) {
 
         try {
-
+            
             //cargar el fxml de la ventana de sign up utilizando un cargador no estatico
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/grupo3/reto2/view/SignUp.fxml"));
 
@@ -161,23 +184,6 @@ public class SignInController {
             Logger.getLogger(SignInController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-    }
-
-    @FXML
-    private void handlePasswdButtonAction(ActionEvent event) {
-        try {
-            // Stage SignUpStage = new Stage();
-            //cargar el fxml de la ventana de sign up utilizando un cargador no estatico
-            System.out.println(getClass().getResource("/view/RecuperarContrasena.fxml"));
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/RecuperarContrasena.fxml"));
-            // System.out.println(loader.getLocation());
-            Parent root = loader.load();
-
-            RecuperarPasswdController recPasswd = ((RecuperarPasswdController) loader.getController());
-            recPasswd.initStage(root);
-        } catch (IOException ex) {
-            Logger.getLogger(SignInController.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
 }

@@ -5,7 +5,7 @@
  */
 package grupo3.reto2.logic;
 
-import grupo3.reto2.entities.User;
+import grupo3.reto2.model.User;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;

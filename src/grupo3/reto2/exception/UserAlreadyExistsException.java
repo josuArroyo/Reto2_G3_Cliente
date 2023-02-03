@@ -12,12 +12,12 @@ import java.util.logging.Logger;
  *This exception is used to show a warning if the user registered already exists
  * @author Alejandro
  */
-public class UserAlreadyExitsException extends Exception{
-    public UserAlreadyExitsException() {
+public class UserAlreadyExistsException extends Exception{
+    public UserAlreadyExistsException() {
         try {
             throw new Exception ("El usuario ya existe ");
         } catch (Exception ex) {
-            Logger.getLogger(UserAlreadyExitsException.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UserAlreadyExistsException.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

@@ -16,9 +16,9 @@
           </Menu>
           <Menu fx:id="menuNavegar" mnemonicParsing="false" text="Navegar">
             <items>
-                  <MenuItem fx:id="miEvento" mnemonicParsing="false" onAction="#miLugar" text="Evento" />
+                  <MenuItem fx:id="miEvento" mnemonicParsing="false" onAction="#miEvento" text="Evento" />
                   <MenuItem fx:id="miEntrenamiento" mnemonicParsing="false" onAction="#miEntrenamiento" text="Entrenamiento" />
-              <MenuItem fx:id="miLugar" mnemonicParsing="false" onAction="#miLugar" text="Lugar" />
+              <MenuItem fx:id="miLugar" mnemonicParsing="false" text="Lugar" />
                   <MenuItem fx:id="miObjetivo" mnemonicParsing="false" onAction="#miObjetivo" text="Objetivo" />
             </items>
           </Menu>

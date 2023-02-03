@@ -23,7 +23,7 @@ public class CreateException extends Exception{
         try {
             throw new Exception ("Error al intentar crear. ");
         } catch (Exception ex) {
-            Logger.getLogger(UserAlreadyExitsException.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UserAlreadyExistsException.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     

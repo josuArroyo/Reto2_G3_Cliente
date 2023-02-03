@@ -10,7 +10,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane fx:id="TableEvent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="grupo3.reto2.controller.EventController">
+<Pane fx:id="TableEvent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="grupo3.reto2.controller.EventController">
    <children>
       <fx:include fx:id="hbox" source="MenuBar.fxml" />
       <Button fx:id="btnCrear" layoutX="785.0" layoutY="71.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="133.0" text="CREAR EVENTO " />
@@ -41,32 +41,7 @@
       <Button fx:id="btnCerrar" layoutX="851.0" layoutY="641.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="135.0" text="CERRAR" />
       <Button fx:id="btnSubscribir" layoutX="851.0" layoutY="578.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="135.0" text="SUBSCRIBIRSE" />
       <DatePicker fx:id="dpFecha" layoutX="282.0" layoutY="128.0" />
-<!--      
-      <MenuBar fx:id="menu" layoutX="14.0" layoutY="14.0">
-        <menus>
-          <Menu mnemonicParsing="false" text="HOME">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="NAVEGAR">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="AYUDA">
-            <items>
-              <MenuItem mnemonicParsing="false" text="About" />
-            </items>
-          </Menu>
-            <Menu mnemonicParsing="false" text="CERRAR SESIÓN">
-              <items>
-                <MenuItem mnemonicParsing="false" text="Action 1" />
-              </items>
-            </Menu>
-        </menus>
-    </MenuBar>
--->  
+
       <Separator layoutX="18.0" layoutY="250.0" prefHeight="3.0" prefWidth="694.0" />
       <Separator layoutX="18.0" layoutY="83.0" prefHeight="3.0" prefWidth="694.0" />
       <Separator layoutX="-65.0" layoutY="164.0" prefHeight="3.0" prefWidth="166.0" rotate="90.0" />
@@ -75,5 +50,6 @@
       <Button fx:id="btnInforme" layoutX="851.0" layoutY="521.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="135.0" text="INFORME" />
       <TextField fx:id="tfFiltro" layoutX="719.0" layoutY="378.0" prefHeight="21.0" prefWidth="150.0" />
       <Button fx:id="btnBorrar" layoutX="780.0" layoutY="141.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="142.0" text="BORRAR EVENTO" />
+      <Button fx:id="btnayuda" layoutX="851.0" layoutY="467.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="135.0" text="AYUDA" />
    </children>
 </Pane>

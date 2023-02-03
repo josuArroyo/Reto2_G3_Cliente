@@ -22,7 +22,7 @@ public class UserNameErrorException extends Exception {
         try {
             throw new Exception("Error. El usuario con ese nombre no existe. ");
         } catch (Exception ex) {
-            Logger.getLogger(UserAlreadyExitsException.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UserAlreadyExistsException.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

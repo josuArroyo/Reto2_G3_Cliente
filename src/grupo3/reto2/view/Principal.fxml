@@ -13,6 +13,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="grupo3.reto2.controller.PrincipalController">
    <children>
+       <fx:include fx:id="hbox" source="MenuBar.fxml" />
       <Label fx:id="lblTexto" layoutX="112.0" layoutY="42.0" prefHeight="145.0" prefWidth="577.0" text="BIENVENIDO A FUERZA G3" textAlignment="CENTER">
          <font>
             <Font name="Bookman Old Style" size="40.0" />
@@ -23,30 +24,6 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </Button>
-      <MenuBar fx:id="menu" layoutY="1.0" prefHeight="26.0" prefWidth="269.0">
-         <menus>
-            <Menu fx:id="menu1" mnemonicParsing="false" text="Home">
-               <items>
-                  <MenuItem fx:id="mItem" mnemonicParsing="false" />
-               </items>
-            </Menu>
-            <Menu fx:id="menu2" mnemonicParsing="false" text="Navegar">
-               <items>
-                  <MenuItem mnemonicParsing="false" text="Objetivo" />
-                  <MenuItem mnemonicParsing="false" text="Lugar" />
-                  <MenuItem mnemonicParsing="false" text="Evento" />
-                  <MenuItem mnemonicParsing="false" text="Entrenamiento" />
-               </items>
-            </Menu>
-            <Menu fx:id="menu3" mnemonicParsing="false" text="Ayuda">
-               <items>
-                  <MenuItem fx:id="mItem5" mnemonicParsing="false" text="Manual de usuario" />
-                  <MenuItem fx:id="mItem6" mnemonicParsing="false" text="Sobre Fuerza G3..." />
-               </items>
-            </Menu>
-            <Menu fx:id="menu4" mnemonicParsing="false" text="Cerrar sesión" />
-         </menus>
-      </MenuBar>
       <ImageView fitHeight="331.0" fitWidth="524.0" layoutX="151.0" layoutY="157.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../Pictures/gym.jpg" />

@@ -18,7 +18,7 @@ public class ReadException extends Exception{
         try {
             throw new Exception ("Error en el filtrado. ");
         } catch (Exception ex) {
-            Logger.getLogger(UserAlreadyExitsException.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UserAlreadyExistsException.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

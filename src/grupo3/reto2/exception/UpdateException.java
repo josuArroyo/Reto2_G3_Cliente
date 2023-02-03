@@ -19,7 +19,7 @@ public class UpdateException extends Exception{
         try {
             throw new Exception ("Error al intentar modificar. ");
         } catch (Exception ex) {
-            Logger.getLogger(UserAlreadyExitsException.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UserAlreadyExistsException.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

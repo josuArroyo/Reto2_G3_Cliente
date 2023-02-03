@@ -5,8 +5,9 @@
  */
 package grupo3.reto2.controller;
 
+import grupo3.reto2.exception.ReadException;
 import grupo3.reto2.logic.PlaceManagerFactory;
-import grupo3.reto2.entities.Lugar;
+import grupo3.reto2.model.Lugar;
 import java.text.SimpleDateFormat;
 import java.time.ZoneId;
 import java.util.Collection;
@@ -37,6 +38,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.GenericType;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -222,6 +224,7 @@ public class PlaceController {
 
     @FXML
     private ObservableList<Lugar> cargarTodo() {
+        
         ObservableList<Lugar> listaLugar;
         List<Lugar> todosLugares;
         todosLugares = placefact.getFactory().findAll_XML(new GenericType<List<Lugar>>() {
@@ -380,7 +383,6 @@ public class PlaceController {
         } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).showAndWait();
         }
-
     }
 
     @FXML

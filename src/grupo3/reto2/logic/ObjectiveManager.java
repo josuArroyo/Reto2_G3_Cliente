@@ -27,7 +27,7 @@ public interface ObjectiveManager {
         
     public void create_JSON(Object requestEntity) throws ClientErrorException; 
 
-    public <T> T findByValue_XML(Class<T> responseType, String valorParam) throws ClientErrorException;
+    public <T> T findByValue_XML(GenericType<T> responseType, String valorParam) throws ClientErrorException;
 
     public <T> T findByValue_JSON(Class<T> responseType, String valorParam) throws ClientErrorException;
 

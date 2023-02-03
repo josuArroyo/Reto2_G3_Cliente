@@ -5,6 +5,7 @@
  */
 package grupo3.reto2.logic;
 
+import grupo3.reto2.exception.CreateException;
 import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
@@ -23,9 +24,9 @@ public interface PlaceManager {
 
     public <T> T find_JSON(Class<T> responseType, String id) throws ClientErrorException;
 
-    public void create_XML(Object requestEntity) throws ClientErrorException;
+    public void create_XML(Object requestEntity) throws ClientErrorException, CreateException;
 
-    public void create_JSON(Object requestEntity) throws ClientErrorException;
+    public void create_JSON(Object requestEntity) throws ClientErrorException, CreateException;
 
     public <T> T findAll_XML(GenericType<T> responseType) throws ClientErrorException;
 

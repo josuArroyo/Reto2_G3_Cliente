@@ -9,7 +9,7 @@ import grupo3.reto2.exception.CreateException;
 import grupo3.reto2.exception.DeleteException;
 import grupo3.reto2.exception.ReadException;
 import grupo3.reto2.exception.UpdateException;
-import grupo3.reto2.entities.Entrenamiento;
+import grupo3.reto2.model.Entrenamiento;
 import java.util.List;
 import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.core.GenericType;

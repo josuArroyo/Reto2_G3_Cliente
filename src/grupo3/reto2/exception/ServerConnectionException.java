@@ -21,7 +21,7 @@ public class ServerConnectionException extends Exception {
         try {
             throw new Exception("Error al intentar conectar con el servidor. Disculpe las molestias. ");
         } catch (Exception ex) {
-            Logger.getLogger(UserAlreadyExitsException.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UserAlreadyExistsException.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }

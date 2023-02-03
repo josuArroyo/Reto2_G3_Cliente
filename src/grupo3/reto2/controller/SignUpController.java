@@ -5,11 +5,12 @@
  */
 package grupo3.reto2.controller;
 
+import grupo3.reto2.exception.UserAlreadyExistsException;
 import grupo3.reto2.logic.ClientFactory;
 import grupo3.reto2.logic.UserFactory;
-import grupo3.reto2.entities.Cliente;
-import grupo3.reto2.entities.User;
-import grupo3.reto2.entities.UserPrivilege;
+import grupo3.reto2.model.Cliente;
+import grupo3.reto2.model.User;
+import grupo3.reto2.model.UserPrivilege;
 import java.util.logging.Logger;
 import java.awt.event.KeyEvent;
 import java.net.URL;
@@ -17,6 +18,7 @@ import static java.time.Instant.now;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.application.Platform;
@@ -166,9 +168,9 @@ public class SignUpController {
             //Validar que la password tenga formato especifico
             String password = this.txtPasswd2.getText();
             if ((PASSWORD_PATTERN.matcher(password).matches())) {
-                System.out.println("contraseña no valida");
+                 System.out.println("contraseña no valida");
                 throw new Exception("CONTRASEÑA NO VALIDA");
-
+               
             }
 
             //Si los campos de password y confirmPassword no coinciden, saldrá un label de error (lblError2) y limpia esos campos.
@@ -178,6 +180,7 @@ public class SignUpController {
                 //throw new Exception("usuario registrado");
             } else {
 
+ 
                 Cliente client = new Cliente();
 
                 client.setLogin(txtNombre2.getText());
@@ -195,9 +198,11 @@ public class SignUpController {
             }
 
             //Seguido, saldrá del método del botón.
-        } catch (Exception e) {
+        } catch (UserAlreadyExistsException e) {
             new Alert(Alert.AlertType.INFORMATION, e.getMessage()).showAndWait();
 
+        } catch (Exception ex) {
+            Logger.getLogger(SignUpController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }

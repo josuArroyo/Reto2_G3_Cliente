@@ -5,7 +5,7 @@
  */
 package grupo3.reto2.logic;
 
-import grupo3.reto2.entities.Evento;
+import grupo3.reto2.model.Evento;
 import grupo3.reto2.exception.BusinessLogicException;
 import java.util.Collection;
 

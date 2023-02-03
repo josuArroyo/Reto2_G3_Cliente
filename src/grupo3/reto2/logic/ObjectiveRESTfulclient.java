@@ -73,7 +73,7 @@ public class ObjectiveRESTfulclient implements ObjectiveManager {
     }
 
     @Override
-    public <T> T findByValue_XML(Class<T> responseType, String valorParam) throws ClientErrorException {
+    public <T> T findByValue_XML(GenericType<T> responseType, String valorParam) throws ClientErrorException {
         WebTarget resource = webTarget;
         resource = resource.path(java.text.MessageFormat.format("FindByValue/{0}", new Object[]{valorParam}));
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_XML).get(responseType);
